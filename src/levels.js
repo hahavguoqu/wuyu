@@ -5,9 +5,9 @@ export const LEVELS=[
   {id:'floating-court',name:'浮渡',lesson:true,mechanic:'slide',variant:'water',initialView:iso,orbit:false,illusion:false,start:[-3.15,2.4,0],dock:[-1.5,2.4,0],near:[-.85,2.4,0],far:[2.15,2.4,0],entry:[2.8,2.4,0],goal:[4.2,2.4,0],tint:'#e2e8ed',top:'#eff2f5',bottom:'#c5d9e1'},
   {id:'folded-garden',name:'折庭',mechanic:'rotate',variant:'fold',initialView:iso,orbit:false,illusion:true,start:[-3.15,2.4,0],dock:[-1.5,2.4,0],near:[0,2.4,0],entry:[2.7,3.45,1.2],goal:[4.25,3.45,1.2],tint:'#e7e1e9',top:'#f3edf0',bottom:'#ced8e2'},
   {id:'cloud-steps',name:'云阶',mechanic:'lift',variant:'cloud',initialView:iso,orbit:false,illusion:false,start:[-3.15,2.4,0],dock:[-.65,2.4,0],near:[0,2.4,0],far:[0,4,0],entry:[.65,4,0],goal:[2.65,4,0],tint:'#eee4db',top:'#faf0e5',bottom:'#d8ddd0'},
-  {id:'turning-cloister',name:'回廊',mechanic:'rotate',variant:'cloister',initialView:-iso,orbit:true,illusion:true,start:[-3.15,2.4,0],dock:[-1.5,2.4,0],near:[0,2.4,0],entry:[2.7,3.45,1.2],goal:[4.25,3.45,1.2],tint:'#dce7eb',top:'#edf3f2',bottom:'#bfd4dd'},
-  {id:'mirror-tide',name:'镜潮',mechanic:'slide',variant:'mirror',initialView:-iso,orbit:true,illusion:true,start:[-3.15,2.4,0],dock:[-.65,2.4,0],near:[0,2.4,0],far:[2,2.4,0],entry:[3.85,3.45,1.2],goal:[5.4,3.45,1.2],tint:'#e3e4ef',top:'#efedf6',bottom:'#c8d6e1'},
-].map((level,index)=>({...level,initialView:index<2?iso+Math.PI:level.initialView,start:[level.start[0],level.start[1],level.start[2]-2.35],goal:[level.goal[0],level.goal[1],level.goal[2]+1.75]}));
+  {id:'turning-cloister',name:'回廊',mechanic:'rotate',variant:'cloister',elbow:true,initialView:iso,orbit:false,illusion:true,start:[-4.4,1.35,-2.5],dock:[-2.5,1.35,-2.5],near:[0,2.4,0],entry:[2.5,3.45,2.5],goal:[4.05,3.45,2.5],tint:'#dce7eb',top:'#edf3f2',bottom:'#bfd4dd'},
+  {id:'mirror-tide',name:'镜潮',mechanic:'slide',variant:'mirror',initialView:iso,orbit:false,illusion:true,start:[-3.15,2.4,0],dock:[-.65,2.4,0],near:[0,2.4,0],far:[2,2.4,-2],entry:[3.85,3.45,-.8],goal:[5.4,3.45,-.8],tint:'#e3e4ef',top:'#efedf6',bottom:'#c8d6e1'},
+].map((level,index)=>({...level,initialView:index<2?iso+Math.PI:level.initialView,dock:[level.dock[0]-(level.elbow?0:level.mechanic==='rotate'?.075:.04),level.dock[1],level.dock[2]],entry:[level.entry[0]+(level.illusion?0:.04),level.entry[1],level.entry[2]],start:[level.start[0],level.start[1],level.start[2]-2.35],goal:[level.goal[0],level.goal[1],level.goal[2]+1.75]}));
 export const CHAPTER_NAMES=['一','二','三','四','五','六'];
 export function levelPoints(level){
   const vector=key=>new THREE.Vector3(...level[key]);
@@ -18,7 +18,8 @@ export function deckPoints(level,state){
   const p=levelPoints(level);
   if(level.mechanic==='rotate'){
     const angle=state.bridgeAngle??(state.orientation??0)*Math.PI/2;
-    return {p0:p.near,p1:p.near.clone().add(new THREE.Vector3(-1.5,0,0).applyAxisAngle(new THREE.Vector3(0,1,0),angle))};
+    const rotate=v=>v.applyAxisAngle(new THREE.Vector3(0,1,0),angle).add(p.near);
+    return {p0:p.near,p1:rotate(new THREE.Vector3(level.elbow?-1.3:-1.5,0,level.elbow?-1.3:0)),...(level.elbow?{corner:rotate(new THREE.Vector3(-1.3,0,0))}:{})};
   }
   const center=p.near.clone().lerp(p.far,state.travel??0);
   return {p0:center.clone().add(new THREE.Vector3(-.65,0,0)),p1:center.clone().add(new THREE.Vector3(.65,0,0))};

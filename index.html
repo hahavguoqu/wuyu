@@ -2,13 +2,13 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#dcebe6"><meta name="description" content="雾屿，一段关于旋转、视角与相遇的立体解谜旅程。">
+  <meta name="theme-color" content="#dcebe6"><meta name="description" content="雾屿，在错层建筑与折角路径间发现通路的 2.5D 解谜旅程。">
   <title>雾屿 · 初见</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
   <main id="game" aria-label="雾屿立体解谜游戏">
-    <div id="scene" aria-label="点击道路行走，点击红柱操作机关"></div>
+    <div id="scene" aria-label="点击道路行走，拖动金色转柄操作青绿色机关"></div>
     <div class="grain" aria-hidden="true"></div>
     <header class="topbar">
       <div class="brand"><svg viewBox="0 0 40 44" fill="none" aria-hidden="true"><path d="M5 34V18L20 9l15 9v16L20 43 5 34Z" stroke="currentColor"/><path d="m5 18 15 9 15-9M20 27v16M13 22V11a7 7 0 0 1 14 0v11" stroke="currentColor"/></svg><span>雾屿</span></div>
@@ -25,7 +25,6 @@
       <button id="center-marker" class="world-marker active" aria-label="走到平台"><span></span></button>
       <button id="goal-marker" class="world-marker goal" aria-label="走向终点"><span></span></button>
       <button id="bridge-control" class="prop-control" aria-label="旋转桥梁" title="旋转桥梁"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 8a7 7 0 1 0 2 7M17 3v5h-5"/></svg></button>
-      <button id="view-control" class="prop-control view-control" aria-label="切换视角" title="切换视角" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
     <div id="move-target" aria-hidden="true" hidden></div>
     <aside id="level-panel" hidden aria-label="关卡列表"></aside>

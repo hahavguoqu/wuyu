@@ -6,17 +6,18 @@ import {buildNavigation,anchorPoint,planRoute,closestAnchor} from '../src/naviga
 import {createTraveller} from '../src/character.js';
 import {rotationDetent,travelFromDrag,angularDelta} from '../src/interaction.js';
 import {buildArchitecture} from '../src/architecture.js';
+import {applyMechanismPose,collisionPairs,safeMechanismValue,prepareColliders} from '../src/mechanism.js';
 function cameraAt(angle){const c=new THREE.OrthographicCamera(-6,6,6,-6,.1,100);c.position.set(Math.sin(angle)*Math.sqrt(128),7,Math.cos(angle)*Math.sqrt(128));c.lookAt(0,0,0);c.updateMatrixWorld();return c;}
 const good=cameraAt(Math.PI/4),bad=cameraAt(-Math.PI/4),start={segment:'west-road',t:0},goal={segment:'goal-road',t:1};
 const idle={orientation:0,travel:0};
-test('six chapters contain exactly two teaching levels and both fixed and orbit illusions',()=>{
+test('six chapters keep two tutorials and explore illusions from a fixed camera',()=>{
   assert.equal(LEVELS.length,6);assert.equal(LEVELS.filter(l=>l.lesson).length,2);assert.ok(LEVELS.slice(0,2).every(l=>l.lesson));
-  assert.equal(LEVELS.filter(l=>l.illusion&&!l.orbit).length,1);assert.equal(LEVELS.filter(l=>l.orbit).length,2);
+  assert.equal(LEVELS.filter(l=>l.illusion&&!l.orbit).length,3);assert.ok(LEVELS.every(l=>!l.orbit));assert.ok(LEVELS.some(l=>l.elbow));
   assert.ok(LEVELS.some(l=>l.mechanic==='lift'));assert.ok(LEVELS.some(l=>l.mechanic==='slide'));
 });
 test('every chapter is solvable after operating its real mechanism',()=>{
   for(const level of LEVELS){
-    const before=buildNavigation(level,idle,level.orbit?bad:good);assert.ok(planRoute(before,start,centerAnchor(level)),level.id);assert.equal(planRoute(before,start,goal),null);
+    const before=buildNavigation(level,idle,good);assert.ok(planRoute(before,start,centerAnchor(level)),level.id);assert.equal(planRoute(before,start,goal),null);
     const after=buildNavigation(level,{orientation:2,travel:1},good);assert.ok(planRoute(after,centerAnchor(level),goal),level.id);assert.ok(planRoute(after,goal,centerAnchor(level)),level.id);
     assert.equal(planRoute(after,start,goal),null,'disconnected start must not stay reachable');
   }
@@ -38,10 +39,43 @@ test('fixed illusion joins endpoints with a real depth and height gap',()=>{
   const level=LEVELS[2],p=levelPoints(level),deck=deckPoints(level,{orientation:2});assert.ok(deck.p1.distanceTo(p.entry)>1.9);assert.ok(overlapError(deck.p1,p.entry,good)<.001);
   assert.equal(buildNavigation(level,{orientation:2},bad).outgoing,false);assert.equal(buildNavigation(level,{orientation:2},good).outgoing,true);
 });
-test('orbit levels require actual projection agreement, independently of screen size',()=>{
-  for(const level of LEVELS.filter(l=>l.orbit))for(const size of [5,10,20]){
+test('fixed illusions require actual projection agreement, independently of screen size',()=>{
+  for(const level of LEVELS.filter(l=>l.illusion))for(const size of [5,10,20]){
     const c=cameraAt(Math.PI/4);c.left=-size;c.right=size;c.updateProjectionMatrix();assert.equal(buildNavigation(level,{orientation:2,travel:1},c).outgoing,true);assert.equal(buildNavigation(level,{orientation:2,travel:1},bad).outgoing,false);
   }
+});
+
+test('the folded cloister changes two optical joints and carries riders around its real corner',()=>{
+  const level=LEVELS.find(l=>l.elbow),before=buildNavigation(level,idle,good),after=buildNavigation(level,{orientation:2},good);
+  assert.ok(planRoute(before,start,centerAnchor(level)).some(step=>step.segment==='deck-elbow'));
+  assert.ok(planRoute(after,centerAnchor(level),goal).some(step=>step.segment==='deck-elbow'));
+  assert.equal(buildNavigation(level,idle,bad).links.length,0);
+  const onElbow={segment:'deck-elbow',t:.6},p=levelPoints(level);
+  const initial=anchorPoint(before,onElbow).sub(p.near),turned=anchorPoint(after,onElbow).sub(p.near);
+  assert.ok(initial.clone().applyAxisAngle(new THREE.Vector3(0,1,0),Math.PI).distanceTo(turned)<1e-8);
+});
+
+test('all structural sweeps stay clear of fixed pillars, roads and guide rails',()=>{
+  const material=new THREE.MeshStandardMaterial(),materials=new Proxy({}, {get:()=>material});
+  for(const level of LEVELS){
+    const stage=buildArchitecture(level,levelPoints(level),materials,material,()=>{},()=>{});
+    for(let i=0;i<=240;i++){
+      const value=i/240*(level.mechanic==='rotate'?Math.PI*2:1);applyMechanismPose(level,stage,value);
+      const pairs=collisionPairs(stage);
+      assert.equal(pairs.length,0,level.id+' sweep '+i+' '+pairs.map(([a,b])=>a.position.toArray()+' / '+b.position.toArray()).join(';'));
+    }
+    assert.equal(safeMechanismValue(level,stage,0,level.mechanic==='rotate'?Math.PI*2:1),level.mechanic==='rotate'?Math.PI*2:1);
+    stage.group.traverse(mesh=>mesh.geometry?.dispose());
+  }material.dispose();
+});
+
+test('collision guard stops a large drag before passing through an obstruction',()=>{
+  const level=LEVELS[1],material=new THREE.MeshStandardMaterial(),materials=new Proxy({}, {get:()=>material}),stage=buildArchitecture(level,levelPoints(level),materials,material,()=>{},()=>{});
+  const blocker=new THREE.Mesh(new THREE.BoxGeometry(.09,1,1),material);blocker.position.set(.65,1.8,0);stage.group.add(blocker);stage.fixedSolids.push(blocker);
+  // Rebuild after inserting a deliberately thin obstacle into the rail corridor.
+  prepareColliders(stage);
+  const safe=safeMechanismValue(level,stage,0,1);assert.ok(safe<.5);assert.equal(collisionPairs(stage).length,0);
+  stage.group.traverse(mesh=>mesh.geometry?.dispose());material.dispose();
 });
 test('a mid-road destination can stop before the goal and reverse without visiting a waypoint',()=>{
   const net=buildNavigation(LEVELS[0],idle,good),source={segment:'west-road',t:.6},target={segment:'west-road',t:.2},route=planRoute(net,source,target);
@@ -98,12 +132,6 @@ test('mechanism handles face the actual initial camera and are not hidden behind
     const caster=new THREE.Raycaster(point.clone().addScaledVector(direction,20),direction.clone().negate());
     let object=caster.intersectObjects(stage.group.children,true)[0]?.object;while(object&&!object.userData.control)object=object.parent;
     assert.equal(object?.userData.control,'mechanism',level.id);
-    if(stage.viewAnchor)for(const angle of [-Math.PI/4,Math.PI/4]){
-      const direction=new THREE.Vector3(Math.sin(angle)*Math.sqrt(128),7,Math.cos(angle)*Math.sqrt(128)).normalize();
-      caster.set(stage.viewAnchor.clone().addScaledVector(direction,20),direction.clone().negate());
-      let target=caster.intersectObjects(stage.group.children,true)[0]?.object;while(target&&!target.userData.control)target=target.parent;
-      assert.equal(target?.userData.control,'view',level.id+' view '+angle);
-    }
     stage.group.traverse(mesh=>mesh.geometry?.dispose());
   }material.dispose();
 });

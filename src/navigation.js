@@ -4,15 +4,19 @@ export function buildNavigation(level,state,camera){
   const p=levelPoints(level),deck=deckPoints(level,state),segments=[
     {id:'west-road',a:'start',b:'west-turn',p0:p.start,p1:p.westCorner},
     {id:'west-bend',a:'west-turn',b:'dock',p0:p.westCorner,p1:p.dock},
-    {id:'deck',a:'deck-left',b:'deck-right',...deck},
+    ...(deck.corner?[
+      {id:'deck',a:'deck-left',b:'deck-corner',p0:deck.p0,p1:deck.corner},
+      {id:'deck-elbow',a:'deck-corner',b:'deck-right',p0:deck.corner,p1:deck.p1},
+    ]:[{id:'deck',a:'deck-left',b:'deck-right',...deck}]),
     {id:'goal-bend',a:'entry',b:'goal-turn',p0:p.entry,p1:p.goalCorner},
     {id:'goal-road',a:'goal-turn',b:'goal',p0:p.goalCorner,p1:p.goal},
   ],links=[];
   const nearEnd=level.mechanic==='rotate'?'deck-right':'deck-left';
   const nearPoint=level.mechanic==='rotate'?deck.p1:deck.p0;
-  if(nearPoint.distanceTo(p.dock)<.035)links.push({a:'dock',b:nearEnd});
+  const atStart=level.mechanic==='rotate'?state.orientation===0:(state.travel??0)<.001;
+  if(atStart&&(nearPoint.distanceTo(p.dock)<.09||(level.elbow&&overlapError(nearPoint,p.dock,camera)<.035)))links.push({a:'dock',b:nearEnd});
   const ready=level.mechanic==='rotate'?state.orientation===2:(state.travel??0)>.999;
-  const outgoing=ready&&(deck.p1.distanceTo(p.entry)<.035||(level.illusion&&overlapError(deck.p1,p.entry,camera)<.035));
+  const outgoing=ready&&(deck.p1.distanceTo(p.entry)<.055||(level.illusion&&overlapError(deck.p1,p.entry,camera)<.035));
   if(outgoing)links.push({a:'deck-right',b:'entry'});
   return {segments,links,outgoing};
 }

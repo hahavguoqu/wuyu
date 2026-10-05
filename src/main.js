@@ -5,8 +5,10 @@ import {buildArchitecture} from './architecture.js';
 import {createTraveller} from './character.js';
 import {rotationDetent,travelFromDrag,angularDelta} from './interaction.js';
 import {applyMechanismPose,safeMechanismValue} from './mechanism.js';
+import {setLayer,renderLayers,visibleHitPoint,TRAVELLER_LAYER,CONTROL_LAYER,BUILDING_LAYER} from './rendering.js';
 import './style.css';
 const $=id=>document.getElementById(id),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const walkingSpeed=(reducedMotion?5:1.45)*1.5;
 const palette={stone:'#e0dfcc',trim:'#fff4d7',rose:'#c98d82',control:'#b98554',roseLight:'#e4b0a0',mint:'#65af9c',green:'#397d70',gold:'#dfb45c',shadow:'#89958c'};
 const materials=Object.fromEntries(Object.entries(palette).map(([key,color])=>[key,new THREE.MeshStandardMaterial({color,roughness:.9})]));
 const glow=new THREE.MeshBasicMaterial({color:'#ffe4a0'}),shared=new Set([...Object.values(materials),glow]);
@@ -14,10 +16,11 @@ const scene=new THREE.Scene();
 const camera=new THREE.OrthographicCamera(-10,10,6,-6,.1,100);
 let renderer;
 try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(error){$('fallback').hidden=false;throw error;}
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0,0);$('scene').append(renderer.domElement);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0,0);renderer.autoClear=false;$('scene').append(renderer.domElement);
 scene.add(new THREE.HemisphereLight('#fff8e8','#9ab9ad',1.5));
 const sun=new THREE.DirectionalLight('#fff6df',2.2);sun.position.set(-5,12,7);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-15,right:15,top:15,bottom:-15,near:.5,far:40});sun.shadow.bias=-.0007;sun.shadow.normalBias=.03;scene.add(sun);
 const fill=new THREE.DirectionalLight('#d4e9e5',.75);fill.position.set(8,5,-8);scene.add(fill);
+scene.children.filter(object=>object.isLight).forEach(light=>light.layers.enableAll());
 const world=new THREE.Group();scene.add(world);
 let levelIndex=0,unlocked=LEVELS.length-1,level,points,architecture,actor,location={segment:'west-road',t:0};
 let orientation=0,travel=0,bridgeAngle=0,viewAngle=Math.PI/4,mechanismMotion=null,walking=null,gesture=null;
@@ -50,7 +53,8 @@ function hint(){
   if(!level.lesson||won||mechanismMotion||walking)return '';
   if(reachable('goal'))return '点击路径，走向纹章';
   if(level.tilt)return '按住转柄，转动折臂';
-  if(location.segment.startsWith('middle'))return '转动横梁，接通上层';
+  if(location.segment==='deck-upper')return '转动横梁，走向纹章';
+  if(location.segment.startsWith('middle'))return '走上上层横梁，再转动';
   return '点击路径，沿下层走向回廊';
 }
 function updateUI(message){
@@ -82,7 +86,7 @@ function loadLevel(index,focus=false){
   for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=false;
   for(const id of ['help-panel','level-panel'])$(id).hidden=true;for(const id of ['help','chapters'])$(id).setAttribute('aria-expanded','false');
   levelIndex=THREE.MathUtils.clamp(index,0,unlocked);level=LEVELS[levelIndex];points=levelPoints(level);location={segment:'west-road',t:0};orientation=0;travel=0;bridgeAngle=0;viewAngle=level.initialView;mechanismMotion=null;walking=null;won=false;desiredHeading=level.initialView;
-  clearStage();architecture=buildArchitecture(level,points,materials,glow);world.add(architecture.group);actor=createTraveller();actor.root.scale.setScalar(.65);world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
+  clearStage();architecture=buildArchitecture(level,points,materials,glow);world.add(architecture.group);actor=createTraveller();actor.root.scale.setScalar(.65);setLayer(actor.root,TRAVELLER_LAYER);world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
   $('game').style.background='linear-gradient(180deg,'+level.top+' 0%,'+level.bottom+' 100%)';
   $('sky-disc').hidden=!level.disc;$('sky-disc').style.background=level.disc||'transparent';$('game').style.setProperty('--ink',level.id==='blue-gate'?'#e0e8e5':'#496562');$('game').style.setProperty('--muted',level.id==='blue-gate'?'#cfdfdf':'#647b79');
   $('landing-markers').replaceChildren();level.landmarks.forEach((target,i)=>{const button=document.createElement('button');button.className='world-marker';button.setAttribute('aria-label',target.label);button.dataset.landmark=i;button.innerHTML='<span></span>';button.addEventListener('click',()=>walkToAnchor(target));$('landing-markers').append(button);});
@@ -108,7 +112,6 @@ function activateMechanism(direction=1){
 }
 function applyMechanism(){
   applyMechanismPose(level,architecture,level.mechanic==='rotate'?bridgeAngle:travel);
-  architecture.knob.rotation.z=level.mechanic==='rotate'?-bridgeAngle:travel*Math.PI;
   architecture.mechanism.updateWorldMatrix(true,true);
 }
 function finish(){
@@ -123,7 +126,7 @@ function advanceWalking(delta){
     const step=walking.steps[walking.index];
     if(!step){location={...walking.destination};walking=null;updateLocation();updateUI();if(location.segment===level.goalAnchor.segment&&location.t>.999)finish();break;}
     if(step.teleport){location={...step.end};walking.index++;walking.time=0;updateLocation();continue;}
-    const duration=step.from.distanceTo(step.to)/(reducedMotion?5:1.45),consumed=Math.min(budget,Math.max(0,duration-walking.time));walking.time+=consumed;budget-=consumed;
+    const duration=step.from.distanceTo(step.to)/walkingSpeed,consumed=Math.min(budget,Math.max(0,duration-walking.time));walking.time+=consumed;budget-=consumed;
     const t=duration>0?Math.min(walking.time/duration,1):1;location={segment:step.segment,t:THREE.MathUtils.lerp(step.fromT,step.toT,t)};updateLocation();
     if(Math.hypot(step.to.x-step.from.x,step.to.z-step.from.z)>.001)desiredHeading=Math.atan2(step.to.x-step.from.x,step.to.z-step.from.z);
     if(t<1)break;walking.index++;walking.time=0;if(budget<=0)break;
@@ -170,7 +173,15 @@ window.addEventListener('keydown',event=>{
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 function pickInteraction(event){
   const rect=renderer.domElement.getBoundingClientRect();pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
-  const hit=raycaster.intersectObjects(world.children,true).find(h=>{const material=Array.isArray(h.object.material)?h.object.material[h.face.materialIndex]:h.object.material;return material.visible!==false;});if(!hit)return null;
+  let hit;
+  // Pick the same foreground layers that are visible on screen.
+  for(const layer of [TRAVELLER_LAYER,CONTROL_LAYER,BUILDING_LAYER]){
+    raycaster.layers.set(layer);
+    const hits=raycaster.intersectObjects(world.children,true);
+    hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(camera.position)-visibleHitPoint(b).distanceToSquared(camera.position));
+    if(hits.length){hit=hits[0];break;}
+  }
+  raycaster.layers.set(BUILDING_LAYER);if(!hit)return null;
   if(hit.object.userData.roads&&hit.face&&hit.face.normal.clone().transformDirection(hit.object.matrixWorld).y>.5){const anchor=closestAnchor(navigation(),hit.point,hit.object.userData.roads);if(anchor)return {kind:'road',anchor};}
   let object=hit.object;while(object){if(object===actor.root)return {kind:'actor'};if(object.userData.control)return {kind:object.userData.control};object=object.parent;}return null;
 }
@@ -224,8 +235,9 @@ for(const [owner,kind]of[[renderer.domElement,null],[$('bridge-control'),'mechan
 renderer.domElement.addEventListener('pointermove',event=>{if(gesture){renderer.domElement.style.cursor='grabbing';return;}const hit=pickInteraction(event);renderer.domElement.style.cursor=!(mechanismMotion||won||menuOpen)&&hit?(hit.kind==='mechanism'?'grab':'pointer'):'default';});
 window.addEventListener('blur',()=>{if(gesture)endGesture(true);pointerDown=null;});
 window.addEventListener('resize',()=>{if(gesture)endGesture(true);resize();});loadLevel(levelIndex);let previous=performance.now();
+document.addEventListener('visibilitychange',()=>{previous=performance.now();});
 renderer.setAnimationLoop(time=>{
-  const delta=menuOpen?0:Math.max((time-previous)/1000,0);previous=time;elapsed+=delta;
+  const delta=menuOpen||document.hidden?0:Math.max((time-previous)/1000,0);previous=time;elapsed+=delta;
   if(mechanismMotion){
     const m=mechanismMotion;m.time+=delta;const t=Math.min(m.time/m.duration,1),ease=t*t*(3-2*t);
     if(m.type==='rotate'){
@@ -236,6 +248,6 @@ renderer.setAnimationLoop(time=>{
   if(walking&&!menuOpen)advanceWalking(delta);
   const up=navigation().segments.find(s=>s.id===location.segment)?.up||new THREE.Vector3(0,1,0);
   const targetPose=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),up).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),desiredHeading));
-  actor.root.quaternion.slerp(targetPose,Math.min(delta*12,1));actor.pose(elapsed,!!walking,reducedMotion);
-  if(won&&!reducedMotion)architecture.completionRing.scale.setScalar(1+Math.sin(elapsed*2)*.025);renderer.render(scene,camera);
+  actor.root.quaternion.slerp(targetPose,Math.min(delta*12,1));actor.pose(elapsed*1.5,!!walking,reducedMotion);
+  if(won&&!reducedMotion)architecture.completionRing.scale.setScalar(1+Math.sin(elapsed*2)*.025);renderLayers(renderer,scene,camera);
 });

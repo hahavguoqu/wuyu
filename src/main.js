@@ -54,6 +54,8 @@ function hint(){
   if(reachable('goal'))return '点击路径，走向纹章';
   if(level.tilt)return '按住转柄，转动折臂';
   if(location.segment==='deck-upper')return '转动横梁，走向纹章';
+  const upper=level.landmarks.find(anchor=>anchor.segment==='deck-upper');
+  if(upper&&!planRoute(navigation(),location,upper))return '转动横梁，接通路径';
   if(location.segment.startsWith('middle'))return '走上上层横梁，再转动';
   return '点击路径，沿下层走向回廊';
 }

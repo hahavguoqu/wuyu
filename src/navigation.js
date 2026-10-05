@@ -2,9 +2,11 @@ import * as THREE from 'three';
 import {levelPoints,deckPoints,overlapError} from './levels.js';
 export function buildNavigation(level,state,camera){
   const p=levelPoints(level),deck=deckPoints(level,state),segments=[
-    {id:'west-road',a:'start',b:'dock',p0:p.start,p1:p.dock},
+    {id:'west-road',a:'start',b:'west-turn',p0:p.start,p1:p.westCorner},
+    {id:'west-bend',a:'west-turn',b:'dock',p0:p.westCorner,p1:p.dock},
     {id:'deck',a:'deck-left',b:'deck-right',...deck},
-    {id:'goal-road',a:'entry',b:'goal',p0:p.entry,p1:p.goal},
+    {id:'goal-bend',a:'entry',b:'goal-turn',p0:p.entry,p1:p.goalCorner},
+    {id:'goal-road',a:'goal-turn',b:'goal',p0:p.goalCorner,p1:p.goal},
   ],links=[];
   const nearEnd=level.mechanic==='rotate'?'deck-right':'deck-left';
   const nearPoint=level.mechanic==='rotate'?deck.p1:deck.p0;

@@ -3,9 +3,10 @@ import {LEVELS,CHAPTER_NAMES,levelPoints,centerAnchor} from './levels.js';
 import {buildNavigation,anchorPoint,closestAnchor,planRoute} from './navigation.js';
 import {buildArchitecture} from './architecture.js';
 import {createTraveller} from './character.js';
+import {rotationDetent,travelFromDrag,angularDelta} from './interaction.js';
 import './style.css';
 const $=id=>document.getElementById(id),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const palette={stone:'#f4f0dd',trim:'#fff7e4',rose:'#c98d82',control:'#c8786b',roseLight:'#e4b0a0',mint:'#94b6a6',green:'#648d7a',gold:'#c9a365',shadow:'#b2c9b8'};
+const palette={stone:'#dedfce',trim:'#fff4d7',rose:'#c98d82',control:'#b98554',roseLight:'#e4b0a0',mint:'#86baaa',green:'#40796f',gold:'#dfb45c',shadow:'#839b8d'};
 const materials=Object.fromEntries(Object.entries(palette).map(([key,color])=>[key,new THREE.MeshStandardMaterial({color,roughness:.9})]));
 const glow=new THREE.MeshBasicMaterial({color:'#ffe4a0'}),shared=new Set([...Object.values(materials),glow]);
 const scene=new THREE.Scene();scene.fog=new THREE.Fog('#dcebe6',28,70);
@@ -14,11 +15,11 @@ let renderer;
 try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(error){$('fallback').hidden=false;throw error;}
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0,0);$('scene').append(renderer.domElement);
 scene.add(new THREE.HemisphereLight('#fff8e8','#9ab9ad',2.7));
-const sun=new THREE.DirectionalLight('#fff6df',3.1);sun.position.set(-5,12,7);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-15,right:15,top:15,bottom:-15,near:.5,far:40});sun.shadow.bias=-.0007;sun.shadow.normalBias=.03;scene.add(sun);
+const sun=new THREE.DirectionalLight('#fff6df',2.2);sun.position.set(-5,12,7);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-15,right:15,top:15,bottom:-15,near:.5,far:40});sun.shadow.bias=-.0007;sun.shadow.normalBias=.03;scene.add(sun);
 const fill=new THREE.DirectionalLight('#d4e9e5',.75);fill.position.set(8,5,-8);scene.add(fill);
 const world=new THREE.Group();scene.add(world);
 let levelIndex=0,unlocked=0,level,points,architecture,actor,location={segment:'west-road',t:0};
-let orientation=0,travel=0,bridgeAngle=0,viewAngle=Math.PI/4,mechanismMotion=null,viewMotion=null,walking=null;
+let orientation=0,travel=0,bridgeAngle=0,viewAngle=Math.PI/4,mechanismMotion=null,viewMotion=null,walking=null,gesture=null;
 let won=false,menuOpen=false,hasStarted=false,elapsed=0,desiredHeading=Math.PI/4,completionTimer,soundEnabled=false,audioContext;
 const completed=new Set(),soundTimers=new Set();
 try{
@@ -31,7 +32,7 @@ function saveProgress(){try{localStorage.setItem('mist-isles-phase3',JSON.string
 function navigation(){return buildNavigation(level,{orientation,travel,bridgeAngle},camera);}
 function namedAnchor(name){return name==='start'?{segment:'west-road',t:0}:name==='center'?centerAnchor(level):{segment:'goal-road',t:1};}
 function reachable(name){return !!planRoute(navigation(),location,namedAnchor(name));}
-function busy(){return !!(walking||mechanismMotion||viewMotion||won||menuOpen);}
+function busy(){return !!(walking||mechanismMotion||viewMotion||gesture||won||menuOpen);}
 function clearStage(){
   const geos=new Set(),mats=new Set();world.traverse(m=>{if(m.geometry)geos.add(m.geometry);if(m.material)for(const mat of Array.isArray(m.material)?m.material:[m.material])if(!shared.has(mat))mats.add(mat);});world.clear();geos.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());
 }
@@ -46,27 +47,24 @@ function updateLocation(){
   Object.assign($('game').dataset,{segment:location.segment,position:String(location.t)});
 }
 function hint(){
-  if(won||mechanismMotion||viewMotion)return '';
-  if(walking)return '点击道路换方向，或停下';
-  if(location.segment==='west-road')return reachable('center')?'点击道路，走上平台':'点击红柱，接回平台';
-  if(reachable('goal'))return level.illusion?'沿着相接的路，走向终点':'点击终点，走下平台';
-  if(level.orbit&&(level.mechanic==='rotate'?orientation===2:travel===1))return '点击眼睛，转动庭院';
-  if(level.mechanic==='rotate')return orientation===0?'点击红柱，旋转桥梁':'再点红柱，接向终点';
-  return level.mechanic==='lift'?'点击红柱，升起平台':'点击红柱，移动平台';
+  if(!level.lesson||won||mechanismMotion||viewMotion||walking)return '';
+  if(location.segment.startsWith('west'))return reachable('center')?'点击路径，移动角色':'拖动转柄，接回路径';
+  if(reachable('goal'))return '走向金色纹章';
+  return level.mechanic==='rotate'?'按住转柄，旋转':'拖动转柄，移动平台';
 }
 function updateUI(message){
   const blocked=!!(mechanismMotion||viewMotion||won||menuOpen);
   for(const [id,name]of [['start-marker','start'],['center-marker','center'],['goal-marker','goal']]){$(id).disabled=blocked;$(id).classList.toggle('blocked',!reachable(name));$(id).classList.toggle('active',reachable(name));}
-  $('bridge-control').disabled=busy();$('view-control').disabled=busy();$('view-control').hidden=!level.orbit;
+  $('bridge-control').disabled=blocked;$('view-control').disabled=blocked;$('view-control').hidden=!level.orbit;
   $('bridge-control').classList.toggle('active',location.segment==='deck'&&!won);$('view-control').classList.toggle('active',location.segment==='deck'&&!reachable('goal'));
   $('stop').hidden=!walking;$('move-target').hidden=!walking;if(walking){const p=screenPoint(anchorPoint(navigation(),walking.destination));$('move-target').style.left=p.x+'px';$('move-target').style.top=p.y+'px';}
-  $('hint').textContent=message??hint();
-  Object.assign($('game').dataset,{level:String(levelIndex+1),orientation:String(orientation),travel:String(travel),view:String(viewAngle),busy:String(busy()),connected:String(navigation().outgoing),menu:String(menuOpen),mechanic:level.mechanic,viewMode:level.orbit?'orbit':'fixed'});
+  $('hint').textContent=level.lesson?(message??hint()):'';$('hint').hidden=!$('hint').textContent;
+  Object.assign($('game').dataset,{level:String(levelIndex+1),orientation:String(orientation),travel:String(travel),view:String(viewAngle),busy:String(busy()),connected:String(navigation().outgoing),menu:String(menuOpen),mechanic:level.mechanic,viewMode:level.orbit?'orbit':'fixed',dragging:gesture?.kind||'',lesson:String(!!level.lesson)});
 }
 const mechanicNames={rotate:'旋转桥梁',slide:'移动平台',lift:'升降平台'};
 const iconPaths={rotate:'<path d="M17 8a7 7 0 1 0 2 7M17 3v5h-5"/>',slide:'<path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/>',lift:'<path d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4"/>'};
 function updateLevelMenu(){
-  $('chapter-name').textContent=CHAPTER_NAMES[levelIndex]+' · '+level.name;$('level-panel').replaceChildren();$('menu-levels').replaceChildren();$('menu-progress').textContent=completed.size+' / '+LEVELS.length;
+  $('chapter-name').textContent=CHAPTER_NAMES[levelIndex];$('chapters').setAttribute('aria-label','第'+CHAPTER_NAMES[levelIndex]+'关 '+level.name);$('level-panel').replaceChildren();$('menu-levels').replaceChildren();$('menu-progress').textContent=completed.size+' / '+LEVELS.length;
   LEVELS.forEach((item,index)=>{
     const label='第'+CHAPTER_NAMES[index]+'关 '+item.name;
     const button=document.createElement('button');button.className='level-option';button.textContent=CHAPTER_NAMES[index]+' · '+item.name;button.disabled=index>unlocked;button.setAttribute('aria-label',label);if(index===levelIndex)button.setAttribute('aria-current','step');button.addEventListener('click',()=>loadLevel(index,true));$('level-panel').append(button);
@@ -77,19 +75,20 @@ function updateLevelMenu(){
   });
 }
 function loadLevel(index,focus=false){
+  const oldGesture=gesture;gesture=null;if(oldGesture?.owner.hasPointerCapture(oldGesture.id))oldGesture.owner.releasePointerCapture(oldGesture.id);
   clearTimeout(completionTimer);soundTimers.forEach(clearTimeout);soundTimers.clear();menuOpen=false;$('game-menu').hidden=true;$('completion').hidden=true;$('completion').inert=false;
   for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=false;
   for(const id of ['help-panel','level-panel'])$(id).hidden=true;for(const id of ['help','chapters'])$(id).setAttribute('aria-expanded','false');
-  levelIndex=THREE.MathUtils.clamp(index,0,unlocked);level=LEVELS[levelIndex];points=levelPoints(level);location={segment:'west-road',t:0};orientation=0;travel=0;bridgeAngle=0;viewAngle=level.initialView;mechanismMotion=null;viewMotion=null;walking=null;won=false;desiredHeading=Math.PI/4;
+  levelIndex=THREE.MathUtils.clamp(index,0,unlocked);level=LEVELS[levelIndex];points=levelPoints(level);location={segment:'west-road',t:0};orientation=0;travel=0;bridgeAngle=0;viewAngle=level.initialView;mechanismMotion=null;viewMotion=null;walking=null;won=false;desiredHeading=level.initialView;
   clearStage();architecture=buildArchitecture(level,points,materials,glow,activateMechanism,changeView);world.add(architecture.group);actor=createTraveller();world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
   $('game').style.background='radial-gradient(ellipse at 50% 30%,'+level.top+' 0,'+level.tint+' 52%,'+level.bottom+' 100%)';scene.fog.color.set(level.tint);
   $('bridge-control').setAttribute('aria-label',mechanicNames[level.mechanic]);$('bridge-control').title=mechanicNames[level.mechanic];$('bridge-control').innerHTML='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">'+iconPaths[level.mechanic]+'</svg>';
-  const instructions='点击道路选择落点，点击红柱'+(level.mechanic==='rotate'?'旋转桥梁':level.mechanic==='lift'?'升降平台':'移动平台')+'。'+(level.orbit?'点击眼睛转动视角。':'');
+  const instructions='点击路径移动。拖动金色转柄'+(level.mechanic==='rotate'?'旋转桥梁':level.mechanic==='lift'?'升降平台':'移动平台')+'，松手对齐。'+(level.orbit?'拖动圆形转盘切换视角。':'');
   $('help-copy').textContent=instructions;$('scene').setAttribute('aria-label',instructions);document.title='雾屿 · '+level.name;updateLevelMenu();resize();updateUI();saveProgress();if(focus)$('center-marker').focus({preventScroll:true});
 }
 function walkTo(name){walkToAnchor(namedAnchor(name));}
 function walkToAnchor(destination){
-  if(mechanismMotion||viewMotion||won||menuOpen)return;
+  if(mechanismMotion||viewMotion||gesture||won||menuOpen)return;
   const route=planRoute(navigation(),location,destination);if(!route){updateUI(hint());tone(220);return;}
   walking={steps:route,destination:{segment:destination.segment,t:destination.t},index:0,time:0};hasStarted=true;tone(523.25);updateUI();
 }
@@ -104,11 +103,13 @@ function activateMechanism(direction=1){
 function applyMechanism(){
   if(level.mechanic==='rotate')architecture.mechanism.rotation.y=bridgeAngle;
   else architecture.mechanism.position.lerpVectors(points.near,points.far,travel);
+  architecture.knob.rotation.z=level.mechanic==='rotate'?-bridgeAngle:travel*Math.PI;
   architecture.mechanism.updateWorldMatrix(true,true);
 }
 function changeView(){if(busy()||!level.orbit)return;viewMotion={from:viewAngle,to:viewAngle>0?-Math.PI/4:Math.PI/4,time:0,duration:reducedMotion?.2:1.5};tone(440,.7);updateUI();}
 function finish(){
   won=true;completed.add(level.id);unlocked=Math.max(unlocked,Math.min(levelIndex+1,LEVELS.length-1));saveProgress();updateLevelMenu();updateUI();tone(659.25,.65);
+  architecture.completionRing.visible=true;
   for(const [delay,freq]of [[170,783.99],[360,1046.5]]){const timer=setTimeout(()=>{soundTimers.delete(timer);tone(freq,1);},delay);soundTimers.add(timer);}
   completionTimer=setTimeout(()=>{$('complete-title').textContent=levelIndex===LEVELS.length-1?'漫游完成':'抵达';$('next').textContent=levelIndex===LEVELS.length-1?'再出发':'下一关';$('completion').hidden=false;for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=true;if(!menuOpen)$('next').focus();},reducedMotion?50:800);
 }
@@ -133,8 +134,8 @@ function applyView(){
   let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
   for(const p of architecture.framePoints){const d=p.clone().sub(target),x=d.dot(right),y=d.dot(up);minX=Math.min(minX,x);maxX=Math.max(maxX,x);minY=Math.min(minY,y);maxY=Math.max(maxY,y);}
   target.addScaledVector(right,(minX+maxX)/2).addScaledVector(up,(minY+maxY)/2);
-  const availableH=Math.max(.55,(height-(width<600?210:180))/height),availableW=Math.max(.76,(width-60)/width);
-  const viewHeight=Math.max((maxY-minY+.75)/availableH,(maxX-minX+.75)/aspect/availableW,7.7);
+  const availableH=Math.max(.62,(height-(width<600?160:130))/height),availableW=Math.max(.76,(width-60)/width);
+  const viewHeight=Math.max((maxY-minY+.75)/availableH,(maxX-minX+.65)/aspect/availableW,6.4);
   camera.left=-viewHeight*aspect/2;camera.right=viewHeight*aspect/2;camera.top=viewHeight/2;camera.bottom=-viewHeight/2;camera.updateProjectionMatrix();
   // Shift the composition slightly below centre to make room for the title on mobile.
   target.addScaledVector(up,-viewHeight*(width<600?.035:.015));camera.position.copy(target).add(direction);camera.lookAt(target);camera.updateMatrixWorld();
@@ -146,11 +147,11 @@ function positionMarkers(){
   if(walking){const p=screenPoint(anchorPoint(navigation(),walking.destination));$('move-target').style.left=p.x+'px';$('move-target').style.top=p.y+'px';}
 }
 function resize(){if(!architecture)return;renderer.setSize($('game').clientWidth,$('game').clientHeight);applyView();positionMarkers();updateUI();}
-function openMenu(){menuOpen=true;$('game-menu').hidden=false;$('completion').inert=true;updateLevelMenu();$('continue').textContent=won?(levelIndex===LEVELS.length-1?'再出发':'下一关'):hasStarted?'继续':'开始';for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=true;for(const id of ['help-panel','level-panel'])$(id).hidden=true;for(const id of ['help','chapters'])$(id).setAttribute('aria-expanded','false');updateUI();$('continue').focus();}
+function openMenu(){if(gesture)endGesture(true);menuOpen=true;$('game-menu').hidden=false;$('completion').inert=true;updateLevelMenu();$('continue').textContent=won?(levelIndex===LEVELS.length-1?'再出发':'下一关'):hasStarted?'继续':'开始';for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=true;for(const id of ['help-panel','level-panel'])$(id).hidden=true;for(const id of ['help','chapters'])$(id).setAttribute('aria-expanded','false');updateUI();$('continue').focus();}
 function closeMenu(){menuOpen=false;hasStarted=true;$('game-menu').hidden=true;$('completion').inert=false;for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=won;updateUI();(won?$('next'):$('menu')).focus({preventScroll:true});}
 for(const id of ['menu','complete-menu'])$(id).addEventListener('click',openMenu);$('menu-close').addEventListener('click',closeMenu);$('continue').addEventListener('click',()=>{if(won)loadLevel(levelIndex===LEVELS.length-1?0:levelIndex+1,true);else closeMenu();});
 $('stop').addEventListener('click',stopWalking);for(const [id,name]of [['start-marker','start'],['center-marker','center'],['goal-marker','goal']])$(id).addEventListener('click',()=>walkTo(name));
-$('bridge-control').addEventListener('click',()=>activateMechanism());$('view-control').addEventListener('click',changeView);$('reset').addEventListener('click',()=>loadLevel(levelIndex));$('again').addEventListener('click',()=>loadLevel(levelIndex,true));$('next').addEventListener('click',()=>loadLevel(levelIndex===LEVELS.length-1?0:levelIndex+1,true));
+$('bridge-control').addEventListener('click',event=>{if(event.detail===0)activateMechanism();});$('view-control').addEventListener('click',event=>{if(event.detail===0)changeView();});$('reset').addEventListener('click',()=>loadLevel(levelIndex));$('again').addEventListener('click',()=>loadLevel(levelIndex,true));$('next').addEventListener('click',()=>loadLevel(levelIndex===LEVELS.length-1?0:levelIndex+1,true));
 $('help').addEventListener('click',()=>{const open=$('help-panel').hidden;$('help-panel').hidden=!open;$('help').setAttribute('aria-expanded',String(open));$('level-panel').hidden=true;$('chapters').setAttribute('aria-expanded','false');});
 $('chapters').addEventListener('click',()=>{const open=$('level-panel').hidden;$('level-panel').hidden=!open;$('chapters').setAttribute('aria-expanded',String(open));$('help-panel').hidden=true;$('help').setAttribute('aria-expanded','false');});
 $('sound').addEventListener('click',()=>{soundEnabled=!soundEnabled;$('sound').setAttribute('aria-pressed',String(soundEnabled));$('sound').setAttribute('aria-label',soundEnabled?'关闭声音':'开启声音');$('sound').title=soundEnabled?'关闭声音':'开启声音';tone(523.25,.6);});
@@ -165,14 +166,62 @@ const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 function pickInteraction(event){
   const rect=renderer.domElement.getBoundingClientRect();pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
   const hit=raycaster.intersectObjects(world.children,true)[0];if(!hit)return null;
-  if(hit.object.userData.roads&&hit.face&&hit.face.normal.clone().transformDirection(hit.object.matrixWorld).y>.5){const anchor=closestAnchor(navigation(),hit.point,hit.object.userData.roads);if(anchor)return ()=>walkToAnchor(anchor);}
-  let object=hit.object;while(object){if(object===actor.root)return stopWalking;if(object.userData.activate)return ()=>object.userData.activate();object=object.parent;}return null;
+  if(hit.object.userData.roads&&hit.face&&hit.face.normal.clone().transformDirection(hit.object.matrixWorld).y>.5){const anchor=closestAnchor(navigation(),hit.point,hit.object.userData.roads);if(anchor)return {kind:'road',anchor};}
+  let object=hit.object;while(object){if(object===actor.root)return {kind:'actor'};if(object.userData.control)return {kind:object.userData.control};object=object.parent;}return null;
 }
 let pointerDown;
-renderer.domElement.addEventListener('pointerdown',event=>{pointerDown={x:event.clientX,y:event.clientY};});renderer.domElement.addEventListener('pointercancel',()=>{pointerDown=null;});
-renderer.domElement.addEventListener('pointerup',event=>{const down=pointerDown;pointerDown=null;if(!down||Math.hypot(event.clientX-down.x,event.clientY-down.y)>8||mechanismMotion||viewMotion||won||menuOpen)return;const action=pickInteraction(event);if(action)action();else if(walking)stopWalking();});
-renderer.domElement.addEventListener('pointermove',event=>{renderer.domElement.style.cursor=!(mechanismMotion||viewMotion||won||menuOpen)&&pickInteraction(event)?'pointer':'default';});
-window.addEventListener('resize',resize);loadLevel(levelIndex);openMenu();let previous=performance.now();
+function startGesture(event,forcedKind){
+  if(event.button!==0||event.isPrimary===false||gesture||mechanismMotion||viewMotion||won||menuOpen)return;
+  const hit=forcedKind?{kind:forcedKind}:pickInteraction(event);
+  pointerDown={id:event.pointerId,x:event.clientX,y:event.clientY,hit};
+  if(!hit||!['mechanism','view'].includes(hit.kind))return;
+  if(hit.kind==='view'&&!level.orbit)return;
+  stopWalking();event.preventDefault();
+  const anchor=hit.kind==='view'?architecture.viewAnchor:architecture.controlInMotion?architecture.controlAnchor.clone().applyMatrix4(architecture.mechanism.matrixWorld):architecture.controlAnchor;
+  const center=screenPoint(anchor),dx=event.clientX-center.x,dy=event.clientY-center.y;
+  const near=screenPoint(points.near),far=screenPoint(points.far);
+  gesture={kind:hit.kind,id:event.pointerId,owner:event.currentTarget,x:event.clientX,y:event.clientY,center,initialAngle:bridgeAngle,initialTravel:travel,initialView:viewAngle,rail:{x:far.x-near.x,y:far.y-near.y},lastAngle:Math.atan2(dy,dx),circular:Math.hypot(dx,dy)>16,angleDelta:0,moved:false};
+  gesture.owner.setPointerCapture(gesture.id);hasStarted=true;updateUI();
+}
+function carryRotation(next){
+  if(location.segment==='deck'){desiredHeading+=next-bridgeAngle;actor.root.rotation.y+=next-bridgeAngle;}
+  bridgeAngle=next;
+}
+function moveGesture(event){
+  const g=gesture;if(!g||g.id!==event.pointerId)return;
+  event.preventDefault();const dx=event.clientX-g.x,dy=event.clientY-g.y;
+  if(Math.hypot(dx,dy)>5)g.moved=true;if(!g.moved)return;
+  if(g.kind==='view'){
+    viewAngle=THREE.MathUtils.clamp(g.initialView+dx*.012-dy*.003,-Math.PI/4,Math.PI/4);applyView();
+  }else if(level.mechanic==='rotate'){
+    if(g.circular){const a=Math.atan2(event.clientY-g.center.y,event.clientX-g.center.x);g.angleDelta+=angularDelta(g.lastAngle,a);g.lastAngle=a;carryRotation(g.initialAngle-g.angleDelta);}
+    else carryRotation(g.initialAngle+(dx-dy*.45)*Math.PI/160);
+    orientation=rotationDetent(bridgeAngle).orientation;applyMechanism();updateLocation();
+  }else{travel=travelFromDrag(g.initialTravel,{x:dx,y:dy},g.rail);applyMechanism();updateLocation();}
+  positionMarkers();updateUI();
+}
+function endGesture(cancel=false){
+  const g=gesture;if(!g)return;gesture=null;pointerDown=null;
+  if(g.owner.hasPointerCapture(g.id))g.owner.releasePointerCapture(g.id);
+  if(!g.moved&&!cancel){g.kind==='view'?changeView():activateMechanism();updateUI();return;}
+  if(g.kind==='view')viewMotion={from:viewAngle,to:cancel?g.initialView:viewAngle>=0?Math.PI/4:-Math.PI/4,time:0,duration:reducedMotion?.1:.4};
+  else if(level.mechanic==='rotate'){
+    const snap=rotationDetent(cancel?g.initialAngle:bridgeAngle);orientation=snap.orientation;mechanismMotion={type:'rotate',from:bridgeAngle,to:snap.angle,time:0,duration:reducedMotion?.1:.32};
+  }else mechanismMotion={type:'travel',from:travel,to:cancel?g.initialTravel:travel>=.5?1:0,time:0,duration:reducedMotion?.1:.4};
+  tone(392,.2);updateUI();
+}
+function pointerUp(event){
+  if(gesture?.id===event.pointerId){endGesture();return;}
+  const down=pointerDown;pointerDown=null;if(!down||down.id!==event.pointerId||Math.hypot(event.clientX-down.x,event.clientY-down.y)>8||mechanismMotion||viewMotion||won||menuOpen)return;
+  const hit=pickInteraction(event);if(hit?.kind==='road')walkToAnchor(hit.anchor);else if(hit?.kind==='actor'||walking)stopWalking();
+}
+for(const [owner,kind]of[[renderer.domElement,null],[$('bridge-control'),'mechanism'],[$('view-control'),'view']]){
+  owner.addEventListener('pointerdown',event=>startGesture(event,kind));owner.addEventListener('pointermove',moveGesture);owner.addEventListener('pointerup',pointerUp);
+  owner.addEventListener('pointercancel',()=>{if(gesture)endGesture(true);pointerDown=null;});owner.addEventListener('lostpointercapture',()=>{if(gesture?.owner===owner)endGesture(true);});
+}
+renderer.domElement.addEventListener('pointermove',event=>{if(gesture){renderer.domElement.style.cursor='grabbing';return;}const hit=pickInteraction(event);renderer.domElement.style.cursor=!(mechanismMotion||viewMotion||won||menuOpen)&&hit?(hit.kind==='mechanism'||hit.kind==='view'?'grab':'pointer'):'default';});
+window.addEventListener('blur',()=>{if(gesture)endGesture(true);pointerDown=null;});
+window.addEventListener('resize',()=>{if(gesture)endGesture(true);resize();});loadLevel(levelIndex);let previous=performance.now();
 renderer.setAnimationLoop(time=>{
   const delta=menuOpen?0:Math.max((time-previous)/1000,0);previous=time;elapsed+=delta;
   if(mechanismMotion){
@@ -187,5 +236,5 @@ renderer.setAnimationLoop(time=>{
   if(viewMotion){const m=viewMotion;m.time+=delta;const t=Math.min(m.time/m.duration,1);viewAngle=THREE.MathUtils.lerp(m.from,m.to,t*t*(3-2*t));applyView();positionMarkers();if(t===1){viewMotion=null;updateUI();}}
   if(walking&&!menuOpen)advanceWalking(delta);
   const angleDelta=Math.atan2(Math.sin(desiredHeading-actor.root.rotation.y),Math.cos(desiredHeading-actor.root.rotation.y));actor.root.rotation.y+=angleDelta*Math.min(delta*12,1);actor.pose(elapsed,!!walking,reducedMotion);
-  architecture.portal.position.y=points.goal.y+.8+(reducedMotion?0:Math.sin(elapsed*1.5)*.025);architecture.halo.quaternion.copy(camera.quaternion);if(architecture.moon)architecture.moon.quaternion.copy(camera.quaternion);renderer.render(scene,camera);
+  if(won&&!reducedMotion)architecture.completionRing.scale.setScalar(1+Math.sin(elapsed*2)*.025);renderer.render(scene,camera);
 });

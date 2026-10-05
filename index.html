@@ -23,14 +23,14 @@
     <div id="markers" aria-label="场景交互">
       <button id="start-marker" class="world-marker" aria-label="走回起点"><span></span></button>
       <button id="center-marker" class="world-marker active" aria-label="走到平台"><span></span></button>
-      <button id="goal-marker" class="world-marker goal" aria-label="走向终点"><span>✦</span><b class="goal-label">终点</b></button>
+      <button id="goal-marker" class="world-marker goal" aria-label="走向终点"><span></span></button>
       <button id="bridge-control" class="prop-control" aria-label="旋转桥梁" title="旋转桥梁"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 8a7 7 0 1 0 2 7M17 3v5h-5"/></svg></button>
       <button id="view-control" class="prop-control view-control" aria-label="切换视角" title="切换视角" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
     <div id="move-target" aria-hidden="true" hidden></div>
     <aside id="level-panel" hidden aria-label="关卡列表"></aside>
     <aside id="help-panel" hidden><p id="help-copy">点击光点，行走。</p><small>Tab 选择 · Enter 操作</small></aside>
-    <footer class="controls"><p id="hint" aria-live="polite">点击道路，选择停留位置</p><button id="stop" aria-label="停下" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M9 6v12M15 6v12"/></svg><span>停下</span></button></footer>
+    <footer class="controls"><p id="hint" aria-live="polite">点击路径，移动角色</p><button id="stop" aria-label="停下" title="停下" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M9 6v12M15 6v12"/></svg></button></footer>
     <section id="completion" hidden role="dialog" aria-modal="true" aria-labelledby="complete-title"><div class="complete-inner"><div class="completion-symbol">✧</div><h2 id="complete-title">抵达</h2><button id="next">下一关 <span>→</span></button><button id="again" class="text-button">重玩</button><button id="complete-menu" class="text-button">目录</button></div></section>
     <section id="game-menu" role="dialog" aria-modal="true" aria-labelledby="menu-title" hidden><div class="menu-inner"><div class="menu-heading"><h2 id="menu-title">目录</h2><span id="menu-progress">0 / 6</span><button id="menu-close" class="icon-button" aria-label="关闭目录"><svg viewBox="0 0 24 24" fill="none"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div id="menu-levels" aria-label="选择关卡"></div><button id="continue">开始</button></div></section>
     <div id="fallback" hidden><h2>暂时无法绘制这座小岛</h2><p>请使用支持 WebGL 的浏览器，并开启硬件加速后重试。</p></div>

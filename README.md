@@ -1,8 +1,21 @@
-# 雾屿 · 第五版
+# 雾屿 · 参考结构版
 
-原创 2.5D 解谜原型。六关全部采用固定正交视角，重点探索错层道路在画面中的连接。象牙色建筑、灰绿色细支撑表示固定结构，青绿色仅用于可移动的台面和柱体；金色转柄直接控制机关。前两关有简短教学，后四关不显示常驻提示。终点是贴地四瓣纹章。
+根据本地 `参考` 目录的四组建筑案例重做的 2.5D 解谜原型。相机固定沿 `(1,1,1)` 方向观察，机关真实旋转；上下错层的路端只有在画面中精确对齐时才能通行。参考截图仅用于本地设计对照，不作为网页素材，也不上传到仓库。
 
-## 运行
+## 四组场景
+
+| 场景 | 建筑与操作 |
+| --- | --- |
+| 折臂 | 象牙色 S 形框架、三根细支撑；青绿色折臂绕横轴从立柱翻为横梁，连接低处与高处的道路。 |
+| 双廊 | 褐色围合墙体、L 形终点支路；紫色双层横梁和四根细杆一起绕竖轴旋转。先从下层抵达固定回廊，再旋转接通上层。 |
+| 门阶 | 白色外围回路与两段楼梯；蓝色 H 形门架绕横轴翻转，两根立柱同时变成水平道路。终点是小方块上的黑色螺旋。 |
+| 悬阶 | 琥珀色折返楼梯和浮空折角平台；青绿色高柱、上下悬臂一起旋转，通过两次错层连接抵达高处终点。橙色轴座可直接拖动。 |
+
+四关均可从目录直接选择，便于比较参考。前两关保留一句教学，后两关没有常驻提示。点击路径任意位置移动或停留，点击人物或暂停图标停下。点击转柄转动一档，也可以按住拖动、松手吸附；键盘左右方向键旋转，Tab/Enter 选择和操作落点。人物保留银白短发、黑色发带、金色发夹、黄色外衣和两条交替迈步的腿，并按建筑比例缩小。
+
+存档使用 `mist-isles-reference-v1`，保留各关完成情况；旧版存档仍保留在浏览器中。
+
+## 运行与验证
 
 ```sh
 npm install
@@ -11,69 +24,33 @@ npm test
 npm run build
 ```
 
-打开 http://127.0.0.1:5173 。构建产物在 `dist`。
+开发地址 `http://127.0.0.1:5173/`，构建产物在 `dist`。
+
+17 项测试覆盖四种建筑的通关顺序、真实投影连接、接缝端面遮挡、任意道路落点、平台搭乘、楼梯和路面覆盖、人物脚部空间、转柄可见性、动态面颜色及双腿动画。964 个机关运动采样位置均检查固定结构的穿入，并验证快速拖动遇到薄障碍时会停下。
+
+## 实现
+
+- `src/levels.js`：建筑路径、台阶、机关几何、运动轴、颜色和明确设计的错层接缝。
+- `src/architecture.js`：方块建筑、楼梯、细支撑、转柄和贴地纹章；使用每个面的独立纯色材质，随机关转动更新上表面和侧面的颜色。错层接通后隐藏接缝内部端面，避免真实深度差把连续道路遮断。
+- `src/navigation.js`：真实道路转角、连续位置寻路和精确投影接缝；转动途中禁止行走。
+- `src/mechanism.js`：三种旋转轴、定向包围盒及分步碰撞检查。水平旋转可完整转一圈；翻转机关限制在两个合法姿态之间。
+- `src/main.js`：直接点击与拖动、人物随台面移动和转向、固定视角取景、目录与进度。
+- `src/character.js`：程序化人物及行走动画。
+
+所有建筑、人物和目标纹章由代码生成，没有外部美术下载依赖。支持触控、键盘焦点、可选音效和减少动态效果偏好。
 
 ## 发布到 GitHub Pages
 
-项目已提供 `.github/workflows/deploy-pages.yml`。推送到 `main` 或 `master` 后，工作流会安装依赖、运行游戏测试、构建并发布 `dist`。也可以在 Actions 页面手动运行。`vite.config.js` 使用相对资源路径，兼容 GitHub 默认项目地址和自定义域名。
+仓库为 `hahavguoqu/wuyu`。推送到 `main` 后，`.github/workflows/deploy-pages.yml` 自动安装依赖、运行测试、构建并发布 `dist`。`vite.config.js` 使用相对资源路径，兼容默认项目地址和自定义域名。
 
-1. 在 GitHub 创建仓库。使用 GitHub Free 时，Pages 需要公开仓库，上传的源代码也会公开。首次创建建议不勾选自动生成 README，方便推送已有项目。
-2. 上传本项目源文件，包括隐藏目录 `.github`、`public`、`src`、`test`、`index.html`、`package.json`、`package-lock.json`、`vite.config.js`、`.gitignore` 和本 README。无需上传 `node_modules`、`dist` 或 `artifacts`。
-3. 在仓库 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。
-4. 打开 **Actions → Deploy game to GitHub Pages → Run workflow**。完成后在 Pages 页面查看实际网站地址。
-
-如果使用 Git 推送到 `hahavguoqu/wuyu`，新仓库的命令如下：
-
-```powershell
-git init -b main
-git add .github public src test index.html package.json package-lock.json vite.config.js .gitignore README.md
-git commit -m "Prepare Mist Isles for GitHub Pages"
-git remote add origin https://github.com/hahavguoqu/wuyu.git
-git push -u origin main
-```
-
-### 绑定 wuyu.lanjinjin.site
-
-先在仓库 **Settings → Pages → Custom domain** 填写 `wuyu.lanjinjin.site` 并保存，再在当前 DNS 服务商添加解析。若仍使用腾讯云 DNS，就在 DNSPod 添加：
+自定义域名在仓库 **Settings → Pages → Custom domain** 设置为 `wuyu.lanjinjin.site`。腾讯云 DNSPod 中对应记录：
 
 | 字段 | 内容 |
 | --- | --- |
 | 主机记录 | `wuyu` |
-| 记录类型 | `CNAME` |
+| 类型 | `CNAME` |
 | 线路 | 默认 |
 | 记录值 | `hahavguoqu.github.io` |
 | TTL | 默认 |
 
-记录值不包含 `https://`、仓库名称或任何路径。同名旧 A、AAAA 或 CNAME 记录需要先处理，避免冲突。此流程不需要更换域名的 DNS 服务器；如果已经改用 Cloudflare DNS，则在 Cloudflare 添加解析。
-
-等待 GitHub 的 DNS 检查和证书签发完成，再开启 **Enforce HTTPS**。DNS 变更及 HTTPS 就绪可能需要最多 24 小时。GitHub Actions 发布方式通过仓库设置绑定域名，无需在项目中增加 `CNAME` 文件。
-
-官方说明：[Pages 工作流](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)、[自定义域名](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)。
-
-## 六关
-
-| 关卡 | 视角 | 玩法 |
-| --- | --- | --- |
-| 初见 | 固定 | 点击路径行走，上桥后拖动金色转柄旋转，松手接向终点。 |
-| 浮渡 | 固定 | 搭上轨道台面，沿轨道方向拖动转柄移动平台。 |
-| 折庭 | 固定 2.5D | 庭院上下错层的道路投影重合后可以通行，连接处的实际深度不同。 |
-| 云阶 | 固定 | 搭乘升降台，向上拖动转柄进入高处的路径。 |
-| 回廊 | 固定 2.5D | 一整段折角路径旋转；两端分别通过不同高度、深度的投影连接接入建筑。 |
-| 镜潮 | 固定 2.5D | 沿斜向轨道移动台面，让终点与高处错层道路在画面中相接。 |
-
-点击路径上的任意位置停留，人物按真实转角走路。旋转转柄支持横向拖动与绕转柄的圆弧拖动；移动、升降转柄按屏幕中轨道的方向拖动，松手自动吸附到站点。行走中可改变落点，点击人物或暂停图标停下，拖动机关也会先停止行走。旅人保持平台内的局部位置随机关移动，包括折角台面。指针取消或窗口失焦会回到拖动前的站点。键盘 Enter 操作转柄，左右方向键旋转，Tab 选择交互点。目录保留选关、进度、暂停和继续；沿用 `mist-isles-phase3` 存档，不清空已完成关卡。
-
-固定道路在接缝处收短，轴座采用象牙色；轨道支撑与升降导轨移出移动柱体的范围。`src/mechanism.js` 用实际三维结构的定向包围盒检测穿入，拖动及吸附动画分步检查完整经过的路径，遇到障碍停在最后一个安全位置。正常六关可完整旋转、往返平移或升降。
-
-## 美术与实现
-
-- `src/character.js`：银白短发、黑色发带、金色星形发夹、黄色外衣和短靴；双腿交替行走，手臂和衣摆随动。
-- `src/architecture.js`：程序化窄路、方柱、折角旋转桥、斜向轨道和升降导轨；固定与可动结构采用不同材质。转柄跟随机关转动，四瓣纹章贴合终点地面；取景覆盖完整运动范围。
-- `src/levels.js`：六关参数、路径转角、平台站点和相机平面投影误差。
-- `src/navigation.js`：连续道路位置、端点连接、任意位置的最短路线。视角错觉以世界端点的真实投影计算连接。
-- `src/main.js`：直接交互、移动平台动画、平滑转向、固定视角取景、目录、进度与资源释放。
-- `src/interaction.js`：双向旋转吸附、跨越角度边界的圆弧拖动、按投影轨道计算平移与升降距离。
-- `src/mechanism.js`：固定与移动结构的碰撞体、运动检查和障碍前停止。
-- `test/levels.test.js`：16 项检查，覆盖六关可解性、1446 个运动采样位置的结构分离、快速拖动防穿透、折角台面搭乘、真实投影连接、路面覆盖、转柄可见性、拖动吸附和双腿行走。
-
-支持触控、键盘焦点、可选音效和减少动态效果偏好。移动机关使用实际三维台面；参考人物以程序化造型实现，未把参考照片上传到公开仓库。镜潮使用风格化淡色倒影。
+DNS 检查和证书签发完成后开启 **Enforce HTTPS**。GitHub Actions 发布方式通过仓库设置绑定域名，无需项目内的 `CNAME` 文件。`node_modules`、`dist`、`artifacts` 和本地 `参考` 目录都不上传。

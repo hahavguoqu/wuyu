@@ -1,137 +1,118 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
-import {LEVELS,levelPoints,deckPoints,centerAnchor,overlapError} from '../src/levels.js';
+import {LEVELS,levelPoints,overlapError,mechanismQuaternion} from '../src/levels.js';
 import {buildNavigation,anchorPoint,planRoute,closestAnchor} from '../src/navigation.js';
-import {createTraveller} from '../src/character.js';
-import {rotationDetent,travelFromDrag,angularDelta} from '../src/interaction.js';
 import {buildArchitecture} from '../src/architecture.js';
 import {applyMechanismPose,collisionPairs,safeMechanismValue,prepareColliders} from '../src/mechanism.js';
-function cameraAt(angle){const c=new THREE.OrthographicCamera(-6,6,6,-6,.1,100);c.position.set(Math.sin(angle)*Math.sqrt(128),7,Math.cos(angle)*Math.sqrt(128));c.lookAt(0,0,0);c.updateMatrixWorld();return c;}
-const good=cameraAt(Math.PI/4),bad=cameraAt(-Math.PI/4),start={segment:'west-road',t:0},goal={segment:'goal-road',t:1};
-const idle={orientation:0,travel:0};
-test('six chapters keep two tutorials and explore illusions from a fixed camera',()=>{
-  assert.equal(LEVELS.length,6);assert.equal(LEVELS.filter(l=>l.lesson).length,2);assert.ok(LEVELS.slice(0,2).every(l=>l.lesson));
-  assert.equal(LEVELS.filter(l=>l.illusion&&!l.orbit).length,3);assert.ok(LEVELS.every(l=>!l.orbit));assert.ok(LEVELS.some(l=>l.elbow));
-  assert.ok(LEVELS.some(l=>l.mechanic==='lift'));assert.ok(LEVELS.some(l=>l.mechanic==='slide'));
-});
-test('every chapter is solvable after operating its real mechanism',()=>{
-  for(const level of LEVELS){
-    const before=buildNavigation(level,idle,good);assert.ok(planRoute(before,start,centerAnchor(level)),level.id);assert.equal(planRoute(before,start,goal),null);
-    const after=buildNavigation(level,{orientation:2,travel:1},good);assert.ok(planRoute(after,centerAnchor(level),goal),level.id);assert.ok(planRoute(after,goal,centerAnchor(level)),level.id);
-    assert.equal(planRoute(after,start,goal),null,'disconnected start must not stay reachable');
-  }
-});
-test('turning bridge carries a mid-road anchor and blocks both disconnected shores',()=>{
-  const level=LEVELS[0],anchor={segment:'deck',t:.55};
-  const before=buildNavigation(level,idle,good),quarter=buildNavigation(level,{...idle,orientation:1},good),after=buildNavigation(level,{...idle,orientation:2},good);
-  assert.ok(Math.abs(anchorPoint(before,anchor).length()-anchorPoint(quarter,anchor).length())<1e-8);
-  assert.equal(planRoute(quarter,anchor,start),null);assert.equal(planRoute(quarter,anchor,goal),null);assert.ok(planRoute(after,anchor,goal));
-});
-test('sliding platform and lift preserve rider position and only dock at station endpoints',()=>{
-  for(const level of LEVELS.filter(l=>l.mechanic!=='rotate')){
-    const anchor={segment:'deck',t:.37},before=buildNavigation(level,idle,good),half=buildNavigation(level,{...idle,travel:.5},good),after=buildNavigation(level,{...idle,travel:1},good);
-    const p=levelPoints(level),carried=anchorPoint(after,anchor).sub(anchorPoint(before,anchor));assert.ok(carried.distanceTo(p.far.clone().sub(p.near))<1e-8);
-    assert.equal(planRoute(half,anchor,start),null);assert.equal(planRoute(half,anchor,goal),null);assert.ok(planRoute(after,anchor,goal));
-  }
-});
-test('fixed illusion joins endpoints with a real depth and height gap',()=>{
-  const level=LEVELS[2],p=levelPoints(level),deck=deckPoints(level,{orientation:2});assert.ok(deck.p1.distanceTo(p.entry)>1.9);assert.ok(overlapError(deck.p1,p.entry,good)<.001);
-  assert.equal(buildNavigation(level,{orientation:2},bad).outgoing,false);assert.equal(buildNavigation(level,{orientation:2},good).outgoing,true);
-});
-test('fixed illusions require actual projection agreement, independently of screen size',()=>{
-  for(const level of LEVELS.filter(l=>l.illusion))for(const size of [5,10,20]){
-    const c=cameraAt(Math.PI/4);c.left=-size;c.right=size;c.updateProjectionMatrix();assert.equal(buildNavigation(level,{orientation:2,travel:1},c).outgoing,true);assert.equal(buildNavigation(level,{orientation:2,travel:1},bad).outgoing,false);
-  }
-});
+import {createTraveller} from '../src/character.js';
+import {rotationDetent,angularDelta} from '../src/interaction.js';
+const camera=new THREE.OrthographicCamera(-12,12,12,-12,.1,100);camera.position.set(18,18,18);camera.lookAt(0,0,0);camera.updateMatrixWorld();
+const net=(level,q)=>buildNavigation(level,{orientation:q,bridgeAngle:q*Math.PI/2},camera);
+const stage=level=>buildArchitecture(level,levelPoints(level),{},new THREE.MeshBasicMaterial());
+const anchor=(segment,t)=>({segment,t});
+function dispose(s){s.group.traverse(m=>{m.geometry?.dispose();for(const mat of Array.isArray(m.material)?m.material:m.material?[m.material]:[])mat.dispose();});}
 
-test('the folded cloister changes two optical joints and carries riders around its real corner',()=>{
-  const level=LEVELS.find(l=>l.elbow),before=buildNavigation(level,idle,good),after=buildNavigation(level,{orientation:2},good);
-  assert.ok(planRoute(before,start,centerAnchor(level)).some(step=>step.segment==='deck-elbow'));
-  assert.ok(planRoute(after,centerAnchor(level),goal).some(step=>step.segment==='deck-elbow'));
-  assert.equal(buildNavigation(level,idle,bad).links.length,0);
-  const onElbow={segment:'deck-elbow',t:.6},p=levelPoints(level);
-  const initial=anchorPoint(before,onElbow).sub(p.near),turned=anchorPoint(after,onElbow).sub(p.near);
-  assert.ok(initial.clone().applyAxisAngle(new THREE.Vector3(0,1,0),Math.PI).distanceTo(turned)<1e-8);
+test('four reference structures use a fixed camera and distinct rotation axes',()=>{
+  assert.equal(LEVELS.length,4);assert.equal(LEVELS.filter(l=>l.lesson).length,2);
+  assert.deepEqual(LEVELS.map(l=>l.axis),['x','y','z','y']);assert.equal(LEVELS.filter(l=>l.stairs?.length).length,2);
+  for(const l of LEVELS)assert.notEqual(l.fixed.top,l.moving.top);
 });
-
-test('all structural sweeps stay clear of fixed pillars, roads and guide rails',()=>{
-  const material=new THREE.MeshStandardMaterial(),materials=new Proxy({}, {get:()=>material});
-  for(const level of LEVELS){
-    const stage=buildArchitecture(level,levelPoints(level),materials,material,()=>{},()=>{});
-    for(let i=0;i<=240;i++){
-      const value=i/240*(level.mechanic==='rotate'?Math.PI*2:1);applyMechanismPose(level,stage,value);
-      const pairs=collisionPairs(stage);
-      assert.equal(pairs.length,0,level.id+' sweep '+i+' '+pairs.map(([a,b])=>a.position.toArray()+' / '+b.position.toArray()).join(';'));
-    }
-    assert.equal(safeMechanismValue(level,stage,0,level.mechanic==='rotate'?Math.PI*2:1),level.mechanic==='rotate'?Math.PI*2:1);
-    stage.group.traverse(mesh=>mesh.geometry?.dispose());
-  }material.dispose();
+test('folded frame opens a complete S route after its arm becomes horizontal',()=>{
+  const l=LEVELS[0];assert.equal(planRoute(net(l,0),l.startAnchor,l.goalAnchor),null);
+  const route=planRoute(net(l,1),l.startAnchor,l.goalAnchor);assert.ok(route);
+  for(const id of ['west-road-1','deck-fold','deck-upper','upper','upper-1'])assert.ok(route.some(s=>s.segment===id),id);
+  const n=net(l,1),a=anchorPoint(n,anchor('deck-fold',1)),b=anchorPoint(n,anchor('west-road-1',1));
+  assert.ok(a.distanceTo(b)>10);assert.ok(overlapError(a,b,camera)<1e-8);
 });
-
-test('collision guard stops a large drag before passing through an obstruction',()=>{
-  const level=LEVELS[1],material=new THREE.MeshStandardMaterial(),materials=new Proxy({}, {get:()=>material}),stage=buildArchitecture(level,levelPoints(level),materials,material,()=>{},()=>{});
-  const blocker=new THREE.Mesh(new THREE.BoxGeometry(.09,1,1),material);blocker.position.set(.65,1.8,0);stage.group.add(blocker);stage.fixedSolids.push(blocker);
-  // Rebuild after inserting a deliberately thin obstacle into the rail corridor.
-  prepareColliders(stage);
-  const safe=safeMechanismValue(level,stage,0,1);assert.ok(safe<.5);assert.equal(collisionPairs(stage).length,0);
-  stage.group.traverse(mesh=>mesh.geometry?.dispose());material.dispose();
+test('double cloister requires the lower crossing before the upper crossing',()=>{
+  const l=LEVELS[1],middle=anchor('middle-2',1);
+  assert.ok(planRoute(net(l,0),l.startAnchor,middle));assert.equal(planRoute(net(l,0),l.startAnchor,l.goalAnchor),null);
+  assert.ok(planRoute(net(l,1),middle,l.goalAnchor));assert.equal(planRoute(net(l,1),l.startAnchor,middle),null);
+  assert.equal(planRoute(net(l,2),middle,l.goalAnchor),null);
 });
-test('a mid-road destination can stop before the goal and reverse without visiting a waypoint',()=>{
-  const net=buildNavigation(LEVELS[0],idle,good),source={segment:'west-road',t:.6},target={segment:'west-road',t:.2},route=planRoute(net,source,target);
-  assert.equal(route.length,1);assert.equal(route[0].fromT,.6);assert.equal(route[0].toT,.2);
-  const snap=closestAnchor(net,anchorPoint(net,source).add(new THREE.Vector3(.2,.02,0)),['west-road']);assert.ok(Math.abs(snap.t-.6)<1e-8);
+test('blue gate joins both beams to a perimeter of two stair flights',()=>{
+  const l=LEVELS[2];assert.equal(planRoute(net(l,0),l.startAnchor,l.goalAnchor),null);
+  const route=planRoute(net(l,1),l.startAnchor,l.goalAnchor);assert.ok(route);
+  assert.equal(route.filter(s=>s.segment?.includes('-rise-')).length,20);
+  for(const id of ['deck-front','deck-back','middle-1'])assert.ok(route.some(s=>s.segment===id));
 });
-test('bent paths route through their corners instead of walking through the empty centre',()=>{
-  for(const level of LEVELS){
-    const network=buildNavigation(level,idle,good),route=planRoute(network,start,centerAnchor(level));
-    assert.ok(route.some(step=>step.segment==='west-bend'),level.id);
-    const after=buildNavigation(level,{orientation:2,travel:1},good),exit=planRoute(after,centerAnchor(level),goal);
-    assert.ok(exit.some(step=>step.segment==='goal-bend'),level.id);
+test('cantilever carries the traveller between three different docking orientations',()=>{
+  const l=LEVELS[3],lower=anchor('deck-lower',.75),upper=anchor('deck-upper',.7),landing=anchor('middle',1);
+  assert.ok(planRoute(net(l,0),l.startAnchor,lower));assert.equal(planRoute(net(l,0),lower,upper),null);
+  assert.ok(planRoute(net(l,3),lower,landing));assert.ok(planRoute(net(l,3),landing,upper));
+  assert.equal(planRoute(net(l,3),upper,l.goalAnchor),null);assert.ok(planRoute(net(l,1),upper,l.goalAnchor));
+});
+test('optical joins disappear when actual camera projection no longer agrees',()=>{
+  const bad=camera.clone();bad.position.set(-18,18,18);bad.lookAt(0,0,0);bad.updateMatrixWorld();
+  for(const l of LEVELS){const q=l.id==='hanging-stair'?3:l.id==='double-cloister'?0:1;assert.ok(net(l,q).links.length>buildNavigation(l,{orientation:q},bad).links.length,l.id);}
+});
+test('arbitrary road positions can stop, reverse and travel along actual corners',()=>{
+  const l=LEVELS[0],n=net(l,1),a=anchor('west-road',.7),b=anchor('west-road',.2),route=planRoute(n,a,b);
+  assert.equal(route.length,1);assert.equal(route[0].fromT,.7);assert.equal(route[0].toT,.2);
+  const snap=closestAnchor(n,anchorPoint(n,a).add(new THREE.Vector3(0,.03,.1)),['west-road']);assert.ok(Math.abs(snap.t-.7)<1e-8);
+  assert.ok(planRoute(n,a,l.goalAnchor).some(s=>s.segment==='west-road-1'));
+});
+test('rider keeps the same local anchor and follows the rotating surface normal',()=>{
+  for(const l of LEVELS){const deck=l.decks[0],a=anchor(deck.id,.37),value=.47,q=mechanismQuaternion(l,value);
+    const n=buildNavigation(l,{orientation:0,bridgeAngle:value},camera),actual=anchorPoint(n,a),local=new THREE.Vector3(...deck.p0).lerp(new THREE.Vector3(...deck.p1),a.t).applyQuaternion(q).add(new THREE.Vector3(...l.pivot));
+    assert.ok(actual.distanceTo(local)<1e-9);assert.ok(n.segments.find(s=>s.id===deck.id).up.distanceTo(new THREE.Vector3(...deck.up).applyQuaternion(q))<1e-9);
+    assert.equal(planRoute(n,a,l.goalAnchor),null,'walking stays blocked between detents');
   }
 });
-test('two visible legs step alternately and return to rest without lowering feet through the floor',()=>{
-  const actor=createTraveller(),legs=actor.root.children.slice(1);assert.equal(legs.length,2);
-  actor.pose(.12,true,false);assert.ok(Math.abs(legs[0].rotation.x)>.2);assert.equal(legs[0].rotation.x,-legs[1].rotation.x);
-  actor.root.updateMatrixWorld(true);for(const leg of legs){const shoe=leg.children[1];assert.ok(shoe.getWorldPosition(new THREE.Vector3()).y>.03);}
-  actor.pose(.12,false,false);assert.ok(Math.abs(legs[0].rotation.x)<1e-8);assert.ok(Math.abs(legs[1].rotation.x)<1e-8);
-  actor.pose(.12,true,true);assert.equal(legs[0].rotation.x,0);
+test('all 964 sampled mechanism poses avoid fixed roads, walls, pillars and stairs',()=>{
+  for(const l of LEVELS){const s=stage(l),limit=l.tilt?Math.PI/2:Math.PI*2;
+    for(let i=0;i<=240;i++){applyMechanismPose(l,s,i/240*limit);assert.equal(collisionPairs(s).length,0,l.id+' pose '+i);}
+    assert.equal(safeMechanismValue(l,s,0,limit),limit);assert.equal(safeMechanismValue(l,s,limit,0),0);dispose(s);
+  }
 });
-test('rotation detents wrap both directions and preserve the nearest turn',()=>{
-  assert.equal(rotationDetent(-Math.PI/2+.03).orientation,3);
-  assert.equal(rotationDetent(Math.PI*2+.06).orientation,0);
-  assert.equal(rotationDetent(Math.PI-.1).angle,Math.PI);
-  assert.ok(Math.abs(angularDelta(Math.PI-.02,-Math.PI+.02)-.04)<1e-8);
+test('a fast turn stops before a thin obstruction instead of crossing it',()=>{
+  const l=LEVELS[1],s=stage(l),blocker=new THREE.Mesh(new THREE.BoxGeometry(.05,.9,.05),new THREE.MeshBasicMaterial());blocker.position.set(2,1,2);s.group.add(blocker);s.fixedSolids.push(blocker);prepareColliders(s);
+  const safe=safeMechanismValue(l,s,0,Math.PI/2);assert.ok(safe>0&&safe<Math.PI/2);assert.equal(collisionPairs(s).length,0);dispose(s);
 });
-test('dragging follows horizontal and vertical rails, clamps ends, and supports reverse travel',()=>{
-  assert.equal(travelFromDrag(0,{x:100,y:0},{x:200,y:0}),.5);
-  assert.equal(travelFromDrag(0,{x:0,y:-60},{x:0,y:-120}),.5);
-  assert.equal(travelFromDrag(1,{x:-200,y:0},{x:200,y:0}),0);
-  assert.equal(travelFromDrag(0,{x:400,y:0},{x:200,y:0}),1);
-  assert.equal(travelFromDrag(.5,{x:0,y:90},{x:200,y:0}),.5);
+test('every active road and stair tread has a visible floor at its navigation height',()=>{
+  for(const l of LEVELS){const s=stage(l),caster=new THREE.Raycaster();
+    for(const q of l.tilt?[1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);s.group.updateWorldMatrix(true,true);const n=net(l,q);
+      for(const segment of n.segments.filter(s=>s.enabled&&!s.riser))for(const t of [.1,.5,.9]){
+        const point=anchorPoint(n,anchor(segment.id,t));caster.set(point.clone().addScaledVector(segment.up,.05),segment.up.clone().negate());
+        assert.ok(caster.intersectObjects(s.group.children,true).some(h=>h.distance<.06&&h.object.userData.roads?.includes(segment.id)),l.id+' '+segment.id+' '+t);
+      }
+    }dispose(s);
+  }
 });
-test('all path centre lines have walkable meshes and the goal seal stays on the floor',()=>{
-  const material=new THREE.MeshStandardMaterial(),materials=new Proxy({}, {get:()=>material});
-  for(const level of LEVELS){
-    const p=levelPoints(level),stage=buildArchitecture(level,p,materials,material,()=>{},()=>{});stage.group.updateMatrixWorld(true);
-    assert.ok(Math.abs(stage.seal.position.y-p.goal.y)<.02);
-    const network=buildNavigation(level,idle,good),caster=new THREE.Raycaster();
-    for(const segment of network.segments)for(const t of [.1,.5,.9]){
-      const point=anchorPoint(network,{segment:segment.id,t});caster.set(point.clone().add(new THREE.Vector3(0,.05,0)),new THREE.Vector3(0,-1,0));
-      assert.ok(caster.intersectObjects(stage.group.children,true).some(hit=>hit.distance<.06&&hit.object.userData.roads?.includes(segment.id)),level.id+' '+segment.id+' '+t);
-    }
-    stage.group.traverse(mesh=>{mesh.geometry?.dispose();});
-  }material.dispose();
+test('architecture uses flat per-face colors and keeps the lit top face after a fold',()=>{
+  for(const l of LEVELS){const s=stage(l);applyMechanismPose(l,s,Math.PI/2);
+    for(const mesh of [...s.fixedSolids,...s.movingSolids])assert.ok(mesh.material.every(m=>m.isMeshBasicMaterial));
+    const mesh=s.movingSolids[0],q=mesh.getWorldQuaternion(new THREE.Quaternion()),normals=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
+    const top=normals.findIndex(n=>new THREE.Vector3(...n).applyQuaternion(q).y>.99);assert.equal(mesh.material[top].color.getHexString(),new THREE.Color(l.moving.top).getHexString());dispose(s);
+  }
 });
-test('mechanism handles face the actual initial camera and are not hidden behind supports',()=>{
-  const material=new THREE.MeshStandardMaterial(),materials=new Proxy({}, {get:()=>material});
-  for(const level of LEVELS){
-    const stage=buildArchitecture(level,levelPoints(level),materials,material,()=>{},()=>{});stage.group.updateMatrixWorld(true);
-    const point=stage.controlInMotion?stage.controlAnchor.clone().applyMatrix4(stage.mechanism.matrixWorld):stage.controlAnchor.clone();
-    const direction=new THREE.Vector3(Math.sin(level.initialView)*Math.sqrt(128),7,Math.cos(level.initialView)*Math.sqrt(128)).normalize();
-    const caster=new THREE.Raycaster(point.clone().addScaledVector(direction,20),direction.clone().negate());
-    let object=caster.intersectObjects(stage.group.children,true)[0]?.object;while(object&&!object.userData.control)object=object.parent;
-    assert.equal(object?.userData.control,'mechanism',level.id);
-    stage.group.traverse(mesh=>mesh.geometry?.dispose());
-  }material.dispose();
+test('optical seams hide mating caps only at their connected detents',()=>{
+  for(const l of LEVELS){const s=stage(l);assert.ok(s.caps.length,l.id);
+    for(const q of l.tilt?[0,1]:[0,1,2,3]){applyMechanismPose(l,s,q*Math.PI/2);for(const cap of s.caps)assert.equal(cap.mesh.material[cap.index].visible,!cap.states.includes(q),l.id+' cap at '+q);}
+    applyMechanismPose(l,s,.31);for(const cap of s.caps)assert.equal(cap.mesh.material[cap.index].visible,true);dispose(s);
+  }
+});
+test('walkable surfaces leave room for the feet and stair landings do not swallow a tread',()=>{
+  for(const l of LEVELS){const s=stage(l);
+    for(const q of l.tilt?[1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);const n=net(l,q);
+      for(const segment of n.segments.filter(s=>s.enabled&&!s.riser))for(const t of [.1,.5,.9]){
+        const foot=anchorPoint(n,anchor(segment.id,t)).addScaledVector(segment.up,.06);
+        for(const mesh of [...s.fixedSolids,...s.movingSolids]){const local=mesh.worldToLocal(foot.clone()),bbox=mesh.geometry.boundingBox.clone().expandByScalar(-.002);assert.ok(!bbox.containsPoint(local),l.id+' '+segment.id+' feet inside solid '+mesh.position.toArray());}
+      }
+    }dispose(s);
+  }
+});
+test('each control can be seen and picked directly from the fixed camera',()=>{
+  const direction=new THREE.Vector3(1,1,1).normalize();
+  for(const l of LEVELS){const s=stage(l),point=s.controlAnchor,caster=new THREE.Raycaster(point.clone().addScaledVector(direction,30),direction.clone().negate());
+    let hit=caster.intersectObjects(s.group.children,true)[0]?.object;while(hit&&!hit.userData.control)hit=hit.parent;assert.equal(hit?.userData.control,'mechanism',l.id);dispose(s);
+  }
+});
+test('two legs animate in opposite directions and return to their resting pose',()=>{
+  const actor=createTraveller(),legs=actor.root.children.slice(1);assert.equal(legs.length,2);actor.pose(.12,true,false);assert.equal(legs[0].rotation.x,-legs[1].rotation.x);assert.ok(Math.abs(legs[0].rotation.x)>.2);
+  actor.pose(.12,false,false);assert.ok(Math.abs(legs[0].rotation.x)<1e-9);actor.pose(.12,true,true);assert.ok(Math.abs(legs[1].rotation.x)<1e-9);
+});
+test('rotation detents allow both yaw directions and circular drags cross the angle seam',()=>{
+  assert.equal(rotationDetent(-Math.PI/2+.03).orientation,3);assert.equal(rotationDetent(Math.PI*2+.03).orientation,0);assert.ok(Math.abs(angularDelta(Math.PI-.02,-Math.PI+.02)-.04)<1e-8);
 });

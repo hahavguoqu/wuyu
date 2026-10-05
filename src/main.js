@@ -10,28 +10,27 @@ const $=id=>document.getElementById(id),reducedMotion=matchMedia('(prefers-reduc
 const palette={stone:'#e0dfcc',trim:'#fff4d7',rose:'#c98d82',control:'#b98554',roseLight:'#e4b0a0',mint:'#65af9c',green:'#397d70',gold:'#dfb45c',shadow:'#89958c'};
 const materials=Object.fromEntries(Object.entries(palette).map(([key,color])=>[key,new THREE.MeshStandardMaterial({color,roughness:.9})]));
 const glow=new THREE.MeshBasicMaterial({color:'#ffe4a0'}),shared=new Set([...Object.values(materials),glow]);
-const scene=new THREE.Scene();scene.fog=new THREE.Fog('#dcebe6',28,70);
+const scene=new THREE.Scene();
 const camera=new THREE.OrthographicCamera(-10,10,6,-6,.1,100);
 let renderer;
 try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(error){$('fallback').hidden=false;throw error;}
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0,0);$('scene').append(renderer.domElement);
-scene.add(new THREE.HemisphereLight('#fff8e8','#9ab9ad',2.7));
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0,0);$('scene').append(renderer.domElement);
+scene.add(new THREE.HemisphereLight('#fff8e8','#9ab9ad',1.5));
 const sun=new THREE.DirectionalLight('#fff6df',2.2);sun.position.set(-5,12,7);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-15,right:15,top:15,bottom:-15,near:.5,far:40});sun.shadow.bias=-.0007;sun.shadow.normalBias=.03;scene.add(sun);
 const fill=new THREE.DirectionalLight('#d4e9e5',.75);fill.position.set(8,5,-8);scene.add(fill);
 const world=new THREE.Group();scene.add(world);
-let levelIndex=0,unlocked=0,level,points,architecture,actor,location={segment:'west-road',t:0};
+let levelIndex=0,unlocked=LEVELS.length-1,level,points,architecture,actor,location={segment:'west-road',t:0};
 let orientation=0,travel=0,bridgeAngle=0,viewAngle=Math.PI/4,mechanismMotion=null,walking=null,gesture=null;
 let won=false,menuOpen=false,hasStarted=false,elapsed=0,desiredHeading=Math.PI/4,completionTimer,soundEnabled=false,audioContext;
 const completed=new Set(),soundTimers=new Set();
 try{
-  const stored=JSON.parse(localStorage.getItem('mist-isles-phase3')||'{}');
-  if(Number.isInteger(stored.unlocked))unlocked=THREE.MathUtils.clamp(stored.unlocked,0,LEVELS.length-1);
+  const stored=JSON.parse(localStorage.getItem('mist-isles-reference-v1')||'{}');
   if(Number.isInteger(stored.level))levelIndex=THREE.MathUtils.clamp(stored.level,0,unlocked);
   for(const id of stored.completed||[])if(LEVELS.some(l=>l.id===id))completed.add(id);
 }catch{}
-function saveProgress(){try{localStorage.setItem('mist-isles-phase3',JSON.stringify({unlocked,level:levelIndex,completed:[...completed]}));}catch{}}
+function saveProgress(){try{localStorage.setItem('mist-isles-reference-v1',JSON.stringify({unlocked,level:levelIndex,completed:[...completed]}));}catch{}}
 function navigation(){return buildNavigation(level,{orientation,travel,bridgeAngle},camera);}
-function namedAnchor(name){return name==='start'?{segment:'west-road',t:0}:name==='center'?centerAnchor(level):{segment:'goal-road',t:1};}
+function namedAnchor(name){return name==='start'?level.startAnchor:name==='center'?centerAnchor(level):level.goalAnchor;}
 function reachable(name){return !!planRoute(navigation(),location,namedAnchor(name));}
 function busy(){return !!(walking||mechanismMotion||gesture||won||menuOpen);}
 function clearStage(){
@@ -49,18 +48,20 @@ function updateLocation(){
 }
 function hint(){
   if(!level.lesson||won||mechanismMotion||walking)return '';
-  if(location.segment.startsWith('west'))return reachable('center')?'点击路径，移动角色':'拖动转柄，接回路径';
-  if(reachable('goal'))return '走向金色纹章';
-  return level.mechanic==='rotate'?'按住转柄，旋转':'拖动转柄，移动平台';
+  if(reachable('goal'))return '点击路径，走向纹章';
+  if(level.tilt)return '按住转柄，转动折臂';
+  if(location.segment.startsWith('middle'))return '转动横梁，接通上层';
+  return '点击路径，沿下层走向回廊';
 }
 function updateUI(message){
   const blocked=!!(mechanismMotion||won||menuOpen);
   for(const [id,name]of [['start-marker','start'],['center-marker','center'],['goal-marker','goal']]){$(id).disabled=blocked;$(id).classList.toggle('blocked',!reachable(name));$(id).classList.toggle('active',reachable(name));}
   $('bridge-control').disabled=blocked;
   $('bridge-control').classList.toggle('active',location.segment.startsWith('deck')&&!won);
+  for(const button of $('landing-markers').children){button.disabled=blocked;button.classList.toggle('blocked',!planRoute(navigation(),location,level.landmarks[Number(button.dataset.landmark)]));}
   $('stop').hidden=!walking;$('move-target').hidden=!walking;if(walking){const p=screenPoint(anchorPoint(navigation(),walking.destination));$('move-target').style.left=p.x+'px';$('move-target').style.top=p.y+'px';}
   $('hint').textContent=level.lesson?(message??hint()):'';$('hint').hidden=!$('hint').textContent;
-  Object.assign($('game').dataset,{level:String(levelIndex+1),orientation:String(orientation),travel:String(travel),view:String(viewAngle),busy:String(busy()),connected:String(navigation().outgoing),menu:String(menuOpen),mechanic:level.mechanic,viewMode:'fixed',dragging:gesture?.kind||'',lesson:String(!!level.lesson)});
+  Object.assign($('game').dataset,{level:String(levelIndex+1),orientation:String(orientation),angle:String(bridgeAngle),travel:String(travel),view:String(viewAngle),busy:String(busy()),connected:String(navigation().outgoing),menu:String(menuOpen),mechanic:level.mechanic,viewMode:'fixed',dragging:gesture?.kind||'',lesson:String(!!level.lesson)});
 }
 const mechanicNames={rotate:'旋转桥梁',slide:'移动平台',lift:'升降平台'};
 const iconPaths={rotate:'<path d="M17 8a7 7 0 1 0 2 7M17 3v5h-5"/>',slide:'<path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/>',lift:'<path d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4"/>'};
@@ -81,10 +82,13 @@ function loadLevel(index,focus=false){
   for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=false;
   for(const id of ['help-panel','level-panel'])$(id).hidden=true;for(const id of ['help','chapters'])$(id).setAttribute('aria-expanded','false');
   levelIndex=THREE.MathUtils.clamp(index,0,unlocked);level=LEVELS[levelIndex];points=levelPoints(level);location={segment:'west-road',t:0};orientation=0;travel=0;bridgeAngle=0;viewAngle=level.initialView;mechanismMotion=null;walking=null;won=false;desiredHeading=level.initialView;
-  clearStage();architecture=buildArchitecture(level,points,materials,glow,activateMechanism);world.add(architecture.group);actor=createTraveller();world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
-  $('game').style.background='radial-gradient(ellipse at 50% 30%,'+level.top+' 0,'+level.tint+' 52%,'+level.bottom+' 100%)';scene.fog.color.set(level.tint);
+  clearStage();architecture=buildArchitecture(level,points,materials,glow);world.add(architecture.group);actor=createTraveller();actor.root.scale.setScalar(.65);world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
+  $('game').style.background='linear-gradient(180deg,'+level.top+' 0%,'+level.bottom+' 100%)';
+  $('sky-disc').hidden=!level.disc;$('sky-disc').style.background=level.disc||'transparent';$('game').style.setProperty('--ink',level.id==='blue-gate'?'#e0e8e5':'#496562');$('game').style.setProperty('--muted',level.id==='blue-gate'?'#cfdfdf':'#647b79');
+  $('landing-markers').replaceChildren();level.landmarks.forEach((target,i)=>{const button=document.createElement('button');button.className='world-marker';button.setAttribute('aria-label',target.label);button.dataset.landmark=i;button.innerHTML='<span></span>';button.addEventListener('click',()=>walkToAnchor(target));$('landing-markers').append(button);});
+  $('center-marker').hidden=true;
   $('bridge-control').setAttribute('aria-label',mechanicNames[level.mechanic]);$('bridge-control').title=mechanicNames[level.mechanic];$('bridge-control').innerHTML='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">'+iconPaths[level.mechanic]+'</svg>';
-  const instructions='点击路径移动。拖动金色转柄'+(level.mechanic==='rotate'?'旋转桥梁':level.mechanic==='lift'?'升降平台':'移动平台')+'，松手对齐。';
+  const instructions='点击路径移动；拖动转柄旋转，松手对齐。看似相接的道路可以通行。';
   $('help-copy').textContent=instructions;$('scene').setAttribute('aria-label',instructions);document.title='雾屿 · '+level.name;updateLevelMenu();resize();updateUI();saveProgress();if(focus)$('center-marker').focus({preventScroll:true});
 }
 function walkTo(name){walkToAnchor(namedAnchor(name));}
@@ -97,7 +101,8 @@ function stopWalking(){if(!walking)return;walking=null;actor.pose(elapsed,false,
 function activateMechanism(direction=1){
   if(busy())return;
   if(level.mechanic==='rotate'){
-    mechanismMotion={type:'rotate',from:bridgeAngle,to:bridgeAngle+direction*Math.PI/2,time:0,duration:reducedMotion?.15:.85};orientation=(orientation+direction+4)%4;
+    const to=level.tilt?(bridgeAngle<Math.PI/4?Math.PI/2:0):bridgeAngle+direction*Math.PI/2;
+    mechanismMotion={type:'rotate',from:bridgeAngle,to,time:0,duration:reducedMotion?.15:.85};
   }else mechanismMotion={type:'travel',from:travel,to:travel>.5?0:1,time:0,duration:reducedMotion?.2:level.mechanic==='lift'?1.65:2.1};
   tone(349.23,.5);updateUI();
 }
@@ -116,24 +121,24 @@ function advanceWalking(delta){
   let budget=delta;
   while(walking){
     const step=walking.steps[walking.index];
-    if(!step){location={...walking.destination};walking=null;updateLocation();updateUI();if(location.segment==='goal-road'&&location.t>.999)finish();break;}
+    if(!step){location={...walking.destination};walking=null;updateLocation();updateUI();if(location.segment===level.goalAnchor.segment&&location.t>.999)finish();break;}
     if(step.teleport){location={...step.end};walking.index++;walking.time=0;updateLocation();continue;}
     const duration=step.from.distanceTo(step.to)/(reducedMotion?5:1.45),consumed=Math.min(budget,Math.max(0,duration-walking.time));walking.time+=consumed;budget-=consumed;
     const t=duration>0?Math.min(walking.time/duration,1):1;location={segment:step.segment,t:THREE.MathUtils.lerp(step.fromT,step.toT,t)};updateLocation();
-    if(step.from.distanceToSquared(step.to)>.00001)desiredHeading=Math.atan2(step.to.x-step.from.x,step.to.z-step.from.z);
+    if(Math.hypot(step.to.x-step.from.x,step.to.z-step.from.z)>.001)desiredHeading=Math.atan2(step.to.x-step.from.x,step.to.z-step.from.z);
     if(t<1)break;walking.index++;walking.time=0;if(budget<=0)break;
   }
 }
 function screenPoint(point){const p=point.clone().project(camera);return {x:(p.x*.5+.5)*$('game').clientWidth,y:(-.5*p.y+.5)*$('game').clientHeight};}
 function applyView(){
   const width=$('game').clientWidth,height=$('game').clientHeight,aspect=width/height;
-  const direction=new THREE.Vector3(Math.sin(viewAngle)*Math.sqrt(128),7,Math.cos(viewAngle)*Math.sqrt(128)),target=new THREE.Vector3(0,2,0);
+  const direction=new THREE.Vector3(18,18,18),target=new THREE.Vector3(0,2,0);
   camera.position.copy(target).add(direction);camera.lookAt(target);camera.updateMatrixWorld();
   const right=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,0),up=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,1);
   let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
   for(const p of architecture.framePoints){const d=p.clone().sub(target),x=d.dot(right),y=d.dot(up);minX=Math.min(minX,x);maxX=Math.max(maxX,x);minY=Math.min(minY,y);maxY=Math.max(maxY,y);}
   target.addScaledVector(right,(minX+maxX)/2).addScaledVector(up,(minY+maxY)/2);
-  const availableH=Math.max(.62,(height-(width<600?160:130))/height),availableW=Math.max(.76,(width-60)/width);
+  const availableH=Math.max(.7,(height-(width<600?130:110))/height),availableW=Math.max(.8,(width-48)/width);
   const viewHeight=Math.max((maxY-minY+.75)/availableH,(maxX-minX+.65)/aspect/availableW,6.4);
   camera.left=-viewHeight*aspect/2;camera.right=viewHeight*aspect/2;camera.top=viewHeight/2;camera.bottom=-viewHeight/2;camera.updateProjectionMatrix();
   // Shift the composition slightly below centre to make room for the title on mobile.
@@ -143,6 +148,7 @@ function positionMarkers(){
   const control=architecture.controlInMotion?architecture.controlAnchor.clone().applyMatrix4(architecture.mechanism.matrixWorld):architecture.controlAnchor;
   const anchors=[['start-marker',points.start],['center-marker',anchorPoint(navigation(),centerAnchor(level))],['goal-marker',points.goal],['bridge-control',control]];
   for(const [id,point]of anchors){const p=screenPoint(point.clone().add(new THREE.Vector3(0,.025,0)));$(id).style.left=p.x+'px';$(id).style.top=p.y+'px';}
+  for(const button of $('landing-markers').children){const p=screenPoint(anchorPoint(navigation(),level.landmarks[Number(button.dataset.landmark)]));button.style.left=p.x+'px';button.style.top=p.y+'px';}
   if(walking){const p=screenPoint(anchorPoint(navigation(),walking.destination));$('move-target').style.left=p.x+'px';$('move-target').style.top=p.y+'px';}
 }
 function resize(){if(!architecture)return;renderer.setSize($('game').clientWidth,$('game').clientHeight);applyView();positionMarkers();updateUI();}
@@ -164,7 +170,7 @@ window.addEventListener('keydown',event=>{
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 function pickInteraction(event){
   const rect=renderer.domElement.getBoundingClientRect();pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
-  const hit=raycaster.intersectObjects(world.children,true)[0];if(!hit)return null;
+  const hit=raycaster.intersectObjects(world.children,true).find(h=>{const material=Array.isArray(h.object.material)?h.object.material[h.face.materialIndex]:h.object.material;return material.visible!==false;});if(!hit)return null;
   if(hit.object.userData.roads&&hit.face&&hit.face.normal.clone().transformDirection(hit.object.matrixWorld).y>.5){const anchor=closestAnchor(navigation(),hit.point,hit.object.userData.roads);if(anchor)return {kind:'road',anchor};}
   let object=hit.object;while(object){if(object===actor.root)return {kind:'actor'};if(object.userData.control)return {kind:object.userData.control};object=object.parent;}return null;
 }
@@ -183,7 +189,7 @@ function startGesture(event,forcedKind){
 }
 function carryRotation(next){
   next=safeMechanismValue(level,architecture,bridgeAngle,next);
-  if(location.segment.startsWith('deck')){desiredHeading+=next-bridgeAngle;actor.root.rotation.y+=next-bridgeAngle;}
+  if(location.segment.startsWith('deck')&&level.axis==='y'){const delta=next-bridgeAngle;desiredHeading+=delta;actor.root.quaternion.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),delta));}
   bridgeAngle=next;
 }
 function moveGesture(event){
@@ -228,6 +234,8 @@ renderer.setAnimationLoop(time=>{
     applyMechanism();updateLocation();positionMarkers();if(t===1){if(level.mechanic==='rotate')orientation=rotationDetent(bridgeAngle).orientation;mechanismMotion=null;updateUI();}
   }
   if(walking&&!menuOpen)advanceWalking(delta);
-  const angleDelta=Math.atan2(Math.sin(desiredHeading-actor.root.rotation.y),Math.cos(desiredHeading-actor.root.rotation.y));actor.root.rotation.y+=angleDelta*Math.min(delta*12,1);actor.pose(elapsed,!!walking,reducedMotion);
+  const up=navigation().segments.find(s=>s.id===location.segment)?.up||new THREE.Vector3(0,1,0);
+  const targetPose=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),up).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),desiredHeading));
+  actor.root.quaternion.slerp(targetPose,Math.min(delta*12,1));actor.pose(elapsed,!!walking,reducedMotion);
   if(won&&!reducedMotion)architecture.completionRing.scale.setScalar(1+Math.sin(elapsed*2)*.025);renderer.render(scene,camera);
 });

@@ -13,3 +13,6 @@
 @media(max-width:600px){.topbar{left:20px;right:16px;top:20px}nav{gap:2px}.icon-button{width:32px;height:32px}.icon-button svg{width:17px;height:17px}.chapter{left:calc(50% - 16px);font-size:12px}.controls{bottom:30px}.controls p{font-size:13px;letter-spacing:1px}.prop-control{width:48px;height:48px}#help-panel{right:20px;width:min(260px,calc(100% - 40px))}.menu-level{gap:15px;height:61px}.level-name{font-size:17px}#completion{bottom:25px}}
 @media(max-height:530px){.topbar{top:12px}.controls{bottom:13px}.menu-level{height:45px}.menu-heading{margin-bottom:10px}#continue{margin-top:13px}.menu-inner{padding:10px 0}#completion{bottom:16px;padding:10px 20px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+#sky-disc{position:absolute;width:210px;height:210px;right:-110px;top:95px;border-radius:50%;opacity:.9;pointer-events:none}
+#landing-markers{position:absolute;inset:0;pointer-events:none}.controls p{color:var(--ink)}
+@media(max-width:600px){#sky-disc{width:150px;height:150px;right:-75px;top:80px}}

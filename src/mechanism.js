@@ -1,10 +1,15 @@
 import * as THREE from 'three';
 import {OBB} from 'three/addons/math/OBB.js';
+import {mechanismQuaternion} from './levels.js';
 
 export function applyMechanismPose(level,stage,value){
-  if(level.mechanic==='rotate')stage.mechanism.rotation.y=value;
-  else stage.mechanism.position.lerpVectors(new THREE.Vector3(...level.near),new THREE.Vector3(...level.far),value);
+  stage.mechanism.quaternion.copy(mechanismQuaternion(level,value));
   stage.mechanism.updateWorldMatrix(true,true);
+  stage.shade?.();
+  // Mating end faces become internal at an optical joint. Rendering those faces
+  // would cover the adjoining floor because its true camera depth is different.
+  const turn=Math.round(value/(Math.PI/2)),orientation=((turn%4)+4)%4,settled=Math.abs(value-turn*Math.PI/2)<.001;
+  for(const cap of stage.caps||[])cap.mesh.material[cap.index].visible=!(settled&&cap.states.includes(orientation));
 }
 export function prepareColliders(stage){
   stage.group.updateWorldMatrix(true,true);
@@ -26,7 +31,8 @@ export function collisionPairs(stage){
   return pairs;
 }
 export function safeMechanismValue(level,stage,from,to){
-  const span=level.mechanic==='rotate'?Math.abs(to-from)/.015:Math.abs(to-from)*new THREE.Vector3(...level.near).distanceTo(new THREE.Vector3(...level.far))/.03;
+  if(level.tilt)to=THREE.MathUtils.clamp(to,0,Math.PI/2);
+  const span=Math.abs(to-from)/.015;
   const steps=Math.max(1,Math.ceil(span));let safe=from;
   for(let i=1;i<=steps;i++){
     const value=THREE.MathUtils.lerp(from,to,i/steps);applyMechanismPose(level,stage,value);

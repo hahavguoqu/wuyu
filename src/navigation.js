@@ -1,24 +1,20 @@
 import * as THREE from 'three';
-import {levelPoints,deckPoints,overlapError} from './levels.js';
+import {mechanismQuaternion,overlapError} from './levels.js';
 export function buildNavigation(level,state,camera){
-  const p=levelPoints(level),deck=deckPoints(level,state),segments=[
-    {id:'west-road',a:'start',b:'west-turn',p0:p.start,p1:p.westCorner},
-    {id:'west-bend',a:'west-turn',b:'dock',p0:p.westCorner,p1:p.dock},
-    ...(deck.corner?[
-      {id:'deck',a:'deck-left',b:'deck-corner',p0:deck.p0,p1:deck.corner},
-      {id:'deck-elbow',a:'deck-corner',b:'deck-right',p0:deck.corner,p1:deck.p1},
-    ]:[{id:'deck',a:'deck-left',b:'deck-right',...deck}]),
-    {id:'goal-bend',a:'entry',b:'goal-turn',p0:p.entry,p1:p.goalCorner},
-    {id:'goal-road',a:'goal-turn',b:'goal',p0:p.goalCorner,p1:p.goal},
-  ],links=[];
-  const nearEnd=level.mechanic==='rotate'?'deck-right':'deck-left';
-  const nearPoint=level.mechanic==='rotate'?deck.p1:deck.p0;
-  const atStart=level.mechanic==='rotate'?state.orientation===0:(state.travel??0)<.001;
-  if(atStart&&(nearPoint.distanceTo(p.dock)<.09||(level.elbow&&overlapError(nearPoint,p.dock,camera)<.035)))links.push({a:'dock',b:nearEnd});
-  const ready=level.mechanic==='rotate'?state.orientation===2:(state.travel??0)>.999;
-  const outgoing=ready&&(deck.p1.distanceTo(p.entry)<.055||(level.illusion&&overlapError(deck.p1,p.entry,camera)<.035));
-  if(outgoing)links.push({a:'deck-right',b:'entry'});
-  return {segments,links,outgoing};
+  const angle=state.bridgeAngle??(state.orientation??0)*Math.PI/2,q=mechanismQuaternion(level,angle),pivot=new THREE.Vector3(...level.pivot),orientation=state.orientation??0;
+  const settled=Math.abs(angle/(Math.PI/2)-Math.round(angle/(Math.PI/2)))<.001;
+  const nodes=new Map(),segments=level.segments.map(spec=>{
+    const p0=new THREE.Vector3(...spec.p0),p1=new THREE.Vector3(...spec.p1),up=new THREE.Vector3(...spec.up);
+    if(spec.dynamic){p0.applyQuaternion(q).add(pivot);p1.applyQuaternion(q).add(pivot);up.applyQuaternion(q);}
+    const enabled=!spec.dynamic||(settled&&(!spec.states||spec.states.includes(orientation)));
+    nodes.set(spec.a,{point:p0,enabled});nodes.set(spec.b,{point:p1,enabled});return {...spec,p0,p1,up,enabled};
+  });
+  const links=level.joints.filter(link=>{
+    if(link.states&&(!settled||!link.states.includes(orientation)))return false;
+    const a=nodes.get(link.a),b=nodes.get(link.b);
+    return a?.enabled&&b?.enabled&&(a.point.distanceTo(b.point)<.11||overlapError(a.point,b.point,camera)<.012);
+  });
+  return {segments,links,outgoing:links.some(link=>link.b.startsWith((level.goalPath||'goal-road')+':'))};
 }
 export function anchorPoint(network,anchor){
   const segment=network.segments.find(s=>s.id===anchor.segment);
@@ -27,6 +23,7 @@ export function anchorPoint(network,anchor){
 export function closestAnchor(network,point,ids){
   let best=null;
   for(const segment of network.segments){
+    if(segment.enabled===false)continue;
     if(ids&&!ids.includes(segment.id))continue;
     const axis=segment.p1.clone().sub(segment.p0),length=axis.lengthSq();
     const t=length?THREE.MathUtils.clamp(point.clone().sub(segment.p0).dot(axis)/length,0,1):0;
@@ -41,6 +38,7 @@ export function planRoute(network,source,target){
   const graph=new Map(),positions=new Map(),anchors=new Map();
   const add=(a,b,cost,leg)=>{if(!graph.has(a))graph.set(a,[]);graph.get(a).push({to:b,cost,leg});};
   for(const segment of network.segments){
+    if(segment.enabled===false)continue;
     const parts=[{t:0,id:segment.a},{t:1,id:segment.b}];
     if(source.segment===segment.id)parts.push({t:THREE.MathUtils.clamp(source.t,0,1),id:'@source'});
     if(target.segment===segment.id)parts.push({t:THREE.MathUtils.clamp(target.t,0,1),id:'@target'});

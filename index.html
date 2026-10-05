@@ -8,6 +8,7 @@
 </head>
 <body>
   <main id="game" aria-label="雾屿立体解谜游戏">
+    <div id="sky-disc" aria-hidden="true" hidden></div>
     <div id="scene" aria-label="点击道路行走，拖动金色转柄操作青绿色机关"></div>
     <div class="grain" aria-hidden="true"></div>
     <header class="topbar">
@@ -24,6 +25,7 @@
       <button id="start-marker" class="world-marker" aria-label="走回起点"><span></span></button>
       <button id="center-marker" class="world-marker active" aria-label="走到平台"><span></span></button>
       <button id="goal-marker" class="world-marker goal" aria-label="走向终点"><span></span></button>
+      <div id="landing-markers"></div>
       <button id="bridge-control" class="prop-control" aria-label="旋转桥梁" title="旋转桥梁"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 8a7 7 0 1 0 2 7M17 3v5h-5"/></svg></button>
     </div>
     <div id="move-target" aria-hidden="true" hidden></div>

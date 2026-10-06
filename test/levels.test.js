@@ -7,7 +7,8 @@ import {buildArchitecture} from '../src/architecture.js';
 import {applyMechanismPose,collisionPairs,safeMechanismValue,prepareColliders} from '../src/mechanism.js';
 import {createTraveller} from '../src/character.js';
 import {rotationDetent,angularDelta} from '../src/interaction.js';
-import {setLayer,renderLayers,visibleHitPoint,sortVisibleHits,BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from '../src/rendering.js';
+import {setLayer,renderLayers,visibleHitPoint,sortVisibleHits,setTravellerSurface,BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from '../src/rendering.js';
+import {opticalDepth,opticalPart} from '../src/optics.js';
 const camera=new THREE.OrthographicCamera(-12,12,12,-12,.1,100);camera.position.set(18,18,18);camera.lookAt(0,0,0);camera.updateMatrixWorld();
 const net=(level,q)=>buildNavigation(level,{orientation:q,bridgeAngle:q*Math.PI/2},camera);
 const stage=level=>buildArchitecture(level,levelPoints(level),{},new THREE.MeshBasicMaterial());
@@ -93,12 +94,15 @@ test('architecture uses flat per-face colors and keeps the lit top face after a 
     const top=normals.findIndex(n=>new THREE.Vector3(...n).applyQuaternion(q).y>.99);assert.equal(mesh.material[top].color.getHexString(),new THREE.Color(l.moving.top).getHexString());dispose(s);
   }
 });
-test('optical end faces retain continuous depth and never switch visibility at detents',()=>{
-  for(const l of LEVELS.slice(1)){const s=stage(l);assert.ok(s.opticalCaps.length,l.id);
-    const profiles=s.opticalCaps.map(({mesh})=>Array.from(mesh.geometry.attributes.isometricDepth.array));
+test('later optical structures retain complete faces and continuous shared-position depth throughout a turn',()=>{
+  for(const l of LEVELS.slice(1)){const s=stage(l);assert.equal(s.opticalCaps.length,0,l.id+' must not isolate end faces');assert.ok(s.depthMeshes.length);
+    const profiles=s.depthMeshes.map(mesh=>Array.from(mesh.geometry.attributes.isometricDepth.array));
+    for(const mesh of s.depthMeshes){const p=mesh.geometry.attributes.position,d=mesh.geometry.attributes.isometricDepth,shared=new Map();
+      for(let i=0;i<p.count;i++){const key=[p.getX(i),p.getY(i),p.getZ(i)].join(',');if(shared.has(key))assert.equal(d.getX(i),shared.get(key),l.id+' fractured face edge');else shared.set(key,d.getX(i));}
+    }
     for(const value of [0,.31,Math.PI/2-.0011,Math.PI/2-.0009,Math.PI/2,Math.PI/2+.0009]){
       applyMechanismPose(l,s,value);
-      s.opticalCaps.forEach(({mesh},i)=>{assert.ok(mesh.material.every(m=>m.visible));assert.deepEqual(Array.from(mesh.geometry.attributes.isometricDepth.array),profiles[i]);});
+      s.depthMeshes.forEach((mesh,i)=>{assert.ok((Array.isArray(mesh.material)?mesh.material:[mesh.material]).every(m=>m.visible));if(!l.opticalDepths[mesh.userData.opticalPart].posePower)assert.deepEqual(Array.from(mesh.geometry.attributes.isometricDepth.array),profiles[i]);});
     }dispose(s);
   }
 });
@@ -219,13 +223,70 @@ test('optical and docking seams show continuous floors across the road width',()
 test('destination emblems remain visible through the mechanism sweep',()=>{
   const direction=new THREE.Vector3(1,1,1).normalize();
   for(const l of LEVELS){const s=stage(l),limit=l.tilt?Math.PI/2:Math.PI*2;
-    for(let i=0;i<=24;i++){applyMechanismPose(l,s,limit*i/24);s.group.updateWorldMatrix(true,true);
+    for(let i=0;i<=96;i++){applyMechanismPose(l,s,limit*i/96);s.group.updateWorldMatrix(true,true);
       for(const [x,z]of[[0,0],[.22,0],[-.22,0],[0,.22],[0,-.22]]){
         const point=levelPoints(l).goal.add(new THREE.Vector3(x,.025,z)),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());
         const hits=displayedHits(s,ray);
         let object=hits[0]?.object;while(object&&object!==s.seal)object=object.parent;
         assert.equal(object,s.seal,l.id+' hidden emblem at pose '+i+' sample '+x+','+z);
       }
+    }dispose(s);
+  }
+});
+
+test('later optical joints remain walkable across both sides of the contact, not just the centre pixel',()=>{
+  const direction=new THREE.Vector3(1,1,1).normalize();
+  for(const l of LEVELS.slice(1)){const s=stage(l);
+    for(const q of l.tilt?[1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);const n=net(l,q);
+      for(const link of n.links.filter(link=>link.states)){
+        const a=n.segments.find(segment=>segment.a===link.a||segment.b===link.a),p=a.a===link.a?a.p0:a.p1;
+        const along=a.p1.clone().sub(a.p0).normalize(),across=along.clone().cross(a.up).normalize();
+        for(const x of [-.39,0,.39])for(const t of [-.18,-.06,0,.06,.18]){
+          const point=p.clone().addScaledVector(across,x).addScaledVector(along,t),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());
+          const hit=displayedHits(s,ray)[0];assert.ok(hit,l.id+' contact gap '+link.a+' '+x+','+t);
+          assert.ok(hit.face.normal.clone().transformDirection(hit.object.matrixWorld).y>.99,l.id+' cap covers contact '+link.a+' '+x+','+t+' roads '+hit.object.userData.roads);
+        }
+      }
+    }dispose(s);
+  }
+});
+
+test('later travellers follow the displayed depth of their carrier on either side of an optical handoff',()=>{
+  for(const l of LEVELS.slice(1))for(const q of l.tilt?[1]:[0,1,3]){const n=net(l,q);
+    for(const link of n.links.filter(link=>link.states)){
+      const endpoints=[link.a,link.b].map(id=>{const segment=n.segments.find(s=>s.a===id||s.b===id),point=segment.a===id?segment.p0:segment.p1;return point.clone().addScalar(opticalDepth(l,opticalPart(l,segment.id),point,q*Math.PI/2));});
+      assert.ok(endpoints[0].distanceTo(endpoints[1])<.11,l.id+' traveller depth jump at '+link.a);
+    }
+  }
+});
+
+test('later cloister corners keep their own exterior surfaces ahead of buried faces for picking',()=>{
+  const direction=new THREE.Vector3(1,1,1).normalize();let buried=0;
+  for(const l of LEVELS.slice(1)){const s=stage(l),group=s.opticalGroups[0];assert.ok(group);
+    for(const path of l.paths.filter(p=>p.id===group.part))for(const point of path.points.slice(1,-1))for(const x of [-.3,0,.3])for(const z of [-.3,0,.3]){
+      const target=new THREE.Vector3(...point).add(new THREE.Vector3(x,.02,z)),ray=new THREE.Raycaster(target.clone().addScaledVector(direction,40),direction.clone().negate());ray.layers.enableAll();
+      const raw=ray.intersectObjects(group.meshes);const sorted=sortVisibleHits(raw,s,ray.ray.origin);assert.ok(sorted.length);assert.ok(sorted[0].face.normal.y>.99,l.id+' buried face covers corner');
+      buried+=raw.filter(h=>h.distance>raw[0].distance+.002).length;
+    }dispose(s);
+  }assert.ok(buried>0);
+});
+
+test('a traveller using building depth is naturally hidden by a nearer pillar and revealed after passing it',()=>{
+  const scene=new THREE.Group(),body=new THREE.Mesh(new THREE.BoxGeometry(.2,.5,.2),new THREE.MeshBasicMaterial()),pillar=new THREE.Mesh(new THREE.BoxGeometry(.3,2,.3),new THREE.MeshBasicMaterial());scene.add(body,pillar);setLayer(scene,BUILDING_LAYER);
+  const direction=new THREE.Vector3(1,1,1).normalize();body.position.set(-1,-1,-1);setTravellerSurface(body,LEVELS[1],undefined,body.position);scene.updateWorldMatrix(true,true);
+  const hits=()=>sortVisibleHits(new THREE.Raycaster(body.position.clone().addScaledVector(direction,30),direction.clone().negate()).intersectObjects(scene.children),{unifiedDepth:true},body.position.clone().addScaledVector(direction,30));
+  assert.equal(hits()[0].object,pillar);body.position.set(1,1,1);scene.updateWorldMatrix(true,true);assert.equal(hits()[0].object,body);
+  body.geometry.dispose();body.material.dispose();pillar.geometry.dispose();pillar.material.dispose();
+});
+
+test('a traveller head stays above its own optical floor throughout the depth ramps',()=>{
+  const direction=new THREE.Vector3(1,1,1).normalize();
+  for(const l of LEVELS.slice(1)){const s=stage(l),path=l.paths.find(p=>p.id==='middle'),body=new THREE.Mesh(new THREE.BoxGeometry(.1,.1,.1),new THREE.MeshBasicMaterial());s.group.add(body);
+    applyMechanismPose(l,s,l.id==='hanging-stair'?3*Math.PI/2:l.tilt?Math.PI/2:0);
+    for(let j=0;j<path.points.length-1;j++)for(const t of [.05,.2,.4,.6,.8,.95]){
+      const foot=new THREE.Vector3(...path.points[j]).lerp(new THREE.Vector3(...path.points[j+1]),t);body.position.copy(foot).add(new THREE.Vector3(0,.42,0));setTravellerSurface(body,l,'middle',foot,l.tilt?Math.PI/2:0,s.opticalGroups[0]);s.group.updateWorldMatrix(true,true);
+      const ray=new THREE.Raycaster(body.position.clone().addScaledVector(direction,40),direction.clone().negate()),raw=ray.intersectObjects([...s.opticalGroups[0].meshes,body]);
+      assert.equal(sortVisibleHits(raw,s,ray.ray.origin)[0]?.object,body,l.id+' figure swallowed by its own floor at '+j+':'+t);
     }dispose(s);
   }
 });

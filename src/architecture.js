@@ -1,16 +1,26 @@
 import * as THREE from 'three';
 import {prepareColliders,applyMechanismPose} from './mechanism.js';
 import {setDepthProfile,setLayer,CONTROL_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from './rendering.js';
+import {opticalDepth} from './optics.js';
+import {opticalBoxGeometry} from './optical-geometry.js';
 
 const normals=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].map(n=>new THREE.Vector3(...n));
 export function buildArchitecture(level,p,materials,glow){
   const group=new THREE.Group(),staticGroup=new THREE.Group(),mechanism=new THREE.Group();group.add(staticGroup,mechanism);mechanism.position.set(...level.pivot);mechanism.userData.control='mechanism';
-  const fixedSolids=[],movingSolids=[],shaded=[],depthMeshes=[],opticalCaps=[];
-  function depth(mesh,profile){setDepthProfile(mesh,profile);depthMeshes.push(mesh);return mesh;}
-  function backCap(mesh,index){
-    const base=mesh.userData.depthProfile||(()=>0),normal=mesh.geometry.attributes.normal;
-    depth(mesh,(point,i)=>base(point,i)-(new THREE.Vector3().fromBufferAttribute(normal,i).dot(normals[index])>.99?16:0));
-    opticalCaps.push({mesh,index});
+  const fixedSolids=[],movingSolids=[],shaded=[],depthMeshes=[],opticalCaps=[],opticalGroups=[];
+  let opticalAngle=0;
+  function depth(mesh,profile,self){setDepthProfile(mesh,profile,self);depthMeshes.push(mesh);return mesh;}
+  function optical(mesh,part){
+    if(!level.opticalDepths?.[part])return;
+    mesh.userData.opticalPart=part;mesh.updateWorldMatrix(true,false);
+    let self;
+    if(level.opticalDepths[part].ramps?.length){
+      const geometry=opticalBoxGeometry(mesh,level.opticalDepths[part]);mesh.geometry.dispose();mesh.geometry=geometry;
+      self=opticalGroups.find(group=>group.part===part);
+      if(!self){self={part,layer:5+opticalGroups.length,texture:{value:null},size:{value:new THREE.Vector2()},meshes:[]};opticalGroups.push(self);}
+      mesh.layers.enable(self.layer);self.meshes.push(mesh);mesh.userData.opticalSelfGroup=self;
+    }
+    depth(mesh,point=>opticalDepth(level,part,mesh.localToWorld(point.clone()),opticalAngle),self);
   }
   function box(size,at,palette=level.fixed,parent=staticGroup,roads=[],structural=true){
     const mesh=new THREE.Mesh(new THREE.BoxGeometry(...size),normals.map(()=>new THREE.MeshBasicMaterial()));mesh.position.set(...at);parent.add(mesh);
@@ -19,6 +29,9 @@ export function buildArchitecture(level,p,materials,glow){
     shaded.push({mesh,colors:['top','x','z'].map(key=>new THREE.Color(palette[key]))});return mesh;
   }
   function road(a,b,id,wall=false,startCap=0,endCap=0,dockStart=0,dockEnd=0,depths=[0,0]){
+    // A sub-pixel overlap at a closed socket avoids antialiasing hairlines.
+    // Preserve the unextended solidBounds used by the complete motion sweep.
+    if(dockStart)dockStart+=.003;if(dockEnd)dockEnd+=.003;
     a=new THREE.Vector3(...a);b=new THREE.Vector3(...b);const axis=b.clone().sub(a).normalize();a.addScaledVector(axis,-startCap);b.addScaledVector(axis,endCap);const alongX=Math.abs(axis.x)>Math.abs(axis.z),length=alongX?Math.abs(b.x-a.x):Math.abs(b.z-a.z),mid=a.clone().lerp(b,.5);
     const bottom=wall?(level.base??-.9):a.y-.9,height=a.y-bottom;
     const mesh=box(alongX?[length,height,.9]:[.9,height,length],[mid.x,(a.y+bottom)/2,mid.z],level.fixed,staticGroup,[id]);
@@ -34,17 +47,19 @@ export function buildArchitecture(level,p,materials,glow){
     mesh.userData.dockCollar={start:dockStart,end:dockEnd};
     if(level.id==='folded-frame'&&id.startsWith('west-road'))setLayer(mesh,id==='west-road'?LOWER_BACK_LAYER:LOWER_FRONT_LAYER);
     if(depths[0])depth(mesh,()=>depths[0]);
-    if((level.id==='double-cloister'||level.id==='hanging-stair')&&id==='middle')backCap(mesh,4);
-    if(level.goalBlock&&id==='goal-road')backCap(mesh,0);
     return mesh;
   }
   for(const path of level.paths){
-    for(let i=0;i<path.points.length-1;i++)road(path.points[i],path.points[i+1],i===0?path.id:path.id+'-'+i,path.wall&&(path.solid||i<path.points.length-2),path.id==='west-road'&&i===0?.45:0,(path.id===(level.goalPath||'goal-road')&&!level.goalBlock&&i===path.points.length-2)?.45:0,i===0?path.dockStart||0:0,i===path.points.length-2?path.dockEnd||0:0,[path.depths?.[i]||0,path.depths?.[i+1]||0]);
+    for(let i=0;i<path.points.length-1;i++){
+      const mesh=road(path.points[i],path.points[i+1],i===0?path.id:path.id+'-'+i,path.wall&&(path.solid||i<path.points.length-2),path.id==='west-road'&&i===0?.45:0,(path.id===(level.goalPath||'goal-road')&&!level.goalBlock&&i===path.points.length-2)?.45:0,i===0?path.dockStart||0:0,i===path.points.length-2?path.dockEnd||0:0,[path.depths?.[i]||0,path.depths?.[i+1]||0]);
+      optical(mesh,path.id);
+    }
     for(let i=1;i<path.points.length-1;i++){
       const [x,y,z]=path.points[i],bottom=path.wall?(level.base??-.9):y-.9;
       const mesh=box([.9,y-bottom,.9],[x,(y+bottom)/2,z],level.fixed,staticGroup,[i===1?path.id:path.id+'-'+(i-1),path.id+'-'+i]);
       if(level.id==='folded-frame'&&path.id==='west-road')setLayer(mesh,LOWER_FRONT_LAYER);
       if(path.depths?.[i])depth(mesh,()=>path.depths[i]);
+      optical(mesh,path.id);
     }
   }
   for(const stair of level.stairs||[])for(const tread of stair.treads){
@@ -52,7 +67,7 @@ export function buildArchitecture(level,p,materials,glow){
     box(alongX?[Math.abs(b.x-a.x),a.y-bottom,.9]:[.9,a.y-bottom,Math.abs(b.z-a.z)],[mid.x,(a.y+bottom)/2,mid.z],level.fixed,staticGroup,[tread.id]);
   }
   for(const spec of level.fixedBoxes||[]){
-    const mesh=box(spec.size,spec.at,spec.support?level.support:level.fixed);
+    const mesh=box(spec.size,spec.at,spec.support?(level.fixedSupport||level.support):level.fixed);
     if(spec.dockTop){
       // Close the visible docking seam without consuming the motion clearance.
       // The extra .003 beyond the .05 gap also covers raster/float rounding.
@@ -63,12 +78,10 @@ export function buildArchitecture(level,p,materials,glow){
     }
     if(level.id==='folded-frame'&&!spec.support)setLayer(mesh,LOWER_BACK_LAYER);
     if(spec.depth)depth(mesh,()=>spec.depth);
-    if(level.goalBlock&&spec.size.every(s=>s===.9))backCap(mesh,0);
+    optical(mesh,spec.opticalPart);
   }
   for(const spec of level.beams){
-    const mesh=box(spec.size,spec.at,spec.support?level.support:level.moving,mechanism,spec.roads);
-    if(level.id==='blue-gate'&&spec.roads.includes('deck-back'))backCap(mesh,3);
-    if(level.id==='hanging-stair'&&spec.roads.includes('deck-upper')&&spec.size[2]===3)backCap(mesh,5);
+    box(spec.size,spec.at,spec.support?level.support:level.moving,mechanism,spec.roads);
   }
   const flat=(color)=>new THREE.MeshBasicMaterial({color});
   function add(geometry,material,at,parent=staticGroup){const mesh=new THREE.Mesh(geometry,material);mesh.position.set(...at);parent.add(mesh);return mesh;}
@@ -93,6 +106,7 @@ export function buildArchitecture(level,p,materials,glow){
   const completionRing=ring(.38,.006,.01,glow);completionRing.visible=false;
   const goalDepth=level.paths.find(path=>path.id===(level.goalPath||'goal-road')).depths?.at(-1)||0;
   if(goalDepth)seal.traverse(mesh=>{if(mesh.isMesh)depth(mesh,()=>goalDepth);});
+  seal.traverse(mesh=>{if(mesh.isMesh)optical(mesh,level.goalPath||'goal-road');});
   seal.userData.emblem='golden-four-petal';
   function shade(){
     group.updateWorldMatrix(true,true);
@@ -107,7 +121,17 @@ export function buildArchitecture(level,p,materials,glow){
   const framePoints=[];
   function collect(root){root.updateWorldMatrix(true,true);root.traverse(mesh=>{if(!mesh.geometry)return;mesh.geometry.computeBoundingBox();const b=mesh.geometry.boundingBox;for(const x of [b.min.x,b.max.x])for(const y of [b.min.y,b.max.y])for(const z of [b.min.z,b.max.z])framePoints.push(new THREE.Vector3(x,y,z).applyMatrix4(mesh.matrixWorld));});}
   collect(staticGroup);
-  const stage={group,mechanism,knob,controlAnchor:new THREE.Vector3(...level.control),controlInMotion:false,fixedSolids,movingSolids,seal,completionRing,framePoints,shade,depthMeshes,opticalCaps,foldedOcclusion:level.id==='folded-frame'};
+  const stage={group,mechanism,knob,controlAnchor:new THREE.Vector3(...level.control),controlInMotion:false,fixedSolids,movingSolids,seal,completionRing,framePoints,shade,depthMeshes,opticalCaps,opticalGroups,foldedOcclusion:level.id==='folded-frame',unifiedDepth:!!level.opticalDepths};
+  const animatedDepthMeshes=depthMeshes.filter(m=>level.opticalDepths?.[m.userData.opticalPart]?.posePower);
+  stage.updateOpticalDepth=value=>{
+    if(value===opticalAngle)return;
+    opticalAngle=value;
+    for(const mesh of animatedDepthMeshes){
+      const position=mesh.geometry.attributes.position,attribute=mesh.geometry.attributes.isometricDepth;
+      for(let i=0;i<position.count;i++)attribute.setX(i,mesh.userData.depthProfile(new THREE.Vector3().fromBufferAttribute(position,i),i));
+      attribute.needsUpdate=true;
+    }
+  };
   for(let i=0;i<=24;i++){applyMechanismPose(level,stage,i/24*(level.tilt?Math.PI/2:Math.PI*2));collect(mechanism);}applyMechanismPose(level,stage,0);
   for(const point of [p.start,p.goal])framePoints.push(point.clone().add(new THREE.Vector3(0,.65,0)));
   if(level.id!=='folded-frame'){

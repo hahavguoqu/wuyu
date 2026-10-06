@@ -5,7 +5,8 @@ import {buildArchitecture} from './architecture.js';
 import {createTraveller} from './character.js';
 import {rotationDetent,travelFromDrag,angularDelta} from './interaction.js';
 import {applyMechanismPose,safeMechanismValue} from './mechanism.js';
-import {setLayer,renderLayers,sortVisibleHits,TRAVELLER_LAYER,BUILDING_LAYER} from './rendering.js';
+import {setLayer,renderLayers,sortVisibleHits,setTravellerSurface,TRAVELLER_LAYER,BUILDING_LAYER} from './rendering.js';
+import {opticalPart} from './optics.js';
 import './style.css';
 const $=id=>document.getElementById(id),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const walkingSpeed=(reducedMotion?5:1.45)*1.5;
@@ -37,6 +38,7 @@ function namedAnchor(name){return name==='start'?level.startAnchor:name==='cente
 function reachable(name){return !!planRoute(navigation(),location,namedAnchor(name));}
 function busy(){return !!(walking||mechanismMotion||gesture||won||menuOpen);}
 function clearStage(){
+  architecture?.opticalGroups?.forEach(group=>group.target?.dispose());
   const geos=new Set(),mats=new Set();world.traverse(m=>{if(m.geometry)geos.add(m.geometry);if(m.material)for(const mat of Array.isArray(m.material)?m.material:[m.material])if(!shared.has(mat))mats.add(mat);});world.clear();geos.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());
 }
 function tone(freq=440,length=.25){
@@ -45,6 +47,7 @@ function tone(freq=440,length=.25){
 }
 function updateLocation(){
   actor.root.position.copy(anchorPoint(navigation(),location));
+  if(architecture.unifiedDepth){const part=opticalPart(level,location.segment);setTravellerSurface(actor.root,level,part,actor.root.position,bridgeAngle,architecture.opticalGroups.find(group=>group.part===part));}
   $('start-marker').classList.toggle('current',location.segment==='west-road'&&location.t<.01);
   const center=centerAnchor(level);$('center-marker').classList.toggle('current',location.segment===center.segment&&Math.abs(location.t-center.t)<.025);
   Object.assign($('game').dataset,{segment:location.segment,position:String(location.t)});
@@ -88,7 +91,7 @@ function loadLevel(index,focus=false){
   for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=false;
   for(const id of ['help-panel','level-panel'])$(id).hidden=true;for(const id of ['help','chapters'])$(id).setAttribute('aria-expanded','false');
   levelIndex=THREE.MathUtils.clamp(index,0,unlocked);level=LEVELS[levelIndex];points=levelPoints(level);location={segment:'west-road',t:0};orientation=0;travel=0;bridgeAngle=0;viewAngle=level.initialView;mechanismMotion=null;walking=null;won=false;desiredHeading=level.initialView;
-  clearStage();architecture=buildArchitecture(level,points,materials,glow);world.add(architecture.group);actor=createTraveller();actor.root.scale.setScalar(.65);setLayer(actor.root,TRAVELLER_LAYER);world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
+  clearStage();architecture=buildArchitecture(level,points,materials,glow);world.add(architecture.group);actor=createTraveller();actor.root.scale.setScalar(.65);setLayer(actor.root,architecture.unifiedDepth?BUILDING_LAYER:TRAVELLER_LAYER);world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
   $('game').style.background='linear-gradient(180deg,'+level.top+' 0%,'+level.bottom+' 100%)';
   $('sky-disc').hidden=!level.disc;$('sky-disc').style.background=level.disc||'transparent';$('game').style.setProperty('--ink',level.id==='blue-gate'?'#e0e8e5':'#496562');$('game').style.setProperty('--muted',level.id==='blue-gate'?'#cfdfdf':'#647b79');
   $('landing-markers').replaceChildren();level.landmarks.forEach((target,i)=>{const button=document.createElement('button');button.className='world-marker';button.setAttribute('aria-label',target.label);button.dataset.landmark=i;button.innerHTML='<span></span>';button.addEventListener('click',()=>walkToAnchor(target));$('landing-markers').append(button);});

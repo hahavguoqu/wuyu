@@ -53,6 +53,14 @@ export function buildArchitecture(level,p,materials,glow){
   }
   for(const spec of level.fixedBoxes||[]){
     const mesh=box(spec.size,spec.at,spec.support?level.support:level.fixed);
+    if(spec.dockTop){
+      // Close the visible docking seam without consuming the motion clearance.
+      // The extra .003 beyond the .05 gap also covers raster/float rounding.
+      mesh.geometry.computeBoundingBox();mesh.userData.solidBounds=mesh.geometry.boundingBox.clone();
+      const position=mesh.geometry.attributes.position;
+      for(let i=0;i<position.count;i++)if(position.getY(i)>0)position.setY(i,position.getY(i)+spec.dockTop);
+      mesh.geometry.computeBoundingBox();mesh.geometry.computeBoundingSphere();mesh.userData.topCollar=spec.dockTop;
+    }
     if(level.id==='folded-frame'&&!spec.support)setLayer(mesh,LOWER_BACK_LAYER);
     if(spec.depth)depth(mesh,()=>spec.depth);
     if(level.goalBlock&&spec.size.every(s=>s===.9))backCap(mesh,0);

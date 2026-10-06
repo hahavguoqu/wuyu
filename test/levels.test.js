@@ -179,6 +179,17 @@ test('dock collars cover the safety gaps while leaving swept collision bounds in
     assert.ok(Math.abs(visible.clone().sub(real).length()-collar.start-collar.end)<1e-6);
   }dispose(s);}
 });
+
+test('the first upright B/C dock has no visible gap while preserving the original collision clearance',()=>{
+  const l=LEVELS[0],s=stage(l),base=s.fixedSolids.find(m=>m.userData.topCollar),fold=s.movingSolids.find(m=>m.userData.roads?.includes('deck-fold'));
+  assert.ok(base);applyMechanismPose(l,s,0);
+  const visibleTop=base.localToWorld(new THREE.Vector3(0,base.geometry.boundingBox.max.y,0)).y;
+  const collisionTop=base.localToWorld(new THREE.Vector3(0,base.userData.solidBounds.max.y,0)).y;
+  const beamBottom=fold.localToWorld(new THREE.Vector3(0,fold.geometry.boundingBox.min.y,0)).y;
+  assert.ok(visibleTop>=beamBottom&&visibleTop-beamBottom<.004,'visible contact must close within raster tolerance');
+  assert.ok(Math.abs(beamBottom-collisionTop-.05)<1e-6,'physical safety clearance must remain');
+  assert.equal(safeMechanismValue(l,s,0,Math.PI/2),Math.PI/2);assert.equal(safeMechanismValue(l,s,Math.PI/2,0),0);dispose(s);
+});
 test('depth-correct picking projects to the same pixel as real geometry',()=>{
   const direction=new THREE.Vector3(1,1,1).normalize();
   for(const l of LEVELS){const s=stage(l);applyMechanismPose(l,s,Math.PI/2);s.group.updateWorldMatrix(true,true);

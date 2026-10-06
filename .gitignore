@@ -4,3 +4,4 @@ artifacts/
 .uv-cache/
 *.log
 参考/
+/docs/关卡设计备忘.local.md

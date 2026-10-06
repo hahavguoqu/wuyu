@@ -5,7 +5,7 @@ import {buildArchitecture} from './architecture.js';
 import {createTraveller} from './character.js';
 import {rotationDetent,travelFromDrag,angularDelta} from './interaction.js';
 import {applyMechanismPose,safeMechanismValue} from './mechanism.js';
-import {setLayer,renderLayers,visibleHitPoint,pickingLayers,TRAVELLER_LAYER,BUILDING_LAYER} from './rendering.js';
+import {setLayer,renderLayers,sortVisibleHits,TRAVELLER_LAYER,BUILDING_LAYER} from './rendering.js';
 import './style.css';
 const $=id=>document.getElementById(id),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const walkingSpeed=(reducedMotion?5:1.45)*1.5;
@@ -175,14 +175,9 @@ window.addEventListener('keydown',event=>{
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 function pickInteraction(event){
   const rect=renderer.domElement.getBoundingClientRect();pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
-  let hit;
-  // Pick the same foreground layers that are visible on screen.
-  for(const layer of pickingLayers(architecture)){
-    raycaster.layers.set(layer);
-    const hits=raycaster.intersectObjects(world.children,true);
-    hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(camera.position)-visibleHitPoint(b).distanceToSquared(camera.position));
-    if(hits.length){hit=hits[0];break;}
-  }
+  // Respect both B/C compositing and C's internal depth, including buried faces.
+  raycaster.layers.enableAll();
+  const hit=sortVisibleHits(raycaster.intersectObjects(world.children,true),architecture,camera.position)[0];
   raycaster.layers.set(BUILDING_LAYER);if(!hit)return null;
   if(hit.object.userData.roads&&hit.face&&hit.face.normal.clone().transformDirection(hit.object.matrixWorld).y>.5){const anchor=closestAnchor(navigation(),hit.point,hit.object.userData.roads);if(anchor)return {kind:'road',anchor};}
   let object=hit.object;while(object){if(object===actor.root)return {kind:'actor'};if(object.userData.control)return {kind:object.userData.control};object=object.parent;}return null;

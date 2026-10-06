@@ -14,6 +14,16 @@ export function renderPasses(stage){
 }
 export function pickingLayers(stage){return renderPasses(stage).slice().reverse();}
 
+export function sortVisibleHits(hits,stage,origin){
+  const order=pickingLayers(stage),rank=mesh=>order.findIndex(layer=>mesh.layers.isEnabled(layer));
+  let visible=hits;
+  if(stage?.foldedOcclusion){
+    const backDepth=Math.min(...hits.filter(h=>h.object.layers.isEnabled(LOWER_BACK_LAYER)).map(h=>h.distance));
+    visible=hits.filter(h=>!h.object.layers.isEnabled(LOWER_FRONT_LAYER)||h.distance<=backDepth+1e-5);
+  }
+  return visible.slice().sort((a,b)=>rank(a.object)-rank(b.object)||visibleHitPoint(a).distanceToSquared(origin)-visibleHitPoint(b).distanceToSquared(origin));
+}
+
 // In a fixed isometric view, (d,d,d) changes depth without moving a pixel.
 // Optical end caps sit behind the adjacent floors throughout a turn. They remain
 // visible wherever the projection is uncovered; no face disappears at a detent.
@@ -41,11 +51,19 @@ export function visibleHitPoint(hit){
   const offset=weights.x*depth.getX(hit.face.a)+weights.y*depth.getX(hit.face.b)+weights.z*depth.getX(hit.face.c);
   return hit.point.clone().addScalar(offset);
 }
+const lowerDepthMaterial=new THREE.MeshBasicMaterial({colorWrite:false});
 export function renderLayers(renderer,scene,camera,stage){
   renderer.clear();
   const passes=renderPasses(stage);
   for(const [i,layer]of passes.entries()){
     if(i)renderer.clearDepth();
+    if(stage?.foldedOcclusion&&layer===LOWER_FRONT_LAYER){
+      // Restore C's own depth before its foreground part is painted over B.
+      // This suppresses C's buried corner faces and keeps both legs flush.
+      const material=scene.overrideMaterial;
+      scene.overrideMaterial=lowerDepthMaterial;camera.layers.set(LOWER_BACK_LAYER);
+      try{renderer.render(scene,camera);}finally{scene.overrideMaterial=material;}
+    }
     camera.layers.set(layer);renderer.render(scene,camera);
   }
   camera.layers.set(BUILDING_LAYER);

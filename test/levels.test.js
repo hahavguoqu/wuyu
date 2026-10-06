@@ -7,16 +7,15 @@ import {buildArchitecture} from '../src/architecture.js';
 import {applyMechanismPose,collisionPairs,safeMechanismValue,prepareColliders} from '../src/mechanism.js';
 import {createTraveller} from '../src/character.js';
 import {rotationDetent,angularDelta} from '../src/interaction.js';
-import {setLayer,renderLayers,visibleHitPoint,pickingLayers,BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from '../src/rendering.js';
+import {setLayer,renderLayers,visibleHitPoint,sortVisibleHits,BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from '../src/rendering.js';
 const camera=new THREE.OrthographicCamera(-12,12,12,-12,.1,100);camera.position.set(18,18,18);camera.lookAt(0,0,0);camera.updateMatrixWorld();
 const net=(level,q)=>buildNavigation(level,{orientation:q,bridgeAngle:q*Math.PI/2},camera);
 const stage=level=>buildArchitecture(level,levelPoints(level),{},new THREE.MeshBasicMaterial());
 const anchor=(segment,t)=>({segment,t});
 function dispose(s){s.group.traverse(m=>{m.geometry?.dispose();for(const mat of Array.isArray(m.material)?m.material:m.material?[m.material]:[])mat.dispose();});}
 function displayedHits(s,ray){
-  ray.layers.enableAll();const order=pickingLayers(s),rank=m=>order.findIndex(layer=>m.layers.isEnabled(layer));
-  return ray.intersectObjects(s.group.children,true).filter(h=>!h.object.userData.background)
-    .sort((a,b)=>rank(a.object)-rank(b.object)||visibleHitPoint(a).distanceToSquared(ray.ray.origin)-visibleHitPoint(b).distanceToSquared(ray.ray.origin));
+  ray.layers.enableAll();
+  return sortVisibleHits(ray.intersectObjects(s.group.children,true).filter(h=>!h.object.userData.background),s,ray.ray.origin);
 }
 
 test('four reference structures use a fixed camera and distinct rotation axes',()=>{
@@ -129,7 +128,7 @@ test('C wraps around B: the transverse leg is behind B and the left return is in
   const s=stage(LEVELS[0]),calls=[],renderer={clear:()=>calls.push('clear'),clearDepth:()=>calls.push('depth'),render:(_,c)=>calls.push(c.layers.mask)};
   assert.equal(s.opticalCaps.length,0,'B keeps all six normal faces');
   renderLayers(renderer,new THREE.Scene(),camera,s);
-  assert.deepEqual(calls,['clear',1<<LOWER_BACK_LAYER,'depth',1<<BUILDING_LAYER,'depth',1<<LOWER_FRONT_LAYER,'depth',1<<CONTROL_LAYER,'depth',1<<TRAVELLER_LAYER]);
+  assert.deepEqual(calls,['clear',1<<LOWER_BACK_LAYER,'depth',1<<BUILDING_LAYER,'depth',1<<LOWER_BACK_LAYER,1<<LOWER_FRONT_LAYER,'depth',1<<CONTROL_LAYER,'depth',1<<TRAVELLER_LAYER]);
   assert.equal(camera.layers.mask,1);dispose(s);
 });
 
@@ -144,6 +143,10 @@ test('B crosses in front of C transverse leg, then is occluded by the left retur
       const ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());ray.layers.enableAll();
       const raw=ray.intersectObjects(s.group.children,true);
       if(!raw.some(h=>s.movingSolids.includes(h.object))||!raw.some(h=>h.object===target))continue;
+      if(winner==='C'){
+        const targetDepth=Math.min(...raw.filter(h=>h.object===target).map(h=>h.distance)),backDepth=Math.min(...raw.filter(h=>h.object.layers.isEnabled(LOWER_BACK_LAYER)).map(h=>h.distance));
+        if(targetDepth>backDepth+1e-5)continue;
+      }
       const hit=displayedHits(s,ray)[0];if(winner==='B')assert.ok(s.movingSolids.includes(hit.object),'C transverse incorrectly covers B at '+degrees);else assert.equal(hit.object.layers.mask,1<<LOWER_FRONT_LAYER,'B incorrectly covers C left return at '+degrees);
       checked++;
     }
@@ -151,6 +154,19 @@ test('B crosses in front of C transverse leg, then is occluded by the left retur
   }
   for(let degrees=0;degrees<=90;degrees+=.5){applyMechanismPose(l,s,degrees*Math.PI/180);for(const mesh of s.movingSolids){assert.equal(mesh.layers.mask,1);assert.ok(mesh.material.every(m=>m.visible));assert.equal(mesh.geometry.attributes.isometricDepth,undefined);}}
   dispose(s);
+});
+
+test('C retains a flush continuous corner instead of painting its buried side over the transverse floor',()=>{
+  const s=stage(LEVELS[0]),lower=s.fixedSolids.filter(m=>m.layers.isEnabled(LOWER_BACK_LAYER)||m.layers.isEnabled(LOWER_FRONT_LAYER)),direction=new THREE.Vector3(1,1,1).normalize();
+  let buried=0;
+  for(let i=0;i<=24;i++)for(let j=0;j<=24;j++){
+    const point=new THREE.Vector3(.5+i*.04,.02,-.35+j*.028),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,30),direction.clone().negate());ray.layers.enableAll();
+    const raw=ray.intersectObjects(lower),displayed=sortVisibleHits(raw,s,ray.ray.origin)[0];assert.ok(displayed);
+    assert.ok(displayed.face.normal.clone().transformDirection(displayed.object.matrixWorld).y>.99,'internal vertical face appears over C floor');
+    const floor=raw[0],front=raw.find(h=>h.object.layers.isEnabled(LOWER_FRONT_LAYER));
+    if(front&&front.distance>floor.distance+1e-5)buried++;
+  }
+  assert.ok(buried>0,'must exercise the previously exposed internal corner');dispose(s);
 });
 test('all four destinations use the same small gold emblem without extending goal cubes',()=>{
   for(const l of LEVELS){const s=stage(l);assert.equal(s.seal.userData.emblem,'golden-four-petal');assert.equal(s.seal.children.filter(m=>m.geometry.type==='CircleGeometry').length,5);

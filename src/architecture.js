@@ -123,7 +123,7 @@ export function buildArchitecture(level,p,materials,glow){
   function collect(root){root.updateWorldMatrix(true,true);root.traverse(mesh=>{if(!mesh.geometry)return;mesh.geometry.computeBoundingBox();const b=mesh.geometry.boundingBox;for(const x of [b.min.x,b.max.x])for(const y of [b.min.y,b.max.y])for(const z of [b.min.z,b.max.z])framePoints.push(new THREE.Vector3(x,y,z).applyMatrix4(mesh.matrixWorld));});}
   collect(staticGroup);
   const stage={group,mechanism,knob,controlAnchor:new THREE.Vector3(...level.control),controlInMotion:false,fixedSolids,movingSolids,seal,completionRing,framePoints,shade,depthMeshes,opticalCaps,opticalGroups,foldedOcclusion:level.id==='folded-frame',unifiedDepth:!!level.opticalDepths};
-  const animatedDepthMeshes=depthMeshes.filter(m=>level.opticalDepths?.[m.userData.opticalPart]?.posePower);
+  const animatedDepthMeshes=depthMeshes.filter(m=>{const spec=level.opticalDepths?.[m.userData.opticalPart];return spec?.posePower||spec?.ramps?.some(r=>r.uprightPower);});
   stage.updateOpticalDepth=value=>{
     if(value===opticalAngle)return;
     opticalAngle=value;

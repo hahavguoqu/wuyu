@@ -40,7 +40,7 @@ export const LEVELS=[
   },
   {
     id:'blue-gate',name:'门阶',axis:'z',sign:1,tilt:true,initialOrientation:1,pivot:[0,2,0],base:1.55,
-    opticalDepths:{landing:{ramps:[{axis:'x',start:-2.65,end:-2.95,amount:1.9}]},middle:{ramps:[{axis:'x',start:0,end:2,amount:1.9},{axis:'x',start:4.4,end:5,amount:-.8,gate:{axis:'z',start:-3.25,end:-4.25}}]},'goal-road':{offset:-2,posePower:32}},
+    opticalDepths:{landing:{ramps:[{axis:'x',start:-2.65,end:-2.95,amount:1.9,uprightPower:2}]},middle:{ramps:[{axis:'x',start:0,end:2,amount:1.9,uprightPower:2},{axis:'x',start:4.4,end:5,amount:-.8,gate:{axis:'z',start:-3.25,end:-4.25}}]},'goal-road':{offset:-2,posePower:32}},
     top:'#356d97',bottom:'#9ebdcc',disc:'#e9eee5',fixed:color('#e5e5d7','#b3c9cc','#7894a3'),moving:color('#68b5e5','#4885ac','#2c5d80'),support:color('#dae0ce','#bccbbb','#8da6a2'),
     paths:[{...path('west-road',[[5,2.45,3],[5,2.45,0],[2.33,2.45,0]]),dockEnd:.08},
       {...path('approach',[[-2.33,2.45,0],[-5,2.45,0],[-5,2.45,-3.5]]),dockStart:.08},

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {opticalDepth} from './optics.js';
+import {opticalDepth,rampPoseWeight} from './optics.js';
 
 export const BUILDING_LAYER=0,CONTROL_LAYER=1,TRAVELLER_LAYER=2;
 export const LOWER_BACK_LAYER=3,LOWER_FRONT_LAYER=4;
@@ -91,7 +91,7 @@ gl_Position=projectionMatrix*mvPosition;`);
   const encode=(target,r,amount)=>target.set(r.axis==='x'?0:r.axis==='y'?1:2,r.start,r.end,amount);
   for(let i=0;i<2;i++){
     const ramp=spec?.ramps?.[i];surface.ramps.value[i].set(0,1,0,0);surface.gates.value[i].set(0,1,0,-1);
-    if(ramp){encode(surface.ramps.value[i],ramp,ramp.amount);if(ramp.gate)encode(surface.gates.value[i],ramp.gate,1);}
+    if(ramp){encode(surface.ramps.value[i],ramp,ramp.amount*rampPoseWeight(ramp,angle));if(ramp.gate)encode(surface.gates.value[i],ramp.gate,1);}
   }
 }
 

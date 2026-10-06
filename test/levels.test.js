@@ -68,6 +68,23 @@ test('blue gate requires two turns: upright rear cap before folding the exit bri
   assert.equal(planRoute(net(l,0),cloister,l.goalAnchor),null);
   const exit=planRoute(net(l,1),cloister,l.goalAnchor);assert.ok(exit);assert.ok(exit.some(s=>s.segment==='deck-back'));
 });
+test('the rear blue pillar retains its exposed top and side through forward and reverse folding',()=>{
+  const l=LEVELS[2],s=stage(l),beam=s.movingSolids.find(m=>m.userData.roads?.includes('deck-cap-x')),direction=new THREE.Vector3(1,1,1).normalize();
+  const upright=s.depthMeshes.map(mesh=>Array.from(mesh.geometry.attributes.isometricDepth.array));
+  for(const degree of [.1,.25,.5,...Array.from({length:40},(_,i)=>i+1),35,20,5,.5,.1]){
+    applyMechanismPose(l,s,degree*Math.PI/180);s.group.updateWorldMatrix(true,true);
+    for(const x of [-.3,-.15,0,.15,.3])for(const z of [-.3,-.15,0,.15,.3]){
+      const point=beam.localToWorld(new THREE.Vector3(x,3.15,z)),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());
+      assert.equal(displayedHits(s,ray)[0]?.object,beam,'white platform cuts blue cap at '+degree+' degrees, '+x+','+z);
+    }
+    for(const y of [1.2,1.6,2,2.4,2.8,3])for(const z of [-.3,0,.3]){
+      const point=beam.localToWorld(new THREE.Vector3(.45,y,z)),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());
+      assert.equal(displayedHits(s,ray)[0]?.object,beam,'white platform cuts blue side at '+degree+' degrees, '+y+','+z);
+    }
+  }
+  applyMechanismPose(l,s,0);s.depthMeshes.forEach((mesh,i)=>assert.deepEqual(Array.from(mesh.geometry.attributes.isometricDepth.array),upright[i],'reverse folding must restore the exact dock depth'));
+  dispose(s);
+});
 test('cantilever carries the traveller between three different docking orientations',()=>{
   const l=LEVELS[3],lower=anchor('deck-lower',.75),upper=anchor('deck-upper',.7),landing=anchor('middle',1);
   assert.ok(planRoute(net(l,0),l.startAnchor,lower));assert.equal(planRoute(net(l,0),lower,upper),null);
@@ -126,7 +143,7 @@ test('later optical structures retain complete faces and continuous shared-posit
     }
     for(const value of [0,.31,Math.PI/2-.0011,Math.PI/2-.0009,Math.PI/2,Math.PI/2+.0009]){
       applyMechanismPose(l,s,value);
-      s.depthMeshes.forEach((mesh,i)=>{assert.ok((Array.isArray(mesh.material)?mesh.material:[mesh.material]).every(m=>m.visible));if(!l.opticalDepths[mesh.userData.opticalPart].posePower)assert.deepEqual(Array.from(mesh.geometry.attributes.isometricDepth.array),profiles[i]);});
+      s.depthMeshes.forEach((mesh,i)=>{assert.ok((Array.isArray(mesh.material)?mesh.material:[mesh.material]).every(m=>m.visible));const spec=l.opticalDepths[mesh.userData.opticalPart];if(!spec.posePower&&!spec.ramps?.some(r=>r.uprightPower))assert.deepEqual(Array.from(mesh.geometry.attributes.isometricDepth.array),profiles[i]);});
     }dispose(s);
   }
 });
@@ -306,12 +323,13 @@ test('a traveller using building depth is naturally hidden by a nearer pillar an
 test('a traveller head stays above its own optical floor throughout the depth ramps',()=>{
   const direction=new THREE.Vector3(1,1,1).normalize();
   for(const l of LEVELS.slice(1)){const s=stage(l),body=new THREE.Mesh(new THREE.BoxGeometry(.1,.1,.1),new THREE.MeshBasicMaterial());s.group.add(body);
-    applyMechanismPose(l,s,l.id==='hanging-stair'?3*Math.PI/2:l.tilt?Math.PI/2:0);
+    for(const angle of l.id==='blue-gate'?[0,.3,.8,Math.PI/2]:[l.id==='hanging-stair'?3*Math.PI/2:0]){
+    applyMechanismPose(l,s,angle);
     for(const path of l.paths.filter(p=>l.opticalDepths[p.id]?.ramps))for(let j=0;j<path.points.length-1;j++)for(const t of [.05,.2,.4,.6,.8,.95]){
-      const group=s.opticalGroups.find(g=>g.part===path.id),foot=new THREE.Vector3(...path.points[j]).lerp(new THREE.Vector3(...path.points[j+1]),t);body.position.copy(foot).add(new THREE.Vector3(0,.42,0));setTravellerSurface(body,l,path.id,foot,l.tilt?Math.PI/2:0,group);s.group.updateWorldMatrix(true,true);
+      const group=s.opticalGroups.find(g=>g.part===path.id),foot=new THREE.Vector3(...path.points[j]).lerp(new THREE.Vector3(...path.points[j+1]),t);body.position.copy(foot).add(new THREE.Vector3(0,.42,0));setTravellerSurface(body,l,path.id,foot,angle,group);s.group.updateWorldMatrix(true,true);
       const ray=new THREE.Raycaster(body.position.clone().addScaledVector(direction,40),direction.clone().negate()),raw=ray.intersectObjects([...group.meshes,body]);
       assert.equal(sortVisibleHits(raw,s,ray.ray.origin)[0]?.object,body,l.id+' figure swallowed by its own floor at '+j+':'+t);
-    }dispose(s);
+    }}dispose(s);
   }
 });
 test('two legs animate in opposite directions and return to their resting pose',()=>{

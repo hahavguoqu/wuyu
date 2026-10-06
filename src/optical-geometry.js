@@ -25,3 +25,32 @@ export function opticalBoxGeometry(mesh,spec){
   }
   const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geometry.setAttribute('normal',new THREE.Float32BufferAttribute(normals,3));geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));geometry.setIndex(indices);geometry.groups=groups;geometry.computeBoundingBox();geometry.computeBoundingSphere();return geometry;
 }
+
+// Road boxes overlap at corners. Remove faces wholly buried in another box;
+// otherwise their end edges can survive the depth mask as a thin bright line.
+// Keep partially exposed faces and coplanar exterior surfaces intact.
+export function removeBuriedFaces(meshes){
+  const solids=meshes.map(mesh=>{
+    mesh.updateWorldMatrix(true,false);mesh.geometry.computeBoundingBox();
+    return {mesh,bounds:mesh.geometry.boundingBox.clone(),inverse:mesh.matrixWorld.clone().invert()};
+  });
+  for(const {mesh} of solids){
+    const geometry=mesh.geometry,position=geometry.attributes.position,index=geometry.index,indices=[],groups=[];
+    for(const group of geometry.groups){
+      const start=indices.length;
+      for(let i=group.start;i<group.start+group.count;i+=3){
+        const ids=[index.getX(i),index.getX(i+1),index.getX(i+2)],vertices=ids.map(id=>new THREE.Vector3().fromBufferAttribute(position,id).applyMatrix4(mesh.matrixWorld));
+        const buried=solids.some(other=>{
+          if(other.mesh===mesh)return false;
+          const local=vertices.map(p=>p.clone().applyMatrix4(other.inverse)),bounds=other.bounds;
+          if(!local.every(p=>['x','y','z'].every(axis=>p[axis]>=bounds.min[axis]-1e-6&&p[axis]<=bounds.max[axis]+1e-6)))return false;
+          const center=local.reduce((sum,p)=>sum.add(p),new THREE.Vector3()).multiplyScalar(1/3);
+          return ['x','y','z'].every(axis=>center[axis]>bounds.min[axis]+1e-6&&center[axis]<bounds.max[axis]-1e-6);
+        });
+        if(!buried)indices.push(...ids);
+      }
+      if(indices.length>start)groups.push({...group,start,count:indices.length-start});
+    }
+    geometry.setIndex(indices);geometry.groups=groups;
+  }
+}

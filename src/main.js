@@ -90,7 +90,7 @@ function loadLevel(index,focus=false){
   clearTimeout(completionTimer);soundTimers.forEach(clearTimeout);soundTimers.clear();menuOpen=false;$('game-menu').hidden=true;$('completion').hidden=true;$('completion').inert=false;
   for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=false;
   for(const id of ['help-panel','level-panel'])$(id).hidden=true;for(const id of ['help','chapters'])$(id).setAttribute('aria-expanded','false');
-  levelIndex=THREE.MathUtils.clamp(index,0,unlocked);level=LEVELS[levelIndex];points=levelPoints(level);location={segment:'west-road',t:0};orientation=0;travel=0;bridgeAngle=0;viewAngle=level.initialView;mechanismMotion=null;walking=null;won=false;desiredHeading=level.initialView;
+  levelIndex=THREE.MathUtils.clamp(index,0,unlocked);level=LEVELS[levelIndex];points=levelPoints(level);location={segment:'west-road',t:0};orientation=level.initialOrientation??0;travel=0;bridgeAngle=orientation*Math.PI/2;viewAngle=level.initialView;mechanismMotion=null;walking=null;won=false;desiredHeading=level.initialView;
   clearStage();architecture=buildArchitecture(level,points,materials,glow);world.add(architecture.group);actor=createTraveller();actor.root.scale.setScalar(.65);setLayer(actor.root,architecture.unifiedDepth?BUILDING_LAYER:TRAVELLER_LAYER);world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
   $('game').style.background='linear-gradient(180deg,'+level.top+' 0%,'+level.bottom+' 100%)';
   $('sky-disc').hidden=!level.disc;$('sky-disc').style.background=level.disc||'transparent';$('game').style.setProperty('--ink',level.id==='blue-gate'?'#e0e8e5':'#496562');$('game').style.setProperty('--muted',level.id==='blue-gate'?'#cfdfdf':'#647b79');

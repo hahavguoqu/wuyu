@@ -18,6 +18,23 @@ function displayedHits(s,ray){
   ray.layers.enableAll();
   return sortVisibleHits(ray.intersectObjects(s.group.children,true).filter(h=>!h.object.userData.background),s,ray.ray.origin);
 }
+function minimumFoldTurns(level){
+  const networks=[net(level,0),net(level,1)],graph=new Map();
+  const add=(a,b,cost)=>{if(!graph.has(a))graph.set(a,[]);graph.get(a).push({to:b,cost});};
+  for(const [q,n] of networks.entries()){
+    for(const s of n.segments.filter(s=>s.enabled))for(const [a,b] of [[s.a,s.b],[s.b,s.a]])add(q+'|'+a,q+'|'+b,0);
+    for(const link of n.links)for(const [a,b] of [[link.a,link.b],[link.b,link.a]])add(q+'|'+a,q+'|'+b,0);
+    for(const s of n.segments)for(const id of [s.a,s.b])add(q+'|'+id,(1-q)+'|'+id,1);
+  }
+  const start=level.segments.find(s=>s.id===level.startAnchor.segment).a,goal=level.segments.find(s=>s.id===level.goalAnchor.segment).b;
+  const distance=new Map([[(level.initialOrientation??0)+'|'+start,0]]),visited=new Set();
+  while(true){
+    let current,min=Infinity;
+    for(const [id,cost] of distance)if(!visited.has(id)&&cost<min){current=id;min=cost;}
+    if(!current)return Infinity;if(current.endsWith('|'+goal))return min;visited.add(current);
+    for(const edge of graph.get(current)||[])if(min+edge.cost<(distance.get(edge.to)??Infinity))distance.set(edge.to,min+edge.cost);
+  }
+}
 
 test('four reference structures use a fixed camera and distinct rotation axes',()=>{
   assert.equal(LEVELS.length,4);assert.equal(LEVELS.filter(l=>l.lesson).length,2);
@@ -38,11 +55,18 @@ test('double cloister climbs an optical corner and carries its rider on the uppe
   assert.equal(planRoute(net(l,1),middle,l.goalAnchor),null);assert.equal(planRoute(net(l,1),l.startAnchor,middle),null);
   assert.equal(planRoute(net(l,2),middle,l.goalAnchor),null);
 });
-test('blue gate joins both beams to a perimeter of two stair flights',()=>{
-  const l=LEVELS[2];assert.equal(planRoute(net(l,0),l.startAnchor,l.goalAnchor),null);
-  const route=planRoute(net(l,1),l.startAnchor,l.goalAnchor);assert.ok(route);
-  assert.equal(route.filter(s=>s.segment?.includes('-rise-')).length,13);
-  for(const id of ['deck-front','deck-back','middle-1'])assert.ok(route.some(s=>s.segment===id));
+test('blue gate requires two turns: upright rear cap before folding the exit bridge',()=>{
+  const l=LEVELS[2],landing=anchor('landing',.25),cloister=anchor('middle-2',1);
+  assert.equal(l.initialOrientation,1);
+  assert.equal(minimumFoldTurns(l),2,'including riding a rotating beam cannot skip the rear cap');
+  for(const q of [0,1])assert.equal(planRoute(net(l,q),l.startAnchor,l.goalAnchor),null,'no single pose solves the level');
+  const approach=planRoute(net(l,1),l.startAnchor,landing);assert.ok(approach);
+  assert.equal(approach.filter(s=>s.segment?.includes('-rise-')).length,13);assert.ok(approach.some(s=>s.segment==='deck-front'));
+  assert.equal(planRoute(net(l,1),landing,cloister),null,'folded cap leaves a square gap, not a corner shortcut');
+  const upright=planRoute(net(l,0),landing,cloister);assert.ok(upright);
+  for(const id of ['deck-cap-x','deck-cap-z','middle-1'])assert.ok(upright.some(s=>s.segment===id),id);
+  assert.equal(planRoute(net(l,0),cloister,l.goalAnchor),null);
+  const exit=planRoute(net(l,1),cloister,l.goalAnchor);assert.ok(exit);assert.ok(exit.some(s=>s.segment==='deck-back'));
 });
 test('cantilever carries the traveller between three different docking orientations',()=>{
   const l=LEVELS[3],lower=anchor('deck-lower',.75),upper=anchor('deck-upper',.7),landing=anchor('middle',1);
@@ -79,7 +103,7 @@ test('a fast turn stops before a thin obstruction instead of crossing it',()=>{
 });
 test('every active road and stair tread has a visible floor at its navigation height',()=>{
   for(const l of LEVELS){const s=stage(l),caster=new THREE.Raycaster();caster.layers.enableAll();
-    for(const q of l.tilt?[1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);s.group.updateWorldMatrix(true,true);const n=net(l,q);
+    for(const q of l.tilt?[0,1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);s.group.updateWorldMatrix(true,true);const n=net(l,q);
       for(const segment of n.segments.filter(s=>s.enabled&&!s.riser))for(const t of [.1,.5,.9]){
         const point=anchorPoint(n,anchor(segment.id,t));caster.set(point.clone().addScaledVector(segment.up,.05),segment.up.clone().negate());
         assert.ok(caster.intersectObjects(s.group.children,true).some(h=>h.distance<.06&&h.object.userData.roads?.includes(segment.id)),l.id+' '+segment.id+' '+t);
@@ -108,7 +132,7 @@ test('later optical structures retain complete faces and continuous shared-posit
 });
 test('walkable surfaces leave room for the feet and stair landings do not swallow a tread',()=>{
   for(const l of LEVELS){const s=stage(l);
-    for(const q of l.tilt?[1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);const n=net(l,q);
+    for(const q of l.tilt?[0,1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);const n=net(l,q);
       for(const segment of n.segments.filter(s=>s.enabled&&!s.riser))for(const t of [.1,.5,.9]){
         const foot=anchorPoint(n,anchor(segment.id,t)).addScaledVector(segment.up,.06);
         for(const mesh of [...s.fixedSolids,...s.movingSolids]){const local=mesh.worldToLocal(foot.clone()),bbox=mesh.geometry.boundingBox.clone().expandByScalar(-.002);assert.ok(!bbox.containsPoint(local),l.id+' '+segment.id+' feet inside solid '+mesh.position.toArray());}
@@ -205,7 +229,7 @@ test('depth-correct picking projects to the same pixel as real geometry',()=>{
 test('optical and docking seams show continuous floors across the road width',()=>{
   const direction=new THREE.Vector3(1,1,1).normalize();
   for(const l of LEVELS){const s=stage(l);
-    for(const q of l.tilt?[1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);s.group.updateWorldMatrix(true,true);const n=net(l,q);
+    for(const q of l.tilt?[0,1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);s.group.updateWorldMatrix(true,true);const n=net(l,q);
       for(const link of n.links.filter(link=>link.states)){
         const find=id=>{const segment=n.segments.find(segment=>segment.a===id||segment.b===id);return {segment,point:segment.a===id?segment.p0:segment.p1};};
         const a=find(link.a),b=find(link.b),axis=a.segment.p1.clone().sub(a.segment.p0).normalize(),across=axis.clone().cross(a.segment.up).normalize();
@@ -237,7 +261,7 @@ test('destination emblems remain visible through the mechanism sweep',()=>{
 test('later optical joints remain walkable across both sides of the contact, not just the centre pixel',()=>{
   const direction=new THREE.Vector3(1,1,1).normalize();
   for(const l of LEVELS.slice(1)){const s=stage(l);
-    for(const q of l.tilt?[1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);const n=net(l,q);
+    for(const q of l.tilt?[0,1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);const n=net(l,q);
       for(const link of n.links.filter(link=>link.states)){
         const a=n.segments.find(segment=>segment.a===link.a||segment.b===link.a),p=a.a===link.a?a.p0:a.p1;
         const along=a.p1.clone().sub(a.p0).normalize(),across=along.clone().cross(a.up).normalize();
@@ -252,7 +276,7 @@ test('later optical joints remain walkable across both sides of the contact, not
 });
 
 test('later travellers follow the displayed depth of their carrier on either side of an optical handoff',()=>{
-  for(const l of LEVELS.slice(1))for(const q of l.tilt?[1]:[0,1,3]){const n=net(l,q);
+  for(const l of LEVELS.slice(1))for(const q of l.tilt?[0,1]:[0,1,3]){const n=net(l,q);
     for(const link of n.links.filter(link=>link.states)){
       const endpoints=[link.a,link.b].map(id=>{const segment=n.segments.find(s=>s.a===id||s.b===id),point=segment.a===id?segment.p0:segment.p1;return point.clone().addScalar(opticalDepth(l,opticalPart(l,segment.id),point,q*Math.PI/2));});
       assert.ok(endpoints[0].distanceTo(endpoints[1])<.11,l.id+' traveller depth jump at '+link.a);
@@ -260,15 +284,15 @@ test('later travellers follow the displayed depth of their carrier on either sid
   }
 });
 
-test('later cloister corners keep their own exterior surfaces ahead of buried faces for picking',()=>{
+test('later cloister corners expose continuous exterior floors without buried end faces',()=>{
   const direction=new THREE.Vector3(1,1,1).normalize();let buried=0;
-  for(const l of LEVELS.slice(1)){const s=stage(l),group=s.opticalGroups[0];assert.ok(group);
-    for(const path of l.paths.filter(p=>p.id===group.part))for(const point of path.points.slice(1,-1))for(const x of [-.3,0,.3])for(const z of [-.3,0,.3]){
+  for(const l of LEVELS.slice(1)){const s=stage(l);assert.ok(s.opticalGroups.length);
+    for(const group of s.opticalGroups)for(const path of l.paths.filter(p=>p.id===group.part))for(const point of path.points.slice(1,-1))for(const x of [-.3,0,.3])for(const z of [-.3,0,.3]){
       const target=new THREE.Vector3(...point).add(new THREE.Vector3(x,.02,z)),ray=new THREE.Raycaster(target.clone().addScaledVector(direction,40),direction.clone().negate());ray.layers.enableAll();
       const raw=ray.intersectObjects(group.meshes);const sorted=sortVisibleHits(raw,s,ray.ray.origin);assert.ok(sorted.length);assert.ok(sorted[0].face.normal.y>.99,l.id+' buried face covers corner');
       buried+=raw.filter(h=>h.distance>raw[0].distance+.002).length;
     }dispose(s);
-  }assert.ok(buried>0);
+  }assert.equal(buried,0,'internal end faces must not leave bright edges along the exterior');
 });
 
 test('a traveller using building depth is naturally hidden by a nearer pillar and revealed after passing it',()=>{
@@ -281,11 +305,11 @@ test('a traveller using building depth is naturally hidden by a nearer pillar an
 
 test('a traveller head stays above its own optical floor throughout the depth ramps',()=>{
   const direction=new THREE.Vector3(1,1,1).normalize();
-  for(const l of LEVELS.slice(1)){const s=stage(l),path=l.paths.find(p=>p.id==='middle'),body=new THREE.Mesh(new THREE.BoxGeometry(.1,.1,.1),new THREE.MeshBasicMaterial());s.group.add(body);
+  for(const l of LEVELS.slice(1)){const s=stage(l),body=new THREE.Mesh(new THREE.BoxGeometry(.1,.1,.1),new THREE.MeshBasicMaterial());s.group.add(body);
     applyMechanismPose(l,s,l.id==='hanging-stair'?3*Math.PI/2:l.tilt?Math.PI/2:0);
-    for(let j=0;j<path.points.length-1;j++)for(const t of [.05,.2,.4,.6,.8,.95]){
-      const foot=new THREE.Vector3(...path.points[j]).lerp(new THREE.Vector3(...path.points[j+1]),t);body.position.copy(foot).add(new THREE.Vector3(0,.42,0));setTravellerSurface(body,l,'middle',foot,l.tilt?Math.PI/2:0,s.opticalGroups[0]);s.group.updateWorldMatrix(true,true);
-      const ray=new THREE.Raycaster(body.position.clone().addScaledVector(direction,40),direction.clone().negate()),raw=ray.intersectObjects([...s.opticalGroups[0].meshes,body]);
+    for(const path of l.paths.filter(p=>l.opticalDepths[p.id]?.ramps))for(let j=0;j<path.points.length-1;j++)for(const t of [.05,.2,.4,.6,.8,.95]){
+      const group=s.opticalGroups.find(g=>g.part===path.id),foot=new THREE.Vector3(...path.points[j]).lerp(new THREE.Vector3(...path.points[j+1]),t);body.position.copy(foot).add(new THREE.Vector3(0,.42,0));setTravellerSurface(body,l,path.id,foot,l.tilt?Math.PI/2:0,group);s.group.updateWorldMatrix(true,true);
+      const ray=new THREE.Raycaster(body.position.clone().addScaledVector(direction,40),direction.clone().negate()),raw=ray.intersectObjects([...group.meshes,body]);
       assert.equal(sortVisibleHits(raw,s,ray.ray.origin)[0]?.object,body,l.id+' figure swallowed by its own floor at '+j+':'+t);
     }dispose(s);
   }

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {prepareColliders,applyMechanismPose} from './mechanism.js';
 import {setDepthProfile,setLayer,CONTROL_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from './rendering.js';
 import {opticalDepth} from './optics.js';
-import {opticalBoxGeometry} from './optical-geometry.js';
+import {opticalBoxGeometry,removeBuriedFaces} from './optical-geometry.js';
 
 const normals=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].map(n=>new THREE.Vector3(...n));
 export function buildArchitecture(level,p,materials,glow){
@@ -83,6 +83,7 @@ export function buildArchitecture(level,p,materials,glow){
   for(const spec of level.beams){
     box(spec.size,spec.at,spec.support?level.support:level.moving,mechanism,spec.roads);
   }
+  for(const group of opticalGroups)removeBuriedFaces(group.meshes);
   const flat=(color)=>new THREE.MeshBasicMaterial({color});
   function add(geometry,material,at,parent=staticGroup){const mesh=new THREE.Mesh(geometry,material);mesh.position.set(...at);parent.add(mesh);return mesh;}
   if(level.bearing){

@@ -8,6 +8,7 @@ import {applyMechanismPose,collisionPairs,safeMechanismValue,prepareColliders} f
 import {createTraveller} from '../src/character.js';
 import {rotationDetent,angularDelta} from '../src/interaction.js';
 import {setLayer,renderLayers,visibleHitPoint,BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER} from '../src/rendering.js';
+import {foldDepth,displayAnchor,installTravellerShear,travellerShear} from '../src/optical-depth.js';
 const camera=new THREE.OrthographicCamera(-12,12,12,-12,.1,100);camera.position.set(18,18,18);camera.lookAt(0,0,0);camera.updateMatrixWorld();
 const net=(level,q)=>buildNavigation(level,{orientation:q,bridgeAngle:q*Math.PI/2},camera);
 const stage=level=>buildArchitecture(level,levelPoints(level),{},new THREE.MeshBasicMaterial());
@@ -90,7 +91,7 @@ test('architecture uses flat per-face colors and keeps the lit top face after a 
   }
 });
 test('optical end faces retain continuous depth and never switch visibility at detents',()=>{
-  for(const l of LEVELS){const s=stage(l);assert.ok(s.opticalCaps.length,l.id);
+  for(const l of LEVELS.slice(1)){const s=stage(l);assert.ok(s.opticalCaps.length,l.id);
     const profiles=s.opticalCaps.map(({mesh})=>Array.from(mesh.geometry.attributes.isometricDepth.array));
     for(const value of [0,.31,Math.PI/2-.0011,Math.PI/2-.0009,Math.PI/2,Math.PI/2+.0009]){
       applyMechanismPose(l,s,value);
@@ -118,6 +119,87 @@ test('the render passes preserve control visibility and draw the traveller last 
   const actor=createTraveller();setLayer(actor.root,TRAVELLER_LAYER);actor.root.traverse(o=>assert.equal(o.layers.mask,1<<TRAVELLER_LAYER));
   const calls=[],renderer={clear:()=>calls.push('clear'),clearDepth:()=>calls.push('depth'),render:(_,c)=>calls.push(c.layers.mask)};
   renderLayers(renderer,new THREE.Scene(),camera);assert.deepEqual(calls,['clear',1<<BUILDING_LAYER,'depth',1<<CONTROL_LAYER,'depth',1<<TRAVELLER_LAYER]);assert.equal(camera.layers.mask,1);
+});
+
+test('the first puzzle renders actor, controls and architecture together without clearing depth',()=>{
+  const s=stage(LEVELS[0]),calls=[],renderer={clear:()=>calls.push('clear'),clearDepth:()=>calls.push('depth'),render:(_,c)=>calls.push(c.layers.mask)};
+  assert.equal(s.sharedDepth,true);assert.equal(s.opticalCaps.length,0);
+  renderLayers(renderer,new THREE.Scene(),camera,s.sharedDepth);assert.deepEqual(calls,['clear',7]);assert.equal(camera.layers.mask,1);dispose(s);
+});
+
+test('first-puzzle optical joints have identical displayed positions on both sides',()=>{
+  const l=LEVELS[0],n=net(l,1);
+  for(const link of n.links){
+    const find=id=>{const s=n.segments.find(s=>s.a===id||s.b===id);return anchor(s.id,s.a===id?0:1);};
+    assert.ok(displayAnchor(l,n,find(link.a),Math.PI/2).distanceTo(displayAnchor(l,n,find(link.b),Math.PI/2))<1e-8,link.a+' -> '+link.b);
+  }
+});
+
+test('the folded floor and its rider share continuous depth throughout a turn',()=>{
+  const l=LEVELS[0],s=stage(l),mesh=s.movingSolids.find(m=>m.userData.foldedDepth),direction=new THREE.Vector3(1,1,1).normalize();
+  const buffer=mesh.geometry.attributes.isometricDepth;
+  for(let i=0;i<=24;i++){
+    const angle=i/24*Math.PI/2;applyMechanismPose(l,s,angle);const n=buildNavigation(l,{orientation:0,bridgeAngle:angle},camera);
+    assert.equal(mesh.geometry.attributes.isometricDepth,buffer,'reuse the live depth buffer');assert.ok(mesh.material.every(m=>m.visible));
+    for(let j=1;j<20;j++){
+      const a=anchor('deck-fold',j/20),actual=anchorPoint(n,a),displayed=displayAnchor(l,n,a,angle);
+      assert.ok(overlapError(actual,displayed,camera)<1e-8);
+      const ray=new THREE.Raycaster(actual.clone().addScaledVector(direction,30),direction.clone().negate()),hits=ray.intersectObject(mesh);
+      hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(ray.ray.origin)-visibleHitPoint(b).distanceToSquared(ray.ray.origin));
+      assert.ok(visibleHitPoint(hits[0]).distanceTo(displayed)<1e-6,'rider floats or sinks: '+i+','+j);
+    }
+  }
+  assert.ok(Math.abs(foldDepth(-4,0))<1e-9);assert.equal(foldDepth(-4,Math.PI/2),-6);dispose(s);
+});
+
+test('first-puzzle columns occlude parts of the traveller near the corner but leave the walking line clear',()=>{
+  const l=LEVELS[0],s=stage(l),direction=new THREE.Vector3(1,1,1).normalize();
+  const poles=s.fixedSolids.filter(m=>m.geometry.parameters.height===5.1);
+  assert.equal(poles.length,3);
+  const occluded=(x,z)=>{
+    let count=0;
+    for(const dx of [-.09,0,.09])for(const y of [.14,.27,.43]){
+      const sample=new THREE.Vector3(x+dx,y,z),ray=new THREE.Raycaster(sample.clone().addScaledVector(direction,20),direction.clone().negate());
+      if(ray.intersectObjects(poles).some(h=>h.distance<20))count++;
+    }
+    return count;
+  };
+  assert.equal(occluded(.8,0),0);const corner=occluded(0,0);assert.ok(corner>0&&corner<9,'partial body occlusion at the corner');assert.equal(occluded(0,-.8),0);
+  for(const segment of net(l,0).segments.filter(s=>s.id.startsWith('west-road')))for(let i=0;i<=40;i++){
+    const foot=anchorPoint(net(l,0),anchor(segment.id,i/40));
+    for(const pole of poles){const local=pole.worldToLocal(foot.clone());assert.ok(Math.abs(local.z)>.2,'column intersects character clearance');}
+  }
+  dispose(s);
+});
+
+test('first-puzzle body depth is continuous at both fold joints and stays in front of its own floor',()=>{
+  const l=LEVELS[0],s=stage(l),n=net(l,1),actor=createTraveller(),updateDepth=installTravellerShear(actor.root);
+  actor.root.scale.setScalar(.65);setLayer(actor.root,TRAVELLER_LAYER);s.group.add(actor.root);
+  assert.ok(travellerShear(l,anchor('west-road',1),Math.PI/2).length()<1e-9,'columns retain natural body depth');
+  for(const [a,b]of[[anchor('west-road-1',1),anchor('deck-fold',1)],[anchor('deck-fold',0),anchor('deck-upper',1)]])
+    assert.ok(travellerShear(l,a,Math.PI/2).distanceTo(travellerShear(l,b,Math.PI/2))<1e-9,'no model depth jump at joint');
+  applyMechanismPose(l,s,Math.PI/2);
+  const direction=new THREE.Vector3(1,1,1).normalize();
+  for(const position of [anchor('west-road-1',.999),anchor('deck-fold',.999),anchor('deck-fold',.6),anchor('deck-fold',.01),anchor('deck-upper',.99)]){
+    actor.root.position.copy(displayAnchor(l,n,position,Math.PI/2));actor.root.rotation.y=-Math.PI/2;updateDepth(l,position,Math.PI/2);s.group.updateWorldMatrix(true,true);
+    for(const height of [.18,.28,.43])for(const dx of [-.035,0,.035]){
+      const point=actor.root.position.clone().add(new THREE.Vector3(dx,height,0)),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,30),direction.clone().negate());ray.layers.enableAll();
+      const hits=ray.intersectObjects(s.group.children,true);hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(ray.ray.origin)-visibleHitPoint(b).distanceToSquared(ray.ray.origin));
+      let hit=hits[0]?.object;while(hit&&hit!==actor.root)hit=hit.parent;assert.equal(hit,actor.root,'own floor hides body '+position.segment+' '+position.t+' height '+height);
+    }
+  }
+  dispose(s);
+});
+
+test('the first crank remains directly pickable in the shared depth pass throughout rotation',()=>{
+  const l=LEVELS[0],s=stage(l),direction=new THREE.Vector3(1,1,1).normalize();
+  const ray=new THREE.Raycaster(s.controlAnchor.clone().addScaledVector(direction,30),direction.clone().negate());ray.layers.enableAll();
+  for(let i=0;i<=24;i++){
+    applyMechanismPose(l,s,i/24*Math.PI/2);
+    const hits=ray.intersectObjects(s.group.children,true);hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(ray.ray.origin)-visibleHitPoint(b).distanceToSquared(ray.ray.origin));
+    let object=hits[0]?.object;while(object&&!object.userData.control)object=object.parent;assert.equal(object?.userData.control,'mechanism','hidden crank at pose '+i);
+  }
+  dispose(s);
 });
 test('all four destinations use the same small gold emblem without extending goal cubes',()=>{
   for(const l of LEVELS){const s=stage(l);assert.equal(s.seal.userData.emblem,'golden-four-petal');assert.equal(s.seal.children.filter(m=>m.geometry.type==='CircleGeometry').length,5);

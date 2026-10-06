@@ -15,7 +15,7 @@ export const LEVELS=[
     top:'#b7d5d3',bottom:'#d4e1d2',fixed:color('#dfdfce','#c3c5b5','#86948b'),moving:color('#a0d0c0','#66a997','#3d7b73'),support:color('#a9ad92','#929981','#737e69'),
     paths:[path('west-road',[[4.8,0,0],[0,0,0],[0,0,-2]]),path('upper',[[3,6,0],[0,6,0],[0,6,-4]])],
     goalPath:'upper',goalMark:'petal',
-    fixedBoxes:[beam([1.2,.9,.9],[5.4,-.45,0]),beam([.9,2.4,.9],[6,.3,0]),...[-.32,0,.32].map(z=>({...beam([.085,5.1,.085],[0,2.55,z]),support:true}))],
+    fixedBoxes:[beam([1.2,.9,.9],[5.4,-.45,0]),beam([.9,2.4,.9],[6,.3,0]),...[-.32,0,.32].map(x=>({...beam([.085,5.1,.085],[x,2.55,.32]),support:true}))],
     beams:[beam([3,.9,.9],[-1.5,0,0],['deck-upper']),beam([.9,4,.9],[0,-2,0],['deck-fold']),beam([.9,.9,.9],[0,0,0],['deck-upper','deck-fold'])],
     decks:[deck('deck-upper',[-3,0,.45],[0,0,.45],[0,0,1],[1]),deck('deck-fold',[0,0,.45],[0,-4,.45],[0,0,1],[1])],
     joints:[joint('west-road:2','deck-fold:1',[1]),joint('deck-fold:0','deck-upper:1',[1]),joint('deck-upper:0','upper:0',[1])],

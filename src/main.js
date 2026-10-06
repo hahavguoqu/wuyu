@@ -6,7 +6,6 @@ import {createTraveller} from './character.js';
 import {rotationDetent,travelFromDrag,angularDelta} from './interaction.js';
 import {applyMechanismPose,safeMechanismValue} from './mechanism.js';
 import {setLayer,renderLayers,visibleHitPoint,TRAVELLER_LAYER,CONTROL_LAYER,BUILDING_LAYER} from './rendering.js';
-import {displayAnchor,installTravellerShear} from './optical-depth.js';
 import './style.css';
 const $=id=>document.getElementById(id),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const walkingSpeed=(reducedMotion?5:1.45)*1.5;
@@ -45,8 +44,7 @@ function tone(freq=440,length=.25){
   const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.value=freq;gain.gain.setValueAtTime(0,audioContext.currentTime);gain.gain.linearRampToValueAtTime(.045,audioContext.currentTime+.025);gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+length);osc.connect(gain).connect(audioContext.destination);osc.start();osc.stop(audioContext.currentTime+length);
 }
 function updateLocation(){
-  actor.root.position.copy(displayAnchor(level,navigation(),location,bridgeAngle));
-  actor.updateDepth?.(level,location,bridgeAngle);
+  actor.root.position.copy(anchorPoint(navigation(),location));
   $('start-marker').classList.toggle('current',location.segment==='west-road'&&location.t<.01);
   const center=centerAnchor(level);$('center-marker').classList.toggle('current',location.segment===center.segment&&Math.abs(location.t-center.t)<.025);
   Object.assign($('game').dataset,{segment:location.segment,position:String(location.t)});
@@ -90,7 +88,7 @@ function loadLevel(index,focus=false){
   for(const selector of ['.topbar','#markers','.controls'])document.querySelector(selector).inert=false;
   for(const id of ['help-panel','level-panel'])$(id).hidden=true;for(const id of ['help','chapters'])$(id).setAttribute('aria-expanded','false');
   levelIndex=THREE.MathUtils.clamp(index,0,unlocked);level=LEVELS[levelIndex];points=levelPoints(level);location={segment:'west-road',t:0};orientation=0;travel=0;bridgeAngle=0;viewAngle=level.initialView;mechanismMotion=null;walking=null;won=false;desiredHeading=level.initialView;
-  clearStage();architecture=buildArchitecture(level,points,materials,glow);world.add(architecture.group);actor=createTraveller();if(architecture.sharedDepth)actor.updateDepth=installTravellerShear(actor.root);actor.root.scale.setScalar(.65);setLayer(actor.root,TRAVELLER_LAYER);world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
+  clearStage();architecture=buildArchitecture(level,points,materials,glow);world.add(architecture.group);actor=createTraveller();actor.root.scale.setScalar(.65);setLayer(actor.root,TRAVELLER_LAYER);world.add(actor.root);actor.root.rotation.y=desiredHeading;applyMechanism();updateLocation();
   $('game').style.background='linear-gradient(180deg,'+level.top+' 0%,'+level.bottom+' 100%)';
   $('sky-disc').hidden=!level.disc;$('sky-disc').style.background=level.disc||'transparent';$('game').style.setProperty('--ink',level.id==='blue-gate'?'#e0e8e5':'#496562');$('game').style.setProperty('--muted',level.id==='blue-gate'?'#cfdfdf':'#647b79');
   $('landing-markers').replaceChildren();level.landmarks.forEach((target,i)=>{const button=document.createElement('button');button.className='world-marker';button.setAttribute('aria-label',target.label);button.dataset.landmark=i;button.innerHTML='<span></span>';button.addEventListener('click',()=>walkToAnchor(target));$('landing-markers').append(button);});
@@ -178,11 +176,9 @@ const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 function pickInteraction(event){
   const rect=renderer.domElement.getBoundingClientRect();pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
   let hit;
-  // The first puzzle shares depth for buildings, controls and the traveller.
-  // Other puzzles retain their existing passes until their joins are authored.
-  for(const layer of architecture.sharedDepth?[null]:[TRAVELLER_LAYER,CONTROL_LAYER,BUILDING_LAYER]){
-    if(layer===null){raycaster.layers.set(BUILDING_LAYER);raycaster.layers.enable(CONTROL_LAYER);raycaster.layers.enable(TRAVELLER_LAYER);}
-    else raycaster.layers.set(layer);
+  // Pick the same foreground layers that are visible on screen.
+  for(const layer of [TRAVELLER_LAYER,CONTROL_LAYER,BUILDING_LAYER]){
+    raycaster.layers.set(layer);
     const hits=raycaster.intersectObjects(world.children,true);
     hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(camera.position)-visibleHitPoint(b).distanceToSquared(camera.position));
     if(hits.length){hit=hits[0];break;}
@@ -255,5 +251,5 @@ renderer.setAnimationLoop(time=>{
   const up=navigation().segments.find(s=>s.id===location.segment)?.up||new THREE.Vector3(0,1,0);
   const targetPose=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),up).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),desiredHeading));
   actor.root.quaternion.slerp(targetPose,Math.min(delta*12,1));actor.pose(elapsed*1.5,!!walking,reducedMotion);
-  if(won&&!reducedMotion)architecture.completionRing.scale.setScalar(1+Math.sin(elapsed*2)*.025);renderLayers(renderer,scene,camera,architecture.sharedDepth);
+  if(won&&!reducedMotion)architecture.completionRing.scale.setScalar(1+Math.sin(elapsed*2)*.025);renderLayers(renderer,scene,camera);
 });

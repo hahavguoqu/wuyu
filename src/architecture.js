@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import {prepareColliders,applyMechanismPose} from './mechanism.js';
 import {setDepthProfile,setLayer,CONTROL_LAYER} from './rendering.js';
-import {foldDepth} from './optical-depth.js';
 
 const normals=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].map(n=>new THREE.Vector3(...n));
 export function buildArchitecture(level,p,materials,glow){
@@ -57,10 +56,7 @@ export function buildArchitecture(level,p,materials,glow){
   }
   for(const spec of level.beams){
     const mesh=box(spec.size,spec.at,spec.support?level.support:level.moving,mechanism,spec.roads);
-    if(level.id==='folded-frame'&&spec.roads.includes('deck-fold')&&spec.size[1]===4){
-      depth(mesh,point=>foldDepth(point.y+mesh.position.y,0));
-      mesh.userData.foldedDepth=true;
-    }
+    if(level.id==='folded-frame'&&spec.roads.includes('deck-fold')&&spec.size[1]===4)backCap(mesh,3);
     if(level.id==='blue-gate'&&spec.roads.includes('deck-back'))backCap(mesh,3);
     if(level.id==='hanging-stair'&&spec.roads.includes('deck-upper')&&spec.size[2]===3)backCap(mesh,5);
   }
@@ -101,12 +97,7 @@ export function buildArchitecture(level,p,materials,glow){
   const framePoints=[];
   function collect(root){root.updateWorldMatrix(true,true);root.traverse(mesh=>{if(!mesh.geometry)return;mesh.geometry.computeBoundingBox();const b=mesh.geometry.boundingBox;for(const x of [b.min.x,b.max.x])for(const y of [b.min.y,b.max.y])for(const z of [b.min.z,b.max.z])framePoints.push(new THREE.Vector3(x,y,z).applyMatrix4(mesh.matrixWorld));});}
   collect(staticGroup);
-  const sharedDepth=level.id==='folded-frame';
-  function updateDepth(angle){
-    if(!sharedDepth)return;
-    for(const mesh of depthMeshes.filter(m=>m.userData.foldedDepth))setDepthProfile(mesh,point=>foldDepth(point.y+mesh.position.y,angle));
-  }
-  const stage={group,mechanism,knob,controlAnchor:new THREE.Vector3(...level.control),controlInMotion:false,fixedSolids,movingSolids,seal,completionRing,framePoints,shade,depthMeshes,opticalCaps,sharedDepth,updateDepth};
+  const stage={group,mechanism,knob,controlAnchor:new THREE.Vector3(...level.control),controlInMotion:false,fixedSolids,movingSolids,seal,completionRing,framePoints,shade,depthMeshes,opticalCaps};
   for(let i=0;i<=24;i++){applyMechanismPose(level,stage,i/24*(level.tilt?Math.PI/2:Math.PI*2));collect(mechanism);}applyMechanismPose(level,stage,0);
   for(const point of [p.start,p.goal])framePoints.push(point.clone().add(new THREE.Vector3(0,.65,0)));
   if(level.id!=='folded-frame'){

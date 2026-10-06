@@ -6,7 +6,7 @@ export function applyMechanismPose(level,stage,value,visual=true){
   stage.mechanism.quaternion.copy(mechanismQuaternion(level,value));
   stage.mechanism.updateWorldMatrix(true,true);
   if(stage.knob)stage.knob.rotation.z=-value;
-  if(visual){stage.updateDepth?.(value);stage.shade?.();}
+  if(visual)stage.shade?.();
 }
 export function prepareColliders(stage){
   stage.group.updateWorldMatrix(true,true);

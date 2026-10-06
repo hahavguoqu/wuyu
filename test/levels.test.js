@@ -6,7 +6,7 @@ import {buildNavigation,anchorPoint,planRoute,closestAnchor} from '../src/naviga
 import {buildArchitecture} from '../src/architecture.js';
 import {applyMechanismPose,collisionPairs,safeMechanismValue,prepareColliders} from '../src/mechanism.js';
 import {createTraveller} from '../src/character.js';
-import {rotationDetent,angularDelta} from '../src/interaction.js';
+import {rotationDetent,angularDelta,rotationFromCircularDrag} from '../src/interaction.js';
 import {setLayer,renderLayers,visibleHitPoint,sortVisibleHits,setTravellerSurface,BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from '../src/rendering.js';
 import {opticalDepth,opticalPart} from '../src/optics.js';
 const camera=new THREE.OrthographicCamera(-12,12,12,-12,.1,100);camera.position.set(18,18,18);camera.lookAt(0,0,0);camera.updateMatrixWorld();
@@ -147,6 +147,43 @@ test('later optical structures retain complete faces and continuous shared-posit
     }dispose(s);
   }
 });
+test('the rear blue pillar covers the goal cube at every overlapping pose',()=>{
+  const l=LEVELS[2],s=stage(l),beam=s.movingSolids.find(m=>m.userData.roads?.includes('deck-back'));
+  const goal=s.fixedSolids.find(m=>m.userData.opticalPart==='goal-road'&&m.geometry.boundingBox.getSize(new THREE.Vector3()).x>.8);
+  assert.ok(goal);const direction=new THREE.Vector3(1,1,1).normalize();let overlaps=0;
+  for(let degree=0;degree<=90;degree+=.5){
+    applyMechanismPose(l,s,degree*Math.PI/180);s.group.updateWorldMatrix(true,true);
+    for(const axis of ['x','y','z'])for(const a of [-.35,0,.35])for(const b of [-.35,0,.35]){
+      const point=new THREE.Vector3(a,b,.45);if(axis==='x')point.set(.45,a,b);if(axis==='y')point.set(a,.45,b);
+      goal.localToWorld(point);const ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());ray.layers.enableAll();
+      const hits=sortVisibleHits(ray.intersectObjects([beam,goal]),s,ray.ray.origin);
+      if(hits.some(h=>h.object===beam)&&hits.some(h=>h.object===goal)){
+        overlaps++;assert.equal(hits[0].object,beam,'goal cuts blue pillar at '+degree+' degrees');
+      }
+    }
+  }
+  assert.ok(overlaps>100,'sample actual overlapping faces, including the end of the fold');dispose(s);
+});
+test('visible crank handles turn in the same world direction as their pillars',()=>{
+  for(const l of LEVELS.filter(l=>!l.bearing)){
+    const s=stage(l),base=s.knob.getWorldQuaternion(new THREE.Quaternion()).invert();
+    for(const angle of [0,.3,.7,Math.PI/2,.7,0]){
+      applyMechanismPose(l,s,angle);s.group.updateWorldMatrix(true,true);
+      const delta=s.knob.getWorldQuaternion(new THREE.Quaternion()).multiply(base);
+      assert.ok(delta.angleTo(mechanismQuaternion(l,angle))<1e-7,l.id+' handle reverses the pillar');
+    }
+    dispose(s);
+  }
+});
+test('clockwise and counterclockwise circular drags respect each mechanism axis sign',()=>{
+  for(const l of LEVELS)for(const delta of [-.2,.2]){
+    const initial=.6,next=rotationFromCircularDrag(initial,delta,l.sign||1);
+    const actual=mechanismQuaternion(l,next).multiply(mechanismQuaternion(l,initial).invert());
+    const axis=new THREE.Vector3(l.axis==='x'?1:0,l.axis==='y'?1:0,l.axis==='z'?1:0);
+    const expected=new THREE.Quaternion().setFromAxisAngle(axis,-delta);
+    assert.ok(actual.angleTo(expected)<1e-7,l.id+' reverses the circular pointer gesture');
+  }
+});
 test('walkable surfaces leave room for the feet and stair landings do not swallow a tread',()=>{
   for(const l of LEVELS){const s=stage(l);
     for(const q of l.tilt?[0,1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);const n=net(l,q);
@@ -261,13 +298,14 @@ test('optical and docking seams show continuous floors across the road width',()
     }dispose(s);
   }
 });
-test('destination emblems remain visible through the mechanism sweep',()=>{
+test('destination emblems stay visible except where the rear blue pillar naturally covers the third goal',()=>{
   const direction=new THREE.Vector3(1,1,1).normalize();
   for(const l of LEVELS){const s=stage(l),limit=l.tilt?Math.PI/2:Math.PI*2;
     for(let i=0;i<=96;i++){applyMechanismPose(l,s,limit*i/96);s.group.updateWorldMatrix(true,true);
       for(const [x,z]of[[0,0],[.22,0],[-.22,0],[0,.22],[0,-.22]]){
         const point=levelPoints(l).goal.add(new THREE.Vector3(x,.025,z)),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());
         const hits=displayedHits(s,ray);
+        if(l.id==='blue-gate'&&hits[0]?.object.userData.roads?.includes('deck-back'))continue;
         let object=hits[0]?.object;while(object&&object!==s.seal)object=object.parent;
         assert.equal(object,s.seal,l.id+' hidden emblem at pose '+i+' sample '+x+','+z);
       }

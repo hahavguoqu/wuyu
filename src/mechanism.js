@@ -5,7 +5,9 @@ import {mechanismQuaternion} from './levels.js';
 export function applyMechanismPose(level,stage,value,visual=true){
   stage.mechanism.quaternion.copy(mechanismQuaternion(level,value));
   stage.mechanism.updateWorldMatrix(true,true);
-  if(stage.knob)stage.knob.rotation.z=-value;
+  // The horizontal knob mount points along -Y; other mounts point along +X/+Z.
+  // Include that mounting direction instead of reversing every knob blindly.
+  if(stage.knob)stage.knob.rotation.z=value*(level.sign||1)*(level.controlAxis==='y'?-1:1);
   if(visual){stage.updateOpticalDepth?.(value);stage.shade?.();}
 }
 export function prepareColliders(stage){

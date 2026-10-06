@@ -3,7 +3,7 @@ import {LEVELS,CHAPTER_NAMES,levelPoints,centerAnchor} from './levels.js';
 import {buildNavigation,anchorPoint,closestAnchor,planRoute} from './navigation.js';
 import {buildArchitecture} from './architecture.js';
 import {createTraveller} from './character.js';
-import {rotationDetent,travelFromDrag,angularDelta} from './interaction.js';
+import {rotationDetent,travelFromDrag,angularDelta,rotationFromCircularDrag} from './interaction.js';
 import {applyMechanismPose,safeMechanismValue} from './mechanism.js';
 import {setLayer,renderLayers,sortVisibleHits,setTravellerSurface,TRAVELLER_LAYER,BUILDING_LAYER} from './rendering.js';
 import {opticalPart} from './optics.js';
@@ -208,7 +208,7 @@ function moveGesture(event){
   event.preventDefault();const dx=event.clientX-g.x,dy=event.clientY-g.y;
   if(Math.hypot(dx,dy)>5)g.moved=true;if(!g.moved)return;
   if(level.mechanic==='rotate'){
-    if(g.circular){const a=Math.atan2(event.clientY-g.center.y,event.clientX-g.center.x);g.angleDelta+=angularDelta(g.lastAngle,a);g.lastAngle=a;carryRotation(g.initialAngle-g.angleDelta);}
+    if(g.circular){const a=Math.atan2(event.clientY-g.center.y,event.clientX-g.center.x);g.angleDelta+=angularDelta(g.lastAngle,a);g.lastAngle=a;carryRotation(rotationFromCircularDrag(g.initialAngle,g.angleDelta,level.sign||1));}
     else carryRotation(g.initialAngle+(dx-dy*.45)*Math.PI/160);
     orientation=rotationDetent(bridgeAngle).orientation;applyMechanism();updateLocation();
   }else{travel=safeMechanismValue(level,architecture,travel,travelFromDrag(g.initialTravel,{x:dx,y:dy},g.rail));applyMechanism();updateLocation();}

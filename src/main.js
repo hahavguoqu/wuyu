@@ -5,7 +5,7 @@ import {buildArchitecture} from './architecture.js';
 import {createTraveller} from './character.js';
 import {rotationDetent,travelFromDrag,angularDelta} from './interaction.js';
 import {applyMechanismPose,safeMechanismValue} from './mechanism.js';
-import {setLayer,renderLayers,visibleHitPoint,TRAVELLER_LAYER,CONTROL_LAYER,BUILDING_LAYER} from './rendering.js';
+import {setLayer,renderLayers,visibleHitPoint,pickingLayers,TRAVELLER_LAYER,BUILDING_LAYER} from './rendering.js';
 import './style.css';
 const $=id=>document.getElementById(id),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const walkingSpeed=(reducedMotion?5:1.45)*1.5;
@@ -177,7 +177,7 @@ function pickInteraction(event){
   const rect=renderer.domElement.getBoundingClientRect();pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
   let hit;
   // Pick the same foreground layers that are visible on screen.
-  for(const layer of [TRAVELLER_LAYER,CONTROL_LAYER,BUILDING_LAYER]){
+  for(const layer of pickingLayers(architecture)){
     raycaster.layers.set(layer);
     const hits=raycaster.intersectObjects(world.children,true);
     hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(camera.position)-visibleHitPoint(b).distanceToSquared(camera.position));
@@ -251,5 +251,5 @@ renderer.setAnimationLoop(time=>{
   const up=navigation().segments.find(s=>s.id===location.segment)?.up||new THREE.Vector3(0,1,0);
   const targetPose=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),up).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),desiredHeading));
   actor.root.quaternion.slerp(targetPose,Math.min(delta*12,1));actor.pose(elapsed*1.5,!!walking,reducedMotion);
-  if(won&&!reducedMotion)architecture.completionRing.scale.setScalar(1+Math.sin(elapsed*2)*.025);renderLayers(renderer,scene,camera);
+  if(won&&!reducedMotion)architecture.completionRing.scale.setScalar(1+Math.sin(elapsed*2)*.025);renderLayers(renderer,scene,camera,architecture);
 });

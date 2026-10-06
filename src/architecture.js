@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {prepareColliders,applyMechanismPose} from './mechanism.js';
-import {setDepthProfile,setLayer,CONTROL_LAYER} from './rendering.js';
+import {setDepthProfile,setLayer,CONTROL_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from './rendering.js';
 
 const normals=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].map(n=>new THREE.Vector3(...n));
 export function buildArchitecture(level,p,materials,glow){
@@ -32,6 +32,7 @@ export function buildArchitecture(level,p,materials,glow){
     }
     mesh.geometry.computeBoundingBox();mesh.geometry.computeBoundingSphere();
     mesh.userData.dockCollar={start:dockStart,end:dockEnd};
+    if(level.id==='folded-frame'&&id.startsWith('west-road'))setLayer(mesh,id==='west-road'?LOWER_BACK_LAYER:LOWER_FRONT_LAYER);
     if(depths[0])depth(mesh,()=>depths[0]);
     if((level.id==='double-cloister'||level.id==='hanging-stair')&&id==='middle')backCap(mesh,4);
     if(level.goalBlock&&id==='goal-road')backCap(mesh,0);
@@ -42,6 +43,7 @@ export function buildArchitecture(level,p,materials,glow){
     for(let i=1;i<path.points.length-1;i++){
       const [x,y,z]=path.points[i],bottom=path.wall?(level.base??-.9):y-.9;
       const mesh=box([.9,y-bottom,.9],[x,(y+bottom)/2,z],level.fixed,staticGroup,[i===1?path.id:path.id+'-'+(i-1),path.id+'-'+i]);
+      if(level.id==='folded-frame'&&path.id==='west-road')setLayer(mesh,LOWER_FRONT_LAYER);
       if(path.depths?.[i])depth(mesh,()=>path.depths[i]);
     }
   }
@@ -51,12 +53,12 @@ export function buildArchitecture(level,p,materials,glow){
   }
   for(const spec of level.fixedBoxes||[]){
     const mesh=box(spec.size,spec.at,spec.support?level.support:level.fixed);
+    if(level.id==='folded-frame'&&!spec.support)setLayer(mesh,LOWER_BACK_LAYER);
     if(spec.depth)depth(mesh,()=>spec.depth);
     if(level.goalBlock&&spec.size.every(s=>s===.9))backCap(mesh,0);
   }
   for(const spec of level.beams){
     const mesh=box(spec.size,spec.at,spec.support?level.support:level.moving,mechanism,spec.roads);
-    if(level.id==='folded-frame'&&spec.roads.includes('deck-fold')&&spec.size[1]===4)backCap(mesh,3);
     if(level.id==='blue-gate'&&spec.roads.includes('deck-back'))backCap(mesh,3);
     if(level.id==='hanging-stair'&&spec.roads.includes('deck-upper')&&spec.size[2]===3)backCap(mesh,5);
   }
@@ -97,7 +99,7 @@ export function buildArchitecture(level,p,materials,glow){
   const framePoints=[];
   function collect(root){root.updateWorldMatrix(true,true);root.traverse(mesh=>{if(!mesh.geometry)return;mesh.geometry.computeBoundingBox();const b=mesh.geometry.boundingBox;for(const x of [b.min.x,b.max.x])for(const y of [b.min.y,b.max.y])for(const z of [b.min.z,b.max.z])framePoints.push(new THREE.Vector3(x,y,z).applyMatrix4(mesh.matrixWorld));});}
   collect(staticGroup);
-  const stage={group,mechanism,knob,controlAnchor:new THREE.Vector3(...level.control),controlInMotion:false,fixedSolids,movingSolids,seal,completionRing,framePoints,shade,depthMeshes,opticalCaps};
+  const stage={group,mechanism,knob,controlAnchor:new THREE.Vector3(...level.control),controlInMotion:false,fixedSolids,movingSolids,seal,completionRing,framePoints,shade,depthMeshes,opticalCaps,foldedOcclusion:level.id==='folded-frame'};
   for(let i=0;i<=24;i++){applyMechanismPose(level,stage,i/24*(level.tilt?Math.PI/2:Math.PI*2));collect(mechanism);}applyMechanismPose(level,stage,0);
   for(const point of [p.start,p.goal])framePoints.push(point.clone().add(new THREE.Vector3(0,.65,0)));
   if(level.id!=='folded-frame'){

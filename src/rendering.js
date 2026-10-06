@@ -1,7 +1,18 @@
 import * as THREE from 'three';
 
 export const BUILDING_LAYER=0,CONTROL_LAYER=1,TRAVELLER_LAYER=2;
+export const LOWER_BACK_LAYER=3,LOWER_FRONT_LAYER=4;
 export function setLayer(root,layer){root.traverse(object=>object.layers.set(layer));}
+
+// The lower C frame wraps around B's projected sweep. Its long transverse leg
+// is behind B, while its left return is in front. Splitting C at the corner
+// makes the handoff spatial: no angle threshold, vanished face, or layer pop.
+export function renderPasses(stage){
+  return stage?.foldedOcclusion
+    ?[LOWER_BACK_LAYER,BUILDING_LAYER,LOWER_FRONT_LAYER,CONTROL_LAYER,TRAVELLER_LAYER]
+    :[BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER];
+}
+export function pickingLayers(stage){return renderPasses(stage).slice().reverse();}
 
 // In a fixed isometric view, (d,d,d) changes depth without moving a pixel.
 // Optical end caps sit behind the adjacent floors throughout a turn. They remain
@@ -30,10 +41,11 @@ export function visibleHitPoint(hit){
   const offset=weights.x*depth.getX(hit.face.a)+weights.y*depth.getX(hit.face.b)+weights.z*depth.getX(hit.face.c);
   return hit.point.clone().addScalar(offset);
 }
-export function renderLayers(renderer,scene,camera){
+export function renderLayers(renderer,scene,camera,stage){
   renderer.clear();
-  for(const layer of [BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER]){
-    if(layer!==BUILDING_LAYER)renderer.clearDepth();
+  const passes=renderPasses(stage);
+  for(const [i,layer]of passes.entries()){
+    if(i)renderer.clearDepth();
     camera.layers.set(layer);renderer.render(scene,camera);
   }
   camera.layers.set(BUILDING_LAYER);

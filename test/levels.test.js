@@ -7,12 +7,17 @@ import {buildArchitecture} from '../src/architecture.js';
 import {applyMechanismPose,collisionPairs,safeMechanismValue,prepareColliders} from '../src/mechanism.js';
 import {createTraveller} from '../src/character.js';
 import {rotationDetent,angularDelta} from '../src/interaction.js';
-import {setLayer,renderLayers,visibleHitPoint,BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER} from '../src/rendering.js';
+import {setLayer,renderLayers,visibleHitPoint,pickingLayers,BUILDING_LAYER,CONTROL_LAYER,TRAVELLER_LAYER,LOWER_BACK_LAYER,LOWER_FRONT_LAYER} from '../src/rendering.js';
 const camera=new THREE.OrthographicCamera(-12,12,12,-12,.1,100);camera.position.set(18,18,18);camera.lookAt(0,0,0);camera.updateMatrixWorld();
 const net=(level,q)=>buildNavigation(level,{orientation:q,bridgeAngle:q*Math.PI/2},camera);
 const stage=level=>buildArchitecture(level,levelPoints(level),{},new THREE.MeshBasicMaterial());
 const anchor=(segment,t)=>({segment,t});
 function dispose(s){s.group.traverse(m=>{m.geometry?.dispose();for(const mat of Array.isArray(m.material)?m.material:m.material?[m.material]:[])mat.dispose();});}
+function displayedHits(s,ray){
+  ray.layers.enableAll();const order=pickingLayers(s),rank=m=>order.findIndex(layer=>m.layers.isEnabled(layer));
+  return ray.intersectObjects(s.group.children,true).filter(h=>!h.object.userData.background)
+    .sort((a,b)=>rank(a.object)-rank(b.object)||visibleHitPoint(a).distanceToSquared(ray.ray.origin)-visibleHitPoint(b).distanceToSquared(ray.ray.origin));
+}
 
 test('four reference structures use a fixed camera and distinct rotation axes',()=>{
   assert.equal(LEVELS.length,4);assert.equal(LEVELS.filter(l=>l.lesson).length,2);
@@ -73,7 +78,7 @@ test('a fast turn stops before a thin obstruction instead of crossing it',()=>{
   const safe=safeMechanismValue(l,s,0,Math.PI/2);assert.ok(safe>0&&safe<Math.PI/2);assert.equal(collisionPairs(s).length,0);dispose(s);
 });
 test('every active road and stair tread has a visible floor at its navigation height',()=>{
-  for(const l of LEVELS){const s=stage(l),caster=new THREE.Raycaster();
+  for(const l of LEVELS){const s=stage(l),caster=new THREE.Raycaster();caster.layers.enableAll();
     for(const q of l.tilt?[1]:[0,1,3]){applyMechanismPose(l,s,q*Math.PI/2);s.group.updateWorldMatrix(true,true);const n=net(l,q);
       for(const segment of n.segments.filter(s=>s.enabled&&!s.riser))for(const t of [.1,.5,.9]){
         const point=anchorPoint(n,anchor(segment.id,t));caster.set(point.clone().addScaledVector(segment.up,.05),segment.up.clone().negate());
@@ -90,7 +95,7 @@ test('architecture uses flat per-face colors and keeps the lit top face after a 
   }
 });
 test('optical end faces retain continuous depth and never switch visibility at detents',()=>{
-  for(const l of LEVELS){const s=stage(l);assert.ok(s.opticalCaps.length,l.id);
+  for(const l of LEVELS.slice(1)){const s=stage(l);assert.ok(s.opticalCaps.length,l.id);
     const profiles=s.opticalCaps.map(({mesh})=>Array.from(mesh.geometry.attributes.isometricDepth.array));
     for(const value of [0,.31,Math.PI/2-.0011,Math.PI/2-.0009,Math.PI/2,Math.PI/2+.0009]){
       applyMechanismPose(l,s,value);
@@ -118,6 +123,34 @@ test('the render passes preserve control visibility and draw the traveller last 
   const actor=createTraveller();setLayer(actor.root,TRAVELLER_LAYER);actor.root.traverse(o=>assert.equal(o.layers.mask,1<<TRAVELLER_LAYER));
   const calls=[],renderer={clear:()=>calls.push('clear'),clearDepth:()=>calls.push('depth'),render:(_,c)=>calls.push(c.layers.mask)};
   renderLayers(renderer,new THREE.Scene(),camera);assert.deepEqual(calls,['clear',1<<BUILDING_LAYER,'depth',1<<CONTROL_LAYER,'depth',1<<TRAVELLER_LAYER]);assert.equal(camera.layers.mask,1);
+});
+
+test('C wraps around B: the transverse leg is behind B and the left return is in front',()=>{
+  const s=stage(LEVELS[0]),calls=[],renderer={clear:()=>calls.push('clear'),clearDepth:()=>calls.push('depth'),render:(_,c)=>calls.push(c.layers.mask)};
+  assert.equal(s.opticalCaps.length,0,'B keeps all six normal faces');
+  renderLayers(renderer,new THREE.Scene(),camera,s);
+  assert.deepEqual(calls,['clear',1<<LOWER_BACK_LAYER,'depth',1<<BUILDING_LAYER,'depth',1<<LOWER_FRONT_LAYER,'depth',1<<CONTROL_LAYER,'depth',1<<TRAVELLER_LAYER]);
+  assert.equal(camera.layers.mask,1);dispose(s);
+});
+
+test('B crosses in front of C transverse leg, then is occluded by the left return',()=>{
+  const l=LEVELS[0],s=stage(l),direction=new THREE.Vector3(1,1,1).normalize();
+  const transverse=s.fixedSolids.find(m=>m.userData.roads?.length===1&&m.userData.roads[0]==='west-road');
+  const left=s.fixedSolids.find(m=>m.userData.roads?.length===1&&m.userData.roads[0]==='west-road-1');
+  for(const [degrees,target,winner]of[[25,transverse,'B'],[45,transverse,'B'],[55,transverse,'B'],[70,left,'C'],[85,left,'C'],[90,left,'C']]){
+    applyMechanismPose(l,s,degrees*Math.PI/180);s.group.updateWorldMatrix(true,true);const bbox=target.geometry.boundingBox;let checked=0;
+    for(const face of ['x','y','z'])for(let i=1;i<20;i++)for(let j=1;j<20;j++){
+      const across=['x','y','z'].filter(axis=>axis!==face),point=new THREE.Vector3();point[face]=bbox.max[face];point[across[0]]=THREE.MathUtils.lerp(bbox.min[across[0]],bbox.max[across[0]],i/20);point[across[1]]=THREE.MathUtils.lerp(bbox.min[across[1]],bbox.max[across[1]],j/20);point.applyMatrix4(target.matrixWorld);
+      const ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());ray.layers.enableAll();
+      const raw=ray.intersectObjects(s.group.children,true);
+      if(!raw.some(h=>s.movingSolids.includes(h.object))||!raw.some(h=>h.object===target))continue;
+      const hit=displayedHits(s,ray)[0];if(winner==='B')assert.ok(s.movingSolids.includes(hit.object),'C transverse incorrectly covers B at '+degrees);else assert.equal(hit.object.layers.mask,1<<LOWER_FRONT_LAYER,'B incorrectly covers C left return at '+degrees);
+      checked++;
+    }
+    assert.ok(checked>0,'missing projected overlap at '+degrees);
+  }
+  for(let degrees=0;degrees<=90;degrees+=.5){applyMechanismPose(l,s,degrees*Math.PI/180);for(const mesh of s.movingSolids){assert.equal(mesh.layers.mask,1);assert.ok(mesh.material.every(m=>m.visible));assert.equal(mesh.geometry.attributes.isometricDepth,undefined);}}
+  dispose(s);
 });
 test('all four destinations use the same small gold emblem without extending goal cubes',()=>{
   for(const l of LEVELS){const s=stage(l);assert.equal(s.seal.userData.emblem,'golden-four-petal');assert.equal(s.seal.children.filter(m=>m.geometry.type==='CircleGeometry').length,5);
@@ -147,8 +180,7 @@ test('optical and docking seams show continuous floors across the road width',()
         const a=find(link.a),b=find(link.b),axis=a.segment.p1.clone().sub(a.segment.p0).normalize(),across=axis.clone().cross(a.segment.up).normalize();
         for(const offset of [-.28,0,.28]){
           const point=a.point.clone().lerp(b.point,.5).addScaledVector(across,offset),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());
-          const hits=ray.intersectObjects(s.group.children,true).filter(h=>!h.object.userData.background);
-          hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(ray.ray.origin)-visibleHitPoint(b).distanceToSquared(ray.ray.origin));
+          const hits=displayedHits(s,ray);
           assert.ok(hits.length,l.id+' empty seam '+link.a);
           const normal=hits[0].face.normal.clone().transformDirection(hits[0].object.matrixWorld);
           assert.ok(normal.y>.99,l.id+' covered floor '+link.a+' -> '+link.b+' at '+offset+' normal '+normal.toArray());
@@ -163,8 +195,7 @@ test('destination emblems remain visible through the mechanism sweep',()=>{
     for(let i=0;i<=24;i++){applyMechanismPose(l,s,limit*i/24);s.group.updateWorldMatrix(true,true);
       for(const [x,z]of[[0,0],[.22,0],[-.22,0],[0,.22],[0,-.22]]){
         const point=levelPoints(l).goal.add(new THREE.Vector3(x,.025,z)),ray=new THREE.Raycaster(point.clone().addScaledVector(direction,40),direction.clone().negate());
-        const hits=ray.intersectObjects(s.group.children,true).filter(h=>!h.object.userData.background);
-        hits.sort((a,b)=>visibleHitPoint(a).distanceToSquared(ray.ray.origin)-visibleHitPoint(b).distanceToSquared(ray.ray.origin));
+        const hits=displayedHits(s,ray);
         let object=hits[0]?.object;while(object&&object!==s.seal)object=object.parent;
         assert.equal(object,s.seal,l.id+' hidden emblem at pose '+i+' sample '+x+','+z);
       }

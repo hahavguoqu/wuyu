@@ -5,3 +5,6 @@ artifacts/
 *.log
 参考/
 /docs/关卡设计备忘.local.md
+godot/.godot/
+godot/build/
+godot/export.cfg

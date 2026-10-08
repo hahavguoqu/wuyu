@@ -55,3 +55,7 @@ npm run build
 | TTL | 默认 |
 
 DNS 检查和证书签发完成后开启 **Enforce HTTPS**。GitHub Actions 发布方式通过仓库设置绑定域名，无需项目内的 `CNAME` 文件。`node_modules`、`dist`、`artifacts` 和本地 `参考` 目录都不上传。
+
+## Godot 迁移试作
+
+第三关「门阶」已有独立 Godot 工程。用 Godot 4.7.2 打开 `godot/project.godot`，或运行 `./tools/godot.ps1 editor`。迁移范围、运行方法和验证说明见 [Godot 工程说明](godot/README.md)。原有网页版继续保留。

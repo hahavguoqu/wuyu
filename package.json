@@ -7,7 +7,9 @@
     "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
     "build": "vite build",
     "test": "node --test test/levels.test.js",
-    "preview": "vite preview --host 127.0.0.1 --port 4173"
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "godot:data": "node tools/export-godot.mjs",
+    "godot:preview": "node tools/serve-godot.mjs"
   },
   "dependencies": {
     "three": "^0.180.0"

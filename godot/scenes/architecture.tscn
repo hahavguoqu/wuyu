@@ -1,0 +1,2162 @@
+[gd_scene format=4]
+
+[ext_resource type="Shader" path="res://shaders/architecture.gdshader" id="1_1mlb5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bb66s"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1751e"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.45, -1.725, 0.9, 0.9, 3.45),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZm5j7NzNw/ZmbmPmZm5j7NzNy/ZmbmPmZm5r7NzNw/ZmbmPmZm5r7NzNy/ZmbmvmZm5j7NzNy/ZmbmvmZm5j7NzNw/ZmbmvmZm5r7NzNy/ZmbmvmZm5r7NzNw/ZmbmvmZm5j7NzNy/ZmbmPmZm5j7NzNy/ZmbmvmZm5j7NzNw/ZmbmPmZm5j7NzNw/ZmbmvmZm5r7NzNw/ZmbmPmZm5r7NzNw/ZmbmvmZm5r7NzNy/ZmbmPmZm5r7NzNy/ZmbmvmZm5j7NzNw/ZmbmPmZm5j7NzNw/ZmbmvmZm5r7NzNw/ZmbmPmZm5r7NzNw/ZmbmPmZm5j7NzNy/ZmbmvmZm5j7NzNy/ZmbmPmZm5r7NzNy/ZmbmvmZm5r7NzNy/////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h50jy"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7rmfb"]
+_surfaces = [{
+"aabb": AABB(-1.418, -0.45, -0.45, 2.753, 0.9, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("SOGqP2Zm5j5mZuY+SOGqP2Zm5j5mZua+SOGqP2Zm5r5mZuY+SOGqP2Zm5r5mZua+BoG1v2Zm5j5mZua+BoG1v2Zm5j5mZuY+BoG1v2Zm5r5mZua+BoG1v2Zm5r5mZuY+BoG1v2Zm5j5mZua+SOGqP2Zm5j5mZua+BoG1v2Zm5j5mZuY+SOGqP2Zm5j5mZuY+BoG1v2Zm5r5mZuY+SOGqP2Zm5r5mZuY+BoG1v2Zm5r5mZua+SOGqP2Zm5r5mZua+BoG1v2Zm5j5mZuY+SOGqP2Zm5j5mZuY+BoG1v2Zm5r5mZuY+SOGqP2Zm5r5mZuY+SOGqP2Zm5j5mZua+BoG1v2Zm5j5mZua+SOGqP2Zm5r5mZua+BoG1v2Zm5r5mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xcg22"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aimxb"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.45, -0.45, 0.9, 0.9, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZm5j5mZuY+ZmbmPmZm5j5mZua+ZmbmPmZm5r5mZuY+ZmbmPmZm5r5mZua+ZmbmvmZm5j5mZua+ZmbmvmZm5j5mZuY+ZmbmvmZm5r5mZua+ZmbmvmZm5r5mZuY+ZmbmvmZm5j5mZua+ZmbmPmZm5j5mZua+ZmbmvmZm5j5mZuY+ZmbmPmZm5j5mZuY+ZmbmvmZm5r5mZuY+ZmbmPmZm5r5mZuY+ZmbmvmZm5r5mZua+ZmbmPmZm5r5mZua+ZmbmvmZm5j5mZuY+ZmbmPmZm5j5mZuY+ZmbmvmZm5r5mZuY+ZmbmPmZm5r5mZuY+ZmbmPmZm5j5mZua+ZmbmvmZm5j5mZua+ZmbmPmZm5r5mZua+ZmbmvmZm5r5mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ha1xn"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_a5w1o"]
+_surfaces = [{
+"aabb": AABB(-1.335, -0.45, -0.45, 2.753, 0.9, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("BoG1P2Zm5j5mZuY+BoG1P2Zm5j5mZua+BoG1P2Zm5r5mZuY+BoG1P2Zm5r5mZua+SOGqv2Zm5j5mZua+SOGqv2Zm5j5mZuY+SOGqv2Zm5r5mZua+SOGqv2Zm5r5mZuY+SOGqv2Zm5j5mZua+BoG1P2Zm5j5mZua+SOGqv2Zm5j5mZuY+BoG1P2Zm5j5mZuY+SOGqv2Zm5r5mZuY+BoG1P2Zm5r5mZuY+SOGqv2Zm5r5mZua+BoG1P2Zm5r5mZua+SOGqv2Zm5j5mZuY+BoG1P2Zm5j5mZuY+SOGqv2Zm5r5mZuY+BoG1P2Zm5r5mZuY+BoG1P2Zm5j5mZua+SOGqv2Zm5j5mZua+BoG1P2Zm5r5mZua+SOGqv2Zm5r5mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5srmi"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_w0ogo"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.45, -1.75, 0.9, 0.9, 3.5),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZm5j4AAOA/ZmbmPmZm5j4AAOC/ZmbmPmZm5r4AAOA/ZmbmPmZm5r4AAOC/ZmbmvmZm5j4AAOC/ZmbmvmZm5j4AAOA/ZmbmvmZm5r4AAOC/ZmbmvmZm5r4AAOA/ZmbmvmZm5j4AAOC/ZmbmPmZm5j4AAOC/ZmbmvmZm5j4AAOA/ZmbmPmZm5j4AAOA/ZmbmvmZm5r4AAOA/ZmbmPmZm5r4AAOA/ZmbmvmZm5r4AAOC/ZmbmPmZm5r4AAOC/ZmbmvmZm5j4AAOA/ZmbmPmZm5j4AAOA/ZmbmvmZm5r4AAOA/ZmbmPmZm5r4AAOA/ZmbmPmZm5j4AAOC/ZmbmvmZm5j4AAOC/ZmbmPmZm5r4AAOC/ZmbmvmZm5r4AAOC/////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ir4rt"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_uvkd1"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.45, -0.45, 0.9, 0.9, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZm5j5mZuY+ZmbmPmZm5j5mZua+ZmbmPmZm5r5mZuY+ZmbmPmZm5r5mZua+ZmbmvmZm5j5mZua+ZmbmvmZm5j5mZuY+ZmbmvmZm5r5mZua+ZmbmvmZm5r5mZuY+ZmbmvmZm5j5mZua+ZmbmPmZm5j5mZua+ZmbmvmZm5j5mZuY+ZmbmPmZm5j5mZuY+ZmbmvmZm5r5mZuY+ZmbmPmZm5r5mZuY+ZmbmvmZm5r5mZua+ZmbmPmZm5r5mZua+ZmbmvmZm5j5mZuY+ZmbmPmZm5j5mZuY+ZmbmvmZm5r5mZuY+ZmbmPmZm5r5mZuY+ZmbmPmZm5j5mZua+ZmbmvmZm5j5mZua+ZmbmPmZm5r5mZua+ZmbmvmZm5r5mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u3wyf"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_h5kjp"]
+_surfaces = [{
+"aabb": AABB(-0.45, -1.3, -0.225, 0.9, 2.6, 0.45),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZmpj9mZmY+ZmbmPmZmpj9mZma+ZmbmPmZmpr9mZmY+ZmbmPmZmpr9mZma+ZmbmvmZmpj9mZma+ZmbmvmZmpj9mZmY+ZmbmvmZmpr9mZma+ZmbmvmZmpr9mZmY+ZmbmvmZmpj9mZma+ZmbmPmZmpj9mZma+ZmbmvmZmpj9mZmY+ZmbmPmZmpj9mZmY+ZmbmvmZmpr9mZmY+ZmbmPmZmpr9mZmY+ZmbmvmZmpr9mZma+ZmbmPmZmpr9mZma+ZmbmvmZmpj9mZmY+ZmbmPmZmpj9mZmY+ZmbmvmZmpr9mZmY+ZmbmPmZmpr9mZmY+ZmbmPmZmpj9mZma+ZmbmvmZmpj9mZma+ZmbmPmZmpr9mZma+ZmbmvmZmpr9mZma+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rvqch"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_q7c4m"]
+_surfaces = [{
+"aabb": AABB(-0.225, -0.45, -0.45, 0.45, 0.9, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmZmPmZm5j5mZuY+ZmZmPmZm5j5mZua+ZmZmPmZm5r5mZuY+ZmZmPmZm5r5mZua+ZmZmvmZm5j5mZua+ZmZmvmZm5j5mZuY+ZmZmvmZm5r5mZua+ZmZmvmZm5r5mZuY+ZmZmvmZm5j5mZua+ZmZmPmZm5j5mZua+ZmZmvmZm5j5mZuY+ZmZmPmZm5j5mZuY+ZmZmvmZm5r5mZuY+ZmZmPmZm5r5mZuY+ZmZmvmZm5r5mZua+ZmZmPmZm5r5mZua+ZmZmvmZm5j5mZuY+ZmZmPmZm5j5mZuY+ZmZmvmZm5r5mZuY+ZmZmPmZm5r5mZuY+ZmZmPmZm5j5mZua+ZmZmvmZm5j5mZua+ZmZmPmZm5r5mZua+ZmZmvmZm5r5mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b0qub"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jpwok"]
+_surfaces = [{
+"aabb": AABB(-0.45, -1.3, -0.45, 0.9, 2.6, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZmpj9mZuY+ZmbmPmZmpj9mZua+ZmbmPmZmpr9mZuY+ZmbmPmZmpr9mZua+ZmbmvmZmpj9mZua+ZmbmvmZmpj9mZuY+ZmbmvmZmpr9mZua+ZmbmvmZmpr9mZuY+ZmbmvmZmpj9mZua+ZmbmPmZmpj9mZua+ZmbmvmZmpj9mZuY+ZmbmPmZmpj9mZuY+ZmbmvmZmpr9mZuY+ZmbmPmZmpr9mZuY+ZmbmvmZmpr9mZua+ZmbmPmZmpr9mZua+ZmbmvmZmpj9mZuY+ZmbmPmZmpj9mZuY+ZmbmvmZmpr9mZuY+ZmbmPmZmpr9mZuY+ZmbmPmZmpj9mZua+ZmbmvmZmpj9mZua+ZmbmPmZmpr9mZua+ZmbmvmZmpr9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iyhlc"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, -2.65, -2.95, 1.9)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 2.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_mrrjp"]
+_surfaces = [{
+"aabb": AABB(-0.325, -0.85, -0.45, 0.656, 1.7, 0.9),
+"format": 34359742471,
+"index_count": 84,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAwADAAJAA0ACQAKAA0ADQAKAA4ACgALAA4ADgALAA8AEAARABQAFAARABUAEQASABUAFQASABYAEgATABYAFgATABcAGAAZABwAHAAZAB0AGQAaAB0AHQAaAB4AGgAbAB4AHgAbAB8AIAAhACQAJAAhACUAIQAiACUAJQAiACYAIgAjACYAJgAjACcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 40,
+"vertex_data": PackedByteArray("1XipPpqZWT9mZuY+1XipPpqZWT9mZua+1XipPpqZWb9mZuY+1XipPpqZWb9mZua+ZmamvpqZWT9mZua+ZmamvpqZWT9mZuY+ZmamvpqZWb9mZua+ZmamvpqZWb9mZuY+ZmamvpqZWT9mZua+zcyMvpqZWT9mZua+zczMPJqZWT9mZua+1XipPpqZWT9mZua+ZmamvpqZWT9mZuY+zcyMvpqZWT9mZuY+zczMPJqZWT9mZuY+1XipPpqZWT9mZuY+ZmamvpqZWb9mZuY+zcyMvpqZWb9mZuY+zczMPJqZWb9mZuY+1XipPpqZWb9mZuY+ZmamvpqZWb9mZua+zcyMvpqZWb9mZua+zczMPJqZWb9mZua+1XipPpqZWb9mZua+ZmamvpqZWT9mZuY+zcyMvpqZWT9mZuY+zczMPJqZWT9mZuY+1XipPpqZWT9mZuY+ZmamvpqZWb9mZuY+zcyMvpqZWb9mZuY+zczMPJqZWb9mZuY+1XipPpqZWb9mZuY+1XipPpqZWT9mZua+zczMPJqZWT9mZua+zcyMvpqZWT9mZua+ZmamvpqZWT9mZua+1XipPpqZWb9mZua+zczMPJqZWb9mZua+zcyMvpqZWb9mZua+ZmamvpqZWb9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AIA=")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3mb46"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 0, 2, 1.9)
+shader_parameter/ramp_b = Vector4(0, 4.4, 5, -0.8)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(2, -3.25, -4.25, 1)
+shader_parameter/upright_a = 2.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_l0i02"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.85, -0.225, 0.9, 1.7, 0.45599997),
+"format": 34359742471,
+"index_count": 30,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPpqZWT9Di2w+ZmbmPpqZWT9mZma+ZmbmPpqZWb9Di2w+ZmbmPpqZWb9mZma+ZmbmvpqZWT9mZma+ZmbmvpqZWT9Di2w+ZmbmvpqZWb9mZma+ZmbmvpqZWb9Di2w+ZmbmvpqZWT9mZma+ZmbmPpqZWT9mZma+ZmbmvpqZWT9Di2w+ZmbmPpqZWT9Di2w+ZmbmvpqZWb9Di2w+ZmbmPpqZWb9Di2w+ZmbmvpqZWb9mZma+ZmbmPpqZWb9mZma+ZmbmvpqZWT9Di2w+ZmbmPpqZWT9Di2w+ZmbmvpqZWb9Di2w+ZmbmPpqZWb9Di2w+ZmbmPpqZWT9mZma+ZmbmvpqZWT9mZma+ZmbmPpqZWb9mZma+ZmbmvpqZWb9mZma+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j258b"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 0, 2, 1.9)
+shader_parameter/ramp_b = Vector4(0, 4.4, 5, -0.8)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(2, -3.25, -4.25, 1)
+shader_parameter/upright_a = 2.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ikq5e"]
+_surfaces = [{
+"aabb": AABB(-3.45, -0.85, -0.45, 6.9, 1.7, 0.9),
+"format": 34359742471,
+"index_count": 96,
+"index_data": PackedByteArray("CAAJAA0ADQAJAA4ACQAKAA4ADgAKAA8ACgALAA8ADwALABAACwAMABAAEAAMABEAEgATABcAFwATABgAEwAUABgAGAAUABkAFAAVABkAGQAVABoAFQAWABoAGgAWABsAHAAdACEAIQAdACIAHQAeACIAIgAeACMAHgAfACMAIwAfACQAHwAgACQAJAAgACUAJgAnACsAKwAnACwAJwAoACwALAAoAC0AKAApAC0ALQApAC4AKQAqAC4ALgAqAC8A"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 48,
+"vertex_data": PackedByteArray("zcxcQJqZWT9mZuY+zcxcQJqZWT9mZua+zcxcQJqZWb9mZuY+zcxcQJqZWb9mZua+zcxcwJqZWT9mZua+zcxcwJqZWT9mZuY+zcxcwJqZWb9mZua+zcxcwJqZWb9mZuY+zcxcwJqZWT9mZua+ZmbGv5qZWT9mZua+ZmbmPpqZWT9mZua+ZmY2QJqZWT9mZua+zcxcQJqZWT9mZua+zcxcwJqZWT9mZuY+ZmbGv5qZWT9mZuY+ZmbmPpqZWT9mZuY+ZmY2QJqZWT9mZuY+zcxcQJqZWT9mZuY+zcxcwJqZWb9mZuY+ZmbGv5qZWb9mZuY+ZmbmPpqZWb9mZuY+ZmY2QJqZWb9mZuY+zcxcQJqZWb9mZuY+zcxcwJqZWb9mZua+ZmbGv5qZWb9mZua+ZmbmPpqZWb9mZua+ZmY2QJqZWb9mZua+zcxcQJqZWb9mZua+zcxcwJqZWT9mZuY+ZmbGv5qZWT9mZuY+ZmbmPpqZWT9mZuY+ZmY2QJqZWT9mZuY+zcxcQJqZWT9mZuY+zcxcwJqZWb9mZuY+ZmbGv5qZWb9mZuY+ZmbmPpqZWb9mZuY+ZmY2QJqZWb9mZuY+zcxcQJqZWb9mZuY+zcxcQJqZWT9mZua+ZmY2QJqZWT9mZua+ZmbmPpqZWT9mZua+ZmbGv5qZWT9mZua+zcxcwJqZWT9mZua+zcxcQJqZWb9mZua+ZmY2QJqZWb9mZua+ZmbmPpqZWb9mZua+ZmbGv5qZWb9mZua+zcxcwJqZWb9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mefx6"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 0, 2, 1.9)
+shader_parameter/ramp_b = Vector4(0, 4.4, 5, -0.8)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(2, -3.25, -4.25, 1)
+shader_parameter/upright_a = 2.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xbe0c"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.85, -1.8, 0.9, 1.7, 3.6),
+"format": 34359742471,
+"index_count": 102,
+"index_data": PackedByteArray("AAABAAQABAABAAUAAQACAAUABQACAAYAAgADAAYABgADAAcACAAJAAwADAAJAA0ACQAKAA0ADQAKAA4AEAARABMAEwARABQAEQASABQAFAASABUAEwAUABYAFgAUABcAFAAVABcAFwAVABgAFgAXABkAGQAXABoAFwAYABoAGgAYABsAHAAdAB8AHwAdACAAHQAeACAAIAAeACEAHwAgACIAIgAgACMAIAAhACMAIwAhACQAIgAjACUAJQAjACYAIwAkACYAJgAkACcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 52,
+"vertex_data": PackedByteArray("ZmbmPpqZWT9mZuY/ZmbmPpqZWT/NzKw/ZmbmPpqZWT8zM7M+ZmbmPpqZWT9mZua/ZmbmPpqZWb9mZuY/ZmbmPpqZWb/NzKw/ZmbmPpqZWb8zM7M+ZmbmPpqZWb9mZua/ZmbmvpqZWT9mZua/ZmbmvpqZWT8zM7M+ZmbmvpqZWT/NzKw/ZmbmvpqZWT9mZuY/ZmbmvpqZWb9mZua/ZmbmvpqZWb8zM7M+ZmbmvpqZWb/NzKw/ZmbmvpqZWb9mZuY/ZmbmvpqZWT9mZua/AAAAAJqZWT9mZua/ZmbmPpqZWT9mZua/ZmbmvpqZWT8zM7M+AAAAAJqZWT8zM7M+ZmbmPpqZWT8zM7M+ZmbmvpqZWT/NzKw/AAAAAJqZWT/NzKw/ZmbmPpqZWT/NzKw/ZmbmvpqZWT9mZuY/AAAAAJqZWT9mZuY/ZmbmPpqZWT9mZuY/ZmbmvpqZWb9mZuY/AAAAAJqZWb9mZuY/ZmbmPpqZWb9mZuY/ZmbmvpqZWb/NzKw/AAAAAJqZWb/NzKw/ZmbmPpqZWb/NzKw/ZmbmvpqZWb8zM7M+AAAAAJqZWb8zM7M+ZmbmPpqZWb8zM7M+ZmbmvpqZWb9mZua/AAAAAJqZWb9mZua/ZmbmPpqZWb9mZua/ZmbmvpqZWT9mZuY/AAAAAJqZWT9mZuY/ZmbmPpqZWT9mZuY/ZmbmvpqZWb9mZuY/AAAAAJqZWb9mZuY/ZmbmPpqZWb9mZuY/ZmbmPpqZWT9mZua/AAAAAJqZWT9mZua/ZmbmvpqZWT9mZua/ZmbmPpqZWb9mZua/AAAAAJqZWb9mZua/ZmbmvpqZWb9mZua/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AIA=")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m2uk4"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 0, 2, 1.9)
+shader_parameter/ramp_b = Vector4(0, 4.4, 5, -0.8)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(2, -3.25, -4.25, 1)
+shader_parameter/upright_a = 2.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1xm03"]
+_surfaces = [{
+"aabb": AABB(-0.525, -0.85, -0.45, 1.05, 1.7, 0.9),
+"format": 34359742471,
+"index_count": 54,
+"index_data": PackedByteArray("BAAFAAYABgAFAAcACAAJAAsACwAJAAwACQAKAAwADAAKAA0ADgAPABEAEQAPABIADwAQABIAEgAQABMAFAAVABcAFwAVABgAFQAWABgAGAAWABkAGgAbAB0AHQAbAB4AGwAcAB4AHgAcAB8A"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 32,
+"vertex_data": PackedByteArray("ZmYGP5qZWT9mZuY+ZmYGP5qZWT9mZua+ZmYGP5qZWb9mZuY+ZmYGP5qZWb9mZua+ZmYGv5qZWT9mZua+ZmYGv5qZWT9mZuY+ZmYGv5qZWb9mZua+ZmYGv5qZWb9mZuY+ZmYGv5qZWT9mZua+mpmZvZqZWT9mZua+ZmYGP5qZWT9mZua+ZmYGv5qZWT9mZuY+mpmZvZqZWT9mZuY+ZmYGP5qZWT9mZuY+ZmYGv5qZWb9mZuY+mpmZvZqZWb9mZuY+ZmYGP5qZWb9mZuY+ZmYGv5qZWb9mZua+mpmZvZqZWb9mZua+ZmYGP5qZWb9mZua+ZmYGv5qZWT9mZuY+mpmZvZqZWT9mZuY+ZmYGP5qZWT9mZuY+ZmYGv5qZWb9mZuY+mpmZvZqZWb9mZuY+ZmYGP5qZWb9mZuY+ZmYGP5qZWT9mZua+mpmZvZqZWT9mZua+ZmYGv5qZWT9mZua+ZmYGP5qZWb9mZua+mpmZvZqZWb9mZua+ZmYGv5qZWb9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AID//////38AgA==")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hddox"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 0, 2, 1.9)
+shader_parameter/ramp_b = Vector4(0, 4.4, 5, -0.8)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(2, -3.25, -4.25, 1)
+shader_parameter/upright_a = 2.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_noi1c"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.85, -0.45, 0.9, 1.7, 0.9),
+"format": 34359742471,
+"index_count": 24,
+"index_data": PackedByteArray("BAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPpqZWT9mZuY+ZmbmPpqZWT9mZua+ZmbmPpqZWb9mZuY+ZmbmPpqZWb9mZua+ZmbmvpqZWT9mZua+ZmbmvpqZWT9mZuY+ZmbmvpqZWb9mZua+ZmbmvpqZWb9mZuY+ZmbmvpqZWT9mZua+ZmbmPpqZWT9mZua+ZmbmvpqZWT9mZuY+ZmbmPpqZWT9mZuY+ZmbmvpqZWb9mZuY+ZmbmPpqZWb9mZuY+ZmbmvpqZWb9mZua+ZmbmPpqZWb9mZua+ZmbmvpqZWT9mZuY+ZmbmPpqZWT9mZuY+ZmbmvpqZWb9mZuY+ZmbmPpqZWb9mZuY+ZmbmPpqZWT9mZua+ZmbmvpqZWT9mZua+ZmbmPpqZWb9mZua+ZmbmvpqZWb9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2wjd"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 0, 2, 1.9)
+shader_parameter/ramp_b = Vector4(0, 4.4, 5, -0.8)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(2, -3.25, -4.25, 1)
+shader_parameter/upright_a = 2.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_nstra"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.85, -0.45, 0.9, 1.7, 0.9),
+"format": 34359742471,
+"index_count": 42,
+"index_data": PackedByteArray("AAABAAIAAgABAAMACAAJAAsACwAJAAwACQAKAAwADAAKAA0ADgAPABEAEQAPABIADwAQABIAEgAQABMAGgAbAB0AHQAbAB4AGwAcAB4AHgAcAB8A"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 32,
+"vertex_data": PackedByteArray("ZmbmPpqZWT9mZuY+ZmbmPpqZWT9mZua+ZmbmPpqZWb9mZuY+ZmbmPpqZWb9mZua+ZmbmvpqZWT9mZua+ZmbmvpqZWT9mZuY+ZmbmvpqZWb9mZua+ZmbmvpqZWb9mZuY+ZmbmvpqZWT9mZua+AAAAAJqZWT9mZua+ZmbmPpqZWT9mZua+ZmbmvpqZWT9mZuY+AAAAAJqZWT9mZuY+ZmbmPpqZWT9mZuY+ZmbmvpqZWb9mZuY+AAAAAJqZWb9mZuY+ZmbmPpqZWb9mZuY+ZmbmvpqZWb9mZua+AAAAAJqZWb9mZua+ZmbmPpqZWb9mZua+ZmbmvpqZWT9mZuY+AAAAAJqZWT9mZuY+ZmbmPpqZWT9mZuY+ZmbmvpqZWb9mZuY+AAAAAJqZWb9mZuY+ZmbmPpqZWb9mZuY+ZmbmPpqZWT9mZua+AAAAAJqZWT9mZua+ZmbmvpqZWT9mZua+ZmbmPpqZWb9mZua+AAAAAJqZWb9mZua+ZmbmvpqZWb9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AID//////38AgA==")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mloej"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 0, 2, 1.9)
+shader_parameter/ramp_b = Vector4(0, 4.4, 5, -0.8)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(2, -3.25, -4.25, 1)
+shader_parameter/upright_a = 2.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_hdumw"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.85, -0.45, 0.9, 1.7, 0.9),
+"format": 34359742471,
+"index_count": 42,
+"index_data": PackedByteArray("AAABAAIAAgABAAMACAAJAAsACwAJAAwACQAKAAwADAAKAA0ADgAPABEAEQAPABIADwAQABIAEgAQABMAFAAVABcAFwAVABgAFQAWABgAGAAWABkA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 32,
+"vertex_data": PackedByteArray("ZmbmPpqZWT9mZuY+ZmbmPpqZWT9mZua+ZmbmPpqZWb9mZuY+ZmbmPpqZWb9mZua+ZmbmvpqZWT9mZua+ZmbmvpqZWT9mZuY+ZmbmvpqZWb9mZua+ZmbmvpqZWb9mZuY+ZmbmvpqZWT9mZua+AAAAAJqZWT9mZua+ZmbmPpqZWT9mZua+ZmbmvpqZWT9mZuY+AAAAAJqZWT9mZuY+ZmbmPpqZWT9mZuY+ZmbmvpqZWb9mZuY+AAAAAJqZWb9mZuY+ZmbmPpqZWb9mZuY+ZmbmvpqZWb9mZua+AAAAAJqZWb9mZua+ZmbmPpqZWb9mZua+ZmbmvpqZWT9mZuY+AAAAAJqZWT9mZuY+ZmbmPpqZWT9mZuY+ZmbmvpqZWb9mZuY+AAAAAJqZWb9mZuY+ZmbmPpqZWb9mZuY+ZmbmPpqZWT9mZua+AAAAAJqZWT9mZua+ZmbmvpqZWT9mZua+ZmbmPpqZWb9mZua+AAAAAJqZWb9mZua+ZmbmvpqZWb9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AID//////38AgA==")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06ida"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_t5atl"]
+_surfaces = [{
+"aabb": AABB(-0.225, -0.45, -0.45, 0.45, 0.9, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmZmPmZm5j5mZuY+ZmZmPmZm5j5mZua+ZmZmPmZm5r5mZuY+ZmZmPmZm5r5mZua+ZmZmvmZm5j5mZua+ZmZmvmZm5j5mZuY+ZmZmvmZm5r5mZua+ZmZmvmZm5r5mZuY+ZmZmvmZm5j5mZua+ZmZmPmZm5j5mZua+ZmZmvmZm5j5mZuY+ZmZmPmZm5j5mZuY+ZmZmvmZm5r5mZuY+ZmZmPmZm5r5mZuY+ZmZmvmZm5r5mZua+ZmZmPmZm5r5mZua+ZmZmvmZm5j5mZuY+ZmZmPmZm5j5mZuY+ZmZmvmZm5r5mZuY+ZmZmPmZm5r5mZuY+ZmZmPmZm5j5mZua+ZmZmvmZm5j5mZua+ZmZmPmZm5r5mZua+ZmZmvmZm5r5mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0qkvc"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_y2olt"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.55625, -0.096875, 0.9, 1.1125, 0.19375),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZmDj9mZsY9ZmbmPmZmDj9mZsa9ZmbmPmZmDr9mZsY9ZmbmPmZmDr9mZsa9ZmbmvmZmDj9mZsa9ZmbmvmZmDj9mZsY9ZmbmvmZmDr9mZsa9ZmbmvmZmDr9mZsY9ZmbmvmZmDj9mZsa9ZmbmPmZmDj9mZsa9ZmbmvmZmDj9mZsY9ZmbmPmZmDj9mZsY9ZmbmvmZmDr9mZsY9ZmbmPmZmDr9mZsY9ZmbmvmZmDr9mZsa9ZmbmPmZmDr9mZsa9ZmbmvmZmDj9mZsY9ZmbmPmZmDj9mZsY9ZmbmvmZmDr9mZsY9ZmbmPmZmDr9mZsY9ZmbmPmZmDj9mZsa9ZmbmvmZmDj9mZsa9ZmbmPmZmDr9mZsa9ZmbmvmZmDr9mZsa9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ieavo"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8nfa5"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.6625, -0.096875, 0.9, 1.325, 0.19375),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPpqZKT9mZsY9ZmbmPpqZKT9mZsa9ZmbmPpqZKb9mZsY9ZmbmPpqZKb9mZsa9ZmbmvpqZKT9mZsa9ZmbmvpqZKT9mZsY9ZmbmvpqZKb9mZsa9ZmbmvpqZKb9mZsY9ZmbmvpqZKT9mZsa9ZmbmPpqZKT9mZsa9ZmbmvpqZKT9mZsY9ZmbmPpqZKT9mZsY9ZmbmvpqZKb9mZsY9ZmbmPpqZKb9mZsY9ZmbmvpqZKb9mZsa9ZmbmPpqZKb9mZsa9ZmbmvpqZKT9mZsY9ZmbmPpqZKT9mZsY9ZmbmvpqZKb9mZsY9ZmbmPpqZKb9mZsY9ZmbmPpqZKT9mZsa9ZmbmvpqZKT9mZsa9ZmbmPpqZKb9mZsa9ZmbmvpqZKb9mZsa9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h15ao"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_x36ar"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.76875, -0.096875, 0.9, 1.5375, 0.19375),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPs3MRD9mZsY9ZmbmPs3MRD9mZsa9ZmbmPs3MRL9mZsY9ZmbmPs3MRL9mZsa9Zmbmvs3MRD9mZsa9Zmbmvs3MRD9mZsY9Zmbmvs3MRL9mZsa9Zmbmvs3MRL9mZsY9Zmbmvs3MRD9mZsa9ZmbmPs3MRD9mZsa9Zmbmvs3MRD9mZsY9ZmbmPs3MRD9mZsY9Zmbmvs3MRL9mZsY9ZmbmPs3MRL9mZsY9Zmbmvs3MRL9mZsa9ZmbmPs3MRL9mZsa9Zmbmvs3MRD9mZsY9ZmbmPs3MRD9mZsY9Zmbmvs3MRL9mZsY9ZmbmPs3MRL9mZsY9ZmbmPs3MRD9mZsa9Zmbmvs3MRD9mZsa9ZmbmPs3MRL9mZsa9Zmbmvs3MRL9mZsa9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eanw5"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_o8sc0"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.875, -0.096875, 0.9, 1.75, 0.19375),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPgAAYD9mZsY9ZmbmPgAAYD9mZsa9ZmbmPgAAYL9mZsY9ZmbmPgAAYL9mZsa9ZmbmvgAAYD9mZsa9ZmbmvgAAYD9mZsY9ZmbmvgAAYL9mZsa9ZmbmvgAAYL9mZsY9ZmbmvgAAYD9mZsa9ZmbmPgAAYD9mZsa9ZmbmvgAAYD9mZsY9ZmbmPgAAYD9mZsY9ZmbmvgAAYL9mZsY9ZmbmPgAAYL9mZsY9ZmbmvgAAYL9mZsa9ZmbmPgAAYL9mZsa9ZmbmvgAAYD9mZsY9ZmbmPgAAYD9mZsY9ZmbmvgAAYL9mZsY9ZmbmPgAAYL9mZsY9ZmbmPgAAYD9mZsa9ZmbmvgAAYD9mZsa9ZmbmPgAAYL9mZsa9ZmbmvgAAYL9mZsa9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m2hry"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ams50"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.98125, -0.096875, 0.9, 1.9625, 0.19375),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPjMzez9mZsY9ZmbmPjMzez9mZsa9ZmbmPjMze79mZsY9ZmbmPjMze79mZsa9ZmbmvjMzez9mZsa9ZmbmvjMzez9mZsY9ZmbmvjMze79mZsa9ZmbmvjMze79mZsY9ZmbmvjMzez9mZsa9ZmbmPjMzez9mZsa9ZmbmvjMzez9mZsY9ZmbmPjMzez9mZsY9ZmbmvjMze79mZsY9ZmbmPjMze79mZsY9ZmbmvjMze79mZsa9ZmbmPjMze79mZsa9ZmbmvjMzez9mZsY9ZmbmPjMzez9mZsY9ZmbmvjMze79mZsY9ZmbmPjMze79mZsY9ZmbmPjMzez9mZsa9ZmbmvjMzez9mZsa9ZmbmPjMze79mZsa9ZmbmvjMze79mZsa9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s6fhi"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fe6e4"]
+_surfaces = [{
+"aabb": AABB(-0.45, -1.0875, -0.096875, 0.9, 2.175, 0.19375),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPjMziz9mZsY9ZmbmPjMziz9mZsa9ZmbmPjMzi79mZsY9ZmbmPjMzi79mZsa9ZmbmvjMziz9mZsa9ZmbmvjMziz9mZsY9ZmbmvjMzi79mZsa9ZmbmvjMzi79mZsY9ZmbmvjMziz9mZsa9ZmbmPjMziz9mZsa9ZmbmvjMziz9mZsY9ZmbmPjMziz9mZsY9ZmbmvjMzi79mZsY9ZmbmPjMzi79mZsY9ZmbmvjMzi79mZsa9ZmbmPjMzi79mZsa9ZmbmvjMziz9mZsY9ZmbmPjMziz9mZsY9ZmbmvjMzi79mZsY9ZmbmPjMzi79mZsY9ZmbmPjMziz9mZsa9ZmbmvjMziz9mZsa9ZmbmPjMzi79mZsa9ZmbmvjMzi79mZsa9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_as05n"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_v0swc"]
+_surfaces = [{
+"aabb": AABB(-0.45, -1.19375, -0.096875, 0.9, 2.3875, 0.19375),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPs3MmD9mZsY9ZmbmPs3MmD9mZsa9ZmbmPs3MmL9mZsY9ZmbmPs3MmL9mZsa9Zmbmvs3MmD9mZsa9Zmbmvs3MmD9mZsY9Zmbmvs3MmL9mZsa9Zmbmvs3MmL9mZsY9Zmbmvs3MmD9mZsa9ZmbmPs3MmD9mZsa9Zmbmvs3MmD9mZsY9ZmbmPs3MmD9mZsY9Zmbmvs3MmL9mZsY9ZmbmPs3MmL9mZsY9Zmbmvs3MmL9mZsa9ZmbmPs3MmL9mZsa9Zmbmvs3MmD9mZsY9ZmbmPs3MmD9mZsY9Zmbmvs3MmL9mZsY9ZmbmPs3MmL9mZsY9ZmbmPs3MmD9mZsa9Zmbmvs3MmD9mZsa9ZmbmPs3MmL9mZsa9Zmbmvs3MmL9mZsa9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0mmuq"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_kefwk"]
+_surfaces = [{
+"aabb": AABB(-0.45, -1.3, -0.096875, 0.9, 2.6, 0.19375),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZmpj9mZsY9ZmbmPmZmpj9mZsa9ZmbmPmZmpr9mZsY9ZmbmPmZmpr9mZsa9ZmbmvmZmpj9mZsa9ZmbmvmZmpj9mZsY9ZmbmvmZmpr9mZsa9ZmbmvmZmpr9mZsY9ZmbmvmZmpj9mZsa9ZmbmPmZmpj9mZsa9ZmbmvmZmpj9mZsY9ZmbmPmZmpj9mZsY9ZmbmvmZmpr9mZsY9ZmbmPmZmpr9mZsY9ZmbmvmZmpr9mZsa9ZmbmPmZmpr9mZsa9ZmbmvmZmpj9mZsY9ZmbmPmZmpj9mZsY9ZmbmvmZmpr9mZsY9ZmbmPmZmpr9mZsY9ZmbmPmZmpj9mZsa9ZmbmvmZmpj9mZsa9ZmbmPmZmpr9mZsa9ZmbmvmZmpr9mZsa9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_45n2c"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fhehf"]
+_surfaces = [{
+"aabb": AABB(-0.155, -1.21, -0.45, 0.31, 2.42, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("UrgePkjhmj9mZuY+UrgePkjhmj9mZua+UrgePkjhmr9mZuY+UrgePkjhmr9mZua+Urgevkjhmj9mZua+Urgevkjhmj9mZuY+Urgevkjhmr9mZua+Urgevkjhmr9mZuY+Urgevkjhmj9mZua+UrgePkjhmj9mZua+Urgevkjhmj9mZuY+UrgePkjhmj9mZuY+Urgevkjhmr9mZuY+UrgePkjhmr9mZuY+Urgevkjhmr9mZua+UrgePkjhmr9mZua+Urgevkjhmj9mZuY+UrgePkjhmj9mZuY+Urgevkjhmr9mZuY+UrgePkjhmr9mZuY+UrgePkjhmj9mZua+Urgevkjhmj9mZua+UrgePkjhmr9mZua+Urgevkjhmr9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i4aat"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_4mdjl"]
+_surfaces = [{
+"aabb": AABB(-0.155, -1.12, -0.45, 0.31, 2.24, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("UrgePilcjz9mZuY+UrgePilcjz9mZua+UrgePilcj79mZuY+UrgePilcj79mZua+Urgevilcjz9mZua+Urgevilcjz9mZuY+Urgevilcj79mZua+Urgevilcj79mZuY+Urgevilcjz9mZua+UrgePilcjz9mZua+Urgevilcjz9mZuY+UrgePilcjz9mZuY+Urgevilcj79mZuY+UrgePilcj79mZuY+Urgevilcj79mZua+UrgePilcj79mZua+Urgevilcjz9mZuY+UrgePilcjz9mZuY+Urgevilcj79mZuY+UrgePilcj79mZuY+UrgePilcjz9mZua+Urgevilcjz9mZua+UrgePilcj79mZua+Urgevilcj79mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m25u6"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ehii1"]
+_surfaces = [{
+"aabb": AABB(-0.155, -1.03, -0.45, 0.31, 2.06, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("UrgePgrXgz9mZuY+UrgePgrXgz9mZua+UrgePgrXg79mZuY+UrgePgrXg79mZua+UrgevgrXgz9mZua+UrgevgrXgz9mZuY+UrgevgrXg79mZua+UrgevgrXg79mZuY+UrgevgrXgz9mZua+UrgePgrXgz9mZua+UrgevgrXgz9mZuY+UrgePgrXgz9mZuY+UrgevgrXg79mZuY+UrgePgrXg79mZuY+UrgevgrXg79mZua+UrgePgrXg79mZua+UrgevgrXgz9mZuY+UrgePgrXgz9mZuY+UrgevgrXg79mZuY+UrgePgrXg79mZuY+UrgePgrXgz9mZua+UrgevgrXgz9mZua+UrgePgrXg79mZua+UrgevgrXg79mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l3fbc"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_o6sin"]
+_surfaces = [{
+"aabb": AABB(-0.155, -0.94, -0.45, 0.31, 1.88, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("UrgePtejcD9mZuY+UrgePtejcD9mZua+UrgePtejcL9mZuY+UrgePtejcL9mZua+UrgevtejcD9mZua+UrgevtejcD9mZuY+UrgevtejcL9mZua+UrgevtejcL9mZuY+UrgevtejcD9mZua+UrgePtejcD9mZua+UrgevtejcD9mZuY+UrgePtejcD9mZuY+UrgevtejcL9mZuY+UrgePtejcL9mZuY+UrgevtejcL9mZua+UrgePtejcL9mZua+UrgevtejcD9mZuY+UrgePtejcD9mZuY+UrgevtejcL9mZuY+UrgePtejcL9mZuY+UrgePtejcD9mZua+UrgevtejcD9mZua+UrgePtejcL9mZua+UrgevtejcL9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a2v8t"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_nu604"]
+_surfaces = [{
+"aabb": AABB(-0.155, -0.85, -0.45, 0.31, 1.7, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("UrgePpqZWT9mZuY+UrgePpqZWT9mZua+UrgePpqZWb9mZuY+UrgePpqZWb9mZua+UrgevpqZWT9mZua+UrgevpqZWT9mZuY+UrgevpqZWb9mZua+UrgevpqZWb9mZuY+UrgevpqZWT9mZua+UrgePpqZWT9mZua+UrgevpqZWT9mZuY+UrgePpqZWT9mZuY+UrgevpqZWb9mZuY+UrgePpqZWb9mZuY+UrgevpqZWb9mZua+UrgePpqZWb9mZua+UrgevpqZWT9mZuY+UrgePpqZWT9mZuY+UrgevpqZWb9mZuY+UrgePpqZWb9mZuY+UrgePpqZWT9mZua+UrgevpqZWT9mZua+UrgePpqZWb9mZua+UrgevpqZWb9mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6okvx"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.8980392, 0.8980392, 0.84313726, 1)
+shader_parameter/x_color = Color(0.7019608, 0.7882353, 0.8, 1)
+shader_parameter/z_color = Color(0.47058824, 0.5803922, 0.6392157, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_4f3x5"]
+_surfaces = [{
+"aabb": AABB(-0.45, -0.45, -0.45, 0.9, 0.9, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPmZm5j5mZuY+ZmbmPmZm5j5mZua+ZmbmPmZm5r5mZuY+ZmbmPmZm5r5mZua+ZmbmvmZm5j5mZua+ZmbmvmZm5j5mZuY+ZmbmvmZm5r5mZua+ZmbmvmZm5r5mZuY+ZmbmvmZm5j5mZua+ZmbmPmZm5j5mZua+ZmbmvmZm5j5mZuY+ZmbmPmZm5j5mZuY+ZmbmvmZm5r5mZuY+ZmbmPmZm5r5mZuY+ZmbmvmZm5r5mZua+ZmbmPmZm5r5mZua+ZmbmvmZm5j5mZuY+ZmbmPmZm5j5mZuY+ZmbmvmZm5r5mZuY+ZmbmPmZm5r5mZuY+ZmbmPmZm5j5mZua+ZmbmvmZm5j5mZua+ZmbmPmZm5r5mZua+ZmbmvmZm5r5mZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f6x0p"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.40784314, 0.70980394, 0.8980392, 1)
+shader_parameter/x_color = Color(0.28235295, 0.52156866, 0.6745098, 1)
+shader_parameter/z_color = Color(0.17254902, 0.3647059, 0.5019608, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qkpyv"]
+_surfaces = [{
+"aabb": AABB(-0.055, -0.055, -0.22, 0.11, 0.11, 0.44),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("rkdhPa5HYT2uR2E+rkdhPa5HYT2uR2G+rkdhPa5HYb2uR2E+rkdhPa5HYb2uR2G+rkdhva5HYT2uR2G+rkdhva5HYT2uR2E+rkdhva5HYb2uR2G+rkdhva5HYb2uR2E+rkdhva5HYT2uR2G+rkdhPa5HYT2uR2G+rkdhva5HYT2uR2E+rkdhPa5HYT2uR2E+rkdhva5HYb2uR2E+rkdhPa5HYb2uR2E+rkdhva5HYb2uR2G+rkdhPa5HYb2uR2G+rkdhva5HYT2uR2E+rkdhPa5HYT2uR2E+rkdhva5HYb2uR2E+rkdhPa5HYb2uR2E+rkdhPa5HYT2uR2G+rkdhva5HYT2uR2G+rkdhPa5HYb2uR2G+rkdhva5HYb2uR2G+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qjb5w"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.77254903, 0.58431375, 0.38039216, 1)
+shader_parameter/x_color = Color(0.6862745, 0.4745098, 0.31764707, 1)
+shader_parameter/z_color = Color(0.5803922, 0.3764706, 0.25490198, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ukwy0"]
+_surfaces = [{
+"aabb": AABB(-0.38, -0.07, -0.075, 0.76, 0.14, 0.15),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("XI/CPilcjz2amZk9XI/CPilcjz2amZm9XI/CPilcj72amZk9XI/CPilcj72amZm9XI/Cvilcjz2amZm9XI/Cvilcjz2amZk9XI/Cvilcj72amZm9XI/Cvilcj72amZk9XI/Cvilcjz2amZm9XI/CPilcjz2amZm9XI/Cvilcjz2amZk9XI/CPilcjz2amZk9XI/Cvilcj72amZk9XI/CPilcj72amZk9XI/Cvilcj72amZm9XI/CPilcj72amZm9XI/Cvilcjz2amZk9XI/CPilcjz2amZk9XI/Cvilcj72amZk9XI/CPilcj72amZk9XI/CPilcjz2amZm9XI/Cvilcjz2amZm9XI/CPilcj72amZm9XI/Cvilcj72amZm9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gy8m1"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.77254903, 0.58431375, 0.38039216, 1)
+shader_parameter/x_color = Color(0.6862745, 0.4745098, 0.31764707, 1)
+shader_parameter/z_color = Color(0.5803922, 0.3764706, 0.25490198, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_u2iw5"]
+_surfaces = [{
+"aabb": AABB(-0.07, -0.38, -0.075, 0.14, 0.76, 0.15),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("KVyPPVyPwj6amZk9KVyPPVyPwj6amZm9KVyPPVyPwr6amZk9KVyPPVyPwr6amZm9KVyPvVyPwj6amZm9KVyPvVyPwj6amZk9KVyPvVyPwr6amZm9KVyPvVyPwr6amZk9KVyPvVyPwj6amZm9KVyPPVyPwj6amZm9KVyPvVyPwj6amZk9KVyPPVyPwj6amZk9KVyPvVyPwr6amZk9KVyPPVyPwr6amZk9KVyPvVyPwr6amZm9KVyPPVyPwr6amZm9KVyPvVyPwj6amZk9KVyPPVyPwj6amZk9KVyPvVyPwr6amZk9KVyPPVyPwr6amZk9KVyPPVyPwj6amZm9KVyPvVyPwj6amZm9KVyPPVyPwr6amZm9KVyPvVyPwr6amZm9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rdln"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.95686275, 0.80784315, 0.5137255, 1)
+shader_parameter/x_color = Color(0.9137255, 0.6745098, 0.34509805, 1)
+shader_parameter/z_color = Color(0.79607844, 0.57254905, 0.26666668, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_v5eml"]
+_surfaces = [{
+"aabb": AABB(-0.08, -0.08, -0.095, 0.16, 0.16, 0.19),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("CtejPQrXoz1cj8I9CtejPQrXoz1cj8K9CtejPQrXo71cj8I9CtejPQrXo71cj8K9CtejvQrXoz1cj8K9CtejvQrXoz1cj8I9CtejvQrXo71cj8K9CtejvQrXo71cj8I9CtejvQrXoz1cj8K9CtejPQrXoz1cj8K9CtejvQrXoz1cj8I9CtejPQrXoz1cj8I9CtejvQrXo71cj8I9CtejPQrXo71cj8I9CtejvQrXo71cj8K9CtejPQrXo71cj8K9CtejvQrXoz1cj8I9CtejPQrXoz1cj8I9CtejvQrXo71cj8I9CtejPQrXo71cj8I9CtejPQrXoz1cj8K9CtejvQrXoz1cj8K9CtejPQrXo71cj8K9CtejvQrXo71cj8K9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mmgbh"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.95686275, 0.80784315, 0.5137255, 1)
+shader_parameter/x_color = Color(0.9137255, 0.6745098, 0.34509805, 1)
+shader_parameter/z_color = Color(0.79607844, 0.57254905, 0.26666668, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_kfp87"]
+_surfaces = [{
+"aabb": AABB(-0.08, -0.08, -0.095, 0.16, 0.16, 0.19),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("CtejPQrXoz1cj8I9CtejPQrXoz1cj8K9CtejPQrXo71cj8I9CtejPQrXo71cj8K9CtejvQrXoz1cj8K9CtejvQrXoz1cj8I9CtejvQrXo71cj8K9CtejvQrXo71cj8I9CtejvQrXoz1cj8K9CtejPQrXoz1cj8K9CtejvQrXoz1cj8I9CtejPQrXoz1cj8I9CtejvQrXo71cj8I9CtejPQrXo71cj8I9CtejvQrXo71cj8K9CtejPQrXo71cj8K9CtejvQrXoz1cj8I9CtejPQrXoz1cj8I9CtejvQrXo71cj8I9CtejPQrXo71cj8I9CtejPQrXoz1cj8K9CtejvQrXoz1cj8K9CtejPQrXo71cj8K9CtejvQrXo71cj8K9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fmlcc"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.95686275, 0.80784315, 0.5137255, 1)
+shader_parameter/x_color = Color(0.9137255, 0.6745098, 0.34509805, 1)
+shader_parameter/z_color = Color(0.79607844, 0.57254905, 0.26666668, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_842kl"]
+_surfaces = [{
+"aabb": AABB(-0.08, -0.08, -0.095, 0.16, 0.16, 0.19),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("CtejPQrXoz1cj8I9CtejPQrXoz1cj8K9CtejPQrXo71cj8I9CtejPQrXo71cj8K9CtejvQrXoz1cj8K9CtejvQrXoz1cj8I9CtejvQrXo71cj8K9CtejvQrXo71cj8I9CtejvQrXoz1cj8K9CtejPQrXoz1cj8K9CtejvQrXoz1cj8I9CtejPQrXoz1cj8I9CtejvQrXo71cj8I9CtejPQrXo71cj8I9CtejvQrXo71cj8K9CtejPQrXo71cj8K9CtejvQrXoz1cj8I9CtejPQrXoz1cj8I9CtejvQrXo71cj8I9CtejPQrXo71cj8I9CtejPQrXoz1cj8K9CtejvQrXoz1cj8K9CtejPQrXo71cj8K9CtejvQrXo71cj8K9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jlh66"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.95686275, 0.80784315, 0.5137255, 1)
+shader_parameter/x_color = Color(0.9137255, 0.6745098, 0.34509805, 1)
+shader_parameter/z_color = Color(0.79607844, 0.57254905, 0.26666668, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_upnm3"]
+_surfaces = [{
+"aabb": AABB(-0.08, -0.08, -0.095, 0.16, 0.16, 0.19),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("CtejPQrXoz1cj8I9CtejPQrXoz1cj8K9CtejPQrXo71cj8I9CtejPQrXo71cj8K9CtejvQrXoz1cj8K9CtejvQrXoz1cj8I9CtejvQrXo71cj8K9CtejvQrXo71cj8I9CtejvQrXoz1cj8K9CtejPQrXoz1cj8K9CtejvQrXoz1cj8I9CtejPQrXoz1cj8I9CtejvQrXo71cj8I9CtejPQrXo71cj8I9CtejvQrXo71cj8K9CtejPQrXo71cj8K9CtejvQrXoz1cj8I9CtejPQrXoz1cj8I9CtejvQrXo71cj8I9CtejPQrXo71cj8I9CtejPQrXoz1cj8K9CtejvQrXoz1cj8K9CtejPQrXo71cj8K9CtejvQrXo71cj8K9////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_87f6r"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(1, 0.95686275, 0.8156863, 1)
+shader_parameter/x_color = Color(1, 0.95686275, 0.8156863, 1)
+shader_parameter/z_color = Color(1, 0.95686275, 0.8156863, 1)
+shader_parameter/face_shading = false
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ywjxp"]
+_surfaces = [{
+"aabb": AABB(-0.33, -0.33, 0, 0.66, 0.66, 1e-05),
+"format": 34359742471,
+"index_count": 144,
+"index_data": PackedByteArray("AQAAAAIAAgAAAAMAAwAAAAQABAAAAAUABQAAAAYABgAAAAcABwAAAAgACAAAAAkACQAAAAoACgAAAAsACwAAAAwADAAAAA0ADQAAAA4ADgAAAA8ADwAAABAAEAAAABEAEQAAABIAEgAAABMAEwAAABQAFAAAABUAFQAAABYAFgAAABcAFwAAABgAGAAAABkAGQAAABoAGgAAABsAGwAAABwAHAAAAB0AHQAAAB4AHgAAAB8AHwAAACAAIAAAACEAIQAAACIAIgAAACMAIwAAACQAJAAAACUAJQAAACYAJgAAACcAJwAAACgAKAAAACkAKQAAACoAKgAAACsAKwAAACwALAAAAC0ALQAAAC4ALgAAAC8ALwAAADAAMAAAADEA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 50,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAw/WoPgAAAAAAAAAAuIOnPv1tMD0AAAAA7TOjPpbrrj0AAAAAQxmcPv9QAT4AAAAA21KSPsP1KD4AAAAAhAuGPnG2TT4AAAAADvJuPg7ybj4AAAAAcbZNPoQLhj4AAAAAw/UoPttSkj4AAAAA/1ABPkMZnD4AAAAAluuuPe0zoz4AAAAA/W0wPbiDpz4AAAAAqF+6I8P1qD4AAAAA/W0wvbiDpz4AAAAAluuuve0zoz4AAAAA/1ABvkMZnD4AAAAAw/UovttSkj4AAAAAcbZNvoQLhj4AAAAADvJuvg7ybj4AAAAAhAuGvnG2TT4AAAAA21KSvsP1KD4AAAAAQxmcvv9QAT4AAAAA7TOjvpbrrj0AAAAAuIOnvv1tMD0AAAAAw/WovqhfOiQAAAAAuIOnvv1tML0AAAAA7TOjvpbrrr0AAAAAQxmcvv9QAb4AAAAA21KSvsP1KL4AAAAAhAuGvnG2Tb4AAAAADvJuvg7ybr4AAAAAcbZNvoQLhr4AAAAAw/UovttSkr4AAAAA/1ABvkMZnL4AAAAAluuuve0zo74AAAAA/W0wvbiDp74AAAAAvseLpMP1qL4AAAAA/W0wPbiDp74AAAAAluuuPe0zo74AAAAA/1ABPkMZnL4AAAAAw/UoPttSkr4AAAAAcbZNPoQLhr4AAAAADvJuPg7ybr4AAAAAhAuGPnG2Tb4AAAAA21KSPsP1KL4AAAAAQxmcPv9QAb4AAAAA7TOjPpbrrr0AAAAAuIOnPv1tML0AAAAAw/WoPqhfuqQAAAAA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgA==")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bmt7g"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/x_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/z_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/face_shading = false
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_48pf4"]
+_surfaces = [{
+"aabb": AABB(-0.331, -0.331, -0.010461622, 0.662, 0.662, 0.020923244),
+"format": 34359742471,
+"index_count": 1920,
+"index_data": PackedByteArray("QQBCAAAAAABCAAEAQgBDAAEAAQBDAAIAQwBEAAIAAgBEAAMARABFAAMAAwBFAAQARQBGAAQABABGAAUARgBHAAUABQBHAAYARwBIAAYABgBIAAcASABJAAcABwBJAAgASQBKAAgACABKAAkASgBLAAkACQBLAAoASwBMAAoACgBMAAsATABNAAsACwBNAAwATQBOAAwADABOAA0ATgBPAA0ADQBPAA4ATwBQAA4ADgBQAA8AUABRAA8ADwBRABAAUQBSABAAEABSABEAUgBTABEAEQBTABIAUwBUABIAEgBUABMAVABVABMAEwBVABQAVQBWABQAFABWABUAVgBXABUAFQBXABYAVwBYABYAFgBYABcAWABZABcAFwBZABgAWQBaABgAGABaABkAWgBbABkAGQBbABoAWwBcABoAGgBcABsAXABdABsAGwBdABwAXQBeABwAHABeAB0AXgBfAB0AHQBfAB4AXwBgAB4AHgBgAB8AYABhAB8AHwBhACAAYQBiACAAIABiACEAYgBjACEAIQBjACIAYwBkACIAIgBkACMAZABlACMAIwBlACQAZQBmACQAJABmACUAZgBnACUAJQBnACYAZwBoACYAJgBoACcAaABpACcAJwBpACgAaQBqACgAKABqACkAagBrACkAKQBrACoAawBsACoAKgBsACsAbABtACsAKwBtACwAbQBuACwALABuAC0AbgBvAC0ALQBvAC4AbwBwAC4ALgBwAC8AcABxAC8ALwBxADAAcQByADAAMAByADEAcgBzADEAMQBzADIAcwB0ADIAMgB0ADMAdAB1ADMAMwB1ADQAdQB2ADQANAB2ADUAdgB3ADUANQB3ADYAdwB4ADYANgB4ADcAeAB5ADcANwB5ADgAeQB6ADgAOAB6ADkAegB7ADkAOQB7ADoAewB8ADoAOgB8ADsAfAB9ADsAOwB9ADwAfQB+ADwAPAB+AD0AfgB/AD0APQB/AD4AfwCAAD4APgCAAD8AgACBAD8APwCBAEAAggCDAEEAQQCDAEIAgwCEAEIAQgCEAEMAhACFAEMAQwCFAEQAhQCGAEQARACGAEUAhgCHAEUARQCHAEYAhwCIAEYARgCIAEcAiACJAEcARwCJAEgAiQCKAEgASACKAEkAigCLAEkASQCLAEoAiwCMAEoASgCMAEsAjACNAEsASwCNAEwAjQCOAEwATACOAE0AjgCPAE0ATQCPAE4AjwCQAE4ATgCQAE8AkACRAE8ATwCRAFAAkQCSAFAAUACSAFEAkgCTAFEAUQCTAFIAkwCUAFIAUgCUAFMAlACVAFMAUwCVAFQAlQCWAFQAVACWAFUAlgCXAFUAVQCXAFYAlwCYAFYAVgCYAFcAmACZAFcAVwCZAFgAmQCaAFgAWACaAFkAmgCbAFkAWQCbAFoAmwCcAFoAWgCcAFsAnACdAFsAWwCdAFwAnQCeAFwAXACeAF0AngCfAF0AXQCfAF4AnwCgAF4AXgCgAF8AoAChAF8AXwChAGAAoQCiAGAAYACiAGEAogCjAGEAYQCjAGIAowCkAGIAYgCkAGMApAClAGMAYwClAGQApQCmAGQAZACmAGUApgCnAGUAZQCnAGYApwCoAGYAZgCoAGcAqACpAGcAZwCpAGgAqQCqAGgAaACqAGkAqgCrAGkAaQCrAGoAqwCsAGoAagCsAGsArACtAGsAawCtAGwArQCuAGwAbACuAG0ArgCvAG0AbQCvAG4ArwCwAG4AbgCwAG8AsACxAG8AbwCxAHAAsQCyAHAAcACyAHEAsgCzAHEAcQCzAHIAswC0AHIAcgC0AHMAtAC1AHMAcwC1AHQAtQC2AHQAdAC2AHUAtgC3AHUAdQC3AHYAtwC4AHYAdgC4AHcAuAC5AHcAdwC5AHgAuQC6AHgAeAC6AHkAugC7AHkAeQC7AHoAuwC8AHoAegC8AHsAvAC9AHsAewC9AHwAvQC+AHwAfAC+AH0AvgC/AH0AfQC/AH4AvwDAAH4AfgDAAH8AwADBAH8AfwDBAIAAwQDCAIAAgADCAIEAwwDEAIIAggDEAIMAxADFAIMAgwDFAIQAxQDGAIQAhADGAIUAxgDHAIUAhQDHAIYAxwDIAIYAhgDIAIcAyADJAIcAhwDJAIgAyQDKAIgAiADKAIkAygDLAIkAiQDLAIoAywDMAIoAigDMAIsAzADNAIsAiwDNAIwAzQDOAIwAjADOAI0AzgDPAI0AjQDPAI4AzwDQAI4AjgDQAI8A0ADRAI8AjwDRAJAA0QDSAJAAkADSAJEA0gDTAJEAkQDTAJIA0wDUAJIAkgDUAJMA1ADVAJMAkwDVAJQA1QDWAJQAlADWAJUA1gDXAJUAlQDXAJYA1wDYAJYAlgDYAJcA2ADZAJcAlwDZAJgA2QDaAJgAmADaAJkA2gDbAJkAmQDbAJoA2wDcAJoAmgDcAJsA3ADdAJsAmwDdAJwA3QDeAJwAnADeAJ0A3gDfAJ0AnQDfAJ4A3wDgAJ4AngDgAJ8A4ADhAJ8AnwDhAKAA4QDiAKAAoADiAKEA4gDjAKEAoQDjAKIA4wDkAKIAogDkAKMA5ADlAKMAowDlAKQA5QDmAKQApADmAKUA5gDnAKUApQDnAKYA5wDoAKYApgDoAKcA6ADpAKcApwDpAKgA6QDqAKgAqADqAKkA6gDrAKkAqQDrAKoA6wDsAKoAqgDsAKsA7ADtAKsAqwDtAKwA7QDuAKwArADuAK0A7gDvAK0ArQDvAK4A7wDwAK4ArgDwAK8A8ADxAK8ArwDxALAA8QDyALAAsADyALEA8gDzALEAsQDzALIA8wD0ALIAsgD0ALMA9AD1ALMAswD1ALQA9QD2ALQAtAD2ALUA9gD3ALUAtQD3ALYA9wD4ALYAtgD4ALcA+AD5ALcAtwD5ALgA+QD6ALgAuAD6ALkA+gD7ALkAuQD7ALoA+wD8ALoAugD8ALsA/AD9ALsAuwD9ALwA/QD+ALwAvAD+AL0A/gD/AL0AvQD/AL4A/wAAAb4AvgAAAb8AAAEBAb8AvwABAcAAAQECAcAAwAACAcEAAgEDAcEAwQADAcIABAEFAcMAwwAFAcQABQEGAcQAxAAGAcUABgEHAcUAxQAHAcYABwEIAcYAxgAIAccACAEJAccAxwAJAcgACQEKAcgAyAAKAckACgELAckAyQALAcoACwEMAcoAygAMAcsADAENAcsAywANAcwADQEOAcwAzAAOAc0ADgEPAc0AzQAPAc4ADwEQAc4AzgAQAc8AEAERAc8AzwARAdAAEQESAdAA0AASAdEAEgETAdEA0QATAdIAEwEUAdIA0gAUAdMAFAEVAdMA0wAVAdQAFQEWAdQA1AAWAdUAFgEXAdUA1QAXAdYAFwEYAdYA1gAYAdcAGAEZAdcA1wAZAdgAGQEaAdgA2AAaAdkAGgEbAdkA2QAbAdoAGwEcAdoA2gAcAdsAHAEdAdsA2wAdAdwAHQEeAdwA3AAeAd0AHgEfAd0A3QAfAd4AHwEgAd4A3gAgAd8AIAEhAd8A3wAhAeAAIQEiAeAA4AAiAeEAIgEjAeEA4QAjAeIAIwEkAeIA4gAkAeMAJAElAeMA4wAlAeQAJQEmAeQA5AAmAeUAJgEnAeUA5QAnAeYAJwEoAeYA5gAoAecAKAEpAecA5wApAegAKQEqAegA6AAqAekAKgErAekA6QArAeoAKwEsAeoA6gAsAesALAEtAesA6wAtAewALQEuAewA7AAuAe0ALgEvAe0A7QAvAe4ALwEwAe4A7gAwAe8AMAExAe8A7wAxAfAAMQEyAfAA8AAyAfEAMgEzAfEA8QAzAfIAMwE0AfIA8gA0AfMANAE1AfMA8wA1AfQANQE2AfQA9AA2AfUANgE3AfUA9QA3AfYANwE4AfYA9gA4AfcAOAE5AfcA9wA5AfgAOQE6AfgA+AA6AfkAOgE7AfkA+QA7AfoAOwE8AfoA+gA8AfsAPAE9AfsA+wA9AfwAPQE+AfwA/AA+Af0APgE/Af0A/QA/Af4APwFAAf4A/gBAAf8AQAFBAf8A/wBBAQABQQFCAQABAAFCAQEBQgFDAQEBAQFDAQIBQwFEAQIBAgFEAQMBRQFGAQQBBAFGAQUBRgFHAQUBBQFHAQYBRwFIAQYBBgFIAQcBSAFJAQcBBwFJAQgBSQFKAQgBCAFKAQkBSgFLAQkBCQFLAQoBSwFMAQoBCgFMAQsBTAFNAQsBCwFNAQwBTQFOAQwBDAFOAQ0BTgFPAQ0BDQFPAQ4BTwFQAQ4BDgFQAQ8BUAFRAQ8BDwFRARABUQFSARABEAFSAREBUgFTAREBEQFTARIBUwFUARIBEgFUARMBVAFVARMBEwFVARQBVQFWARQBFAFWARUBVgFXARUBFQFXARYBVwFYARYBFgFYARcBWAFZARcBFwFZARgBWQFaARgBGAFaARkBWgFbARkBGQFbARoBWwFcARoBGgFcARsBXAFdARsBGwFdARwBXQFeARwBHAFeAR0BXgFfAR0BHQFfAR4BXwFgAR4BHgFgAR8BYAFhAR8BHwFhASABYQFiASABIAFiASEBYgFjASEBIQFjASIBYwFkASIBIgFkASMBZAFlASMBIwFlASQBZQFmASQBJAFmASUBZgFnASUBJQFnASYBZwFoASYBJgFoAScBaAFpAScBJwFpASgBaQFqASgBKAFqASkBagFrASkBKQFrASoBawFsASoBKgFsASsBbAFtASsBKwFtASwBbQFuASwBLAFuAS0BbgFvAS0BLQFvAS4BbwFwAS4BLgFwAS8BcAFxAS8BLwFxATABcQFyATABMAFyATEBcgFzATEBMQFzATIBcwF0ATIBMgF0ATMBdAF1ATMBMwF1ATQBdQF2ATQBNAF2ATUBdgF3ATUBNQF3ATYBdwF4ATYBNgF4ATcBeAF5ATcBNwF5ATgBeQF6ATgBOAF6ATkBegF7ATkBOQF7AToBewF8AToBOgF8ATsBfAF9ATsBOwF9ATwBfQF+ATwBPAF+AT0BfgF/AT0BPQF/AT4BfwGAAT4BPgGAAT8BgAGBAT8BPwGBAUABgQGCAUABQAGCAUEBggGDAUEBQQGDAUIBgwGEAUIBQgGEAUMBhAGFAUMBQwGFAUQB"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 390,
+"vertex_data": PackedByteArray("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")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ldbi"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/x_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/z_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/face_shading = false
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jxik0"]
+_surfaces = [{
+"aabb": AABB(-0.28, -0.28, -0.004755283, 0.56, 0.56, 0.009510566),
+"format": 34359742471,
+"index_count": 1920,
+"index_data": PackedByteArray("QQBCAAAAAABCAAEAQgBDAAEAAQBDAAIAQwBEAAIAAgBEAAMARABFAAMAAwBFAAQARQBGAAQABABGAAUARgBHAAUABQBHAAYARwBIAAYABgBIAAcASABJAAcABwBJAAgASQBKAAgACABKAAkASgBLAAkACQBLAAoASwBMAAoACgBMAAsATABNAAsACwBNAAwATQBOAAwADABOAA0ATgBPAA0ADQBPAA4ATwBQAA4ADgBQAA8AUABRAA8ADwBRABAAUQBSABAAEABSABEAUgBTABEAEQBTABIAUwBUABIAEgBUABMAVABVABMAEwBVABQAVQBWABQAFABWABUAVgBXABUAFQBXABYAVwBYABYAFgBYABcAWABZABcAFwBZABgAWQBaABgAGABaABkAWgBbABkAGQBbABoAWwBcABoAGgBcABsAXABdABsAGwBdABwAXQBeABwAHABeAB0AXgBfAB0AHQBfAB4AXwBgAB4AHgBgAB8AYABhAB8AHwBhACAAYQBiACAAIABiACEAYgBjACEAIQBjACIAYwBkACIAIgBkACMAZABlACMAIwBlACQAZQBmACQAJABmACUAZgBnACUAJQBnACYAZwBoACYAJgBoACcAaABpACcAJwBpACgAaQBqACgAKABqACkAagBrACkAKQBrACoAawBsACoAKgBsACsAbABtACsAKwBtACwAbQBuACwALABuAC0AbgBvAC0ALQBvAC4AbwBwAC4ALgBwAC8AcABxAC8ALwBxADAAcQByADAAMAByADEAcgBzADEAMQBzADIAcwB0ADIAMgB0ADMAdAB1ADMAMwB1ADQAdQB2ADQANAB2ADUAdgB3ADUANQB3ADYAdwB4ADYANgB4ADcAeAB5ADcANwB5ADgAeQB6ADgAOAB6ADkAegB7ADkAOQB7ADoAewB8ADoAOgB8ADsAfAB9ADsAOwB9ADwAfQB+ADwAPAB+AD0AfgB/AD0APQB/AD4AfwCAAD4APgCAAD8AgACBAD8APwCBAEAAggCDAEEAQQCDAEIAgwCEAEIAQgCEAEMAhACFAEMAQwCFAEQAhQCGAEQARACGAEUAhgCHAEUARQCHAEYAhwCIAEYARgCIAEcAiACJAEcARwCJAEgAiQCKAEgASACKAEkAigCLAEkASQCLAEoAiwCMAEoASgCMAEsAjACNAEsASwCNAEwAjQCOAEwATACOAE0AjgCPAE0ATQCPAE4AjwCQAE4ATgCQAE8AkACRAE8ATwCRAFAAkQCSAFAAUACSAFEAkgCTAFEAUQCTAFIAkwCUAFIAUgCUAFMAlACVAFMAUwCVAFQAlQCWAFQAVACWAFUAlgCXAFUAVQCXAFYAlwCYAFYAVgCYAFcAmACZAFcAVwCZAFgAmQCaAFgAWACaAFkAmgCbAFkAWQCbAFoAmwCcAFoAWgCcAFsAnACdAFsAWwCdAFwAnQCeAFwAXACeAF0AngCfAF0AXQCfAF4AnwCgAF4AXgCgAF8AoAChAF8AXwChAGAAoQCiAGAAYACiAGEAogCjAGEAYQCjAGIAowCkAGIAYgCkAGMApAClAGMAYwClAGQApQCmAGQAZACmAGUApgCnAGUAZQCnAGYApwCoAGYAZgCoAGcAqACpAGcAZwCpAGgAqQCqAGgAaACqAGkAqgCrAGkAaQCrAGoAqwCsAGoAagCsAGsArACtAGsAawCtAGwArQCuAGwAbACuAG0ArgCvAG0AbQCvAG4ArwCwAG4AbgCwAG8AsACxAG8AbwCxAHAAsQCyAHAAcACyAHEAsgCzAHEAcQCzAHIAswC0AHIAcgC0AHMAtAC1AHMAcwC1AHQAtQC2AHQAdAC2AHUAtgC3AHUAdQC3AHYAtwC4AHYAdgC4AHcAuAC5AHcAdwC5AHgAuQC6AHgAeAC6AHkAugC7AHkAeQC7AHoAuwC8AHoAegC8AHsAvAC9AHsAewC9AHwAvQC+AHwAfAC+AH0AvgC/AH0AfQC/AH4AvwDAAH4AfgDAAH8AwADBAH8AfwDBAIAAwQDCAIAAgADCAIEAwwDEAIIAggDEAIMAxADFAIMAgwDFAIQAxQDGAIQAhADGAIUAxgDHAIUAhQDHAIYAxwDIAIYAhgDIAIcAyADJAIcAhwDJAIgAyQDKAIgAiADKAIkAygDLAIkAiQDLAIoAywDMAIoAigDMAIsAzADNAIsAiwDNAIwAzQDOAIwAjADOAI0AzgDPAI0AjQDPAI4AzwDQAI4AjgDQAI8A0ADRAI8AjwDRAJAA0QDSAJAAkADSAJEA0gDTAJEAkQDTAJIA0wDUAJIAkgDUAJMA1ADVAJMAkwDVAJQA1QDWAJQAlADWAJUA1gDXAJUAlQDXAJYA1wDYAJYAlgDYAJcA2ADZAJcAlwDZAJgA2QDaAJgAmADaAJkA2gDbAJkAmQDbAJoA2wDcAJoAmgDcAJsA3ADdAJsAmwDdAJwA3QDeAJwAnADeAJ0A3gDfAJ0AnQDfAJ4A3wDgAJ4AngDgAJ8A4ADhAJ8AnwDhAKAA4QDiAKAAoADiAKEA4gDjAKEAoQDjAKIA4wDkAKIAogDkAKMA5ADlAKMAowDlAKQA5QDmAKQApADmAKUA5gDnAKUApQDnAKYA5wDoAKYApgDoAKcA6ADpAKcApwDpAKgA6QDqAKgAqADqAKkA6gDrAKkAqQDrAKoA6wDsAKoAqgDsAKsA7ADtAKsAqwDtAKwA7QDuAKwArADuAK0A7gDvAK0ArQDvAK4A7wDwAK4ArgDwAK8A8ADxAK8ArwDxALAA8QDyALAAsADyALEA8gDzALEAsQDzALIA8wD0ALIAsgD0ALMA9AD1ALMAswD1ALQA9QD2ALQAtAD2ALUA9gD3ALUAtQD3ALYA9wD4ALYAtgD4ALcA+AD5ALcAtwD5ALgA+QD6ALgAuAD6ALkA+gD7ALkAuQD7ALoA+wD8ALoAugD8ALsA/AD9ALsAuwD9ALwA/QD+ALwAvAD+AL0A/gD/AL0AvQD/AL4A/wAAAb4AvgAAAb8AAAEBAb8AvwABAcAAAQECAcAAwAACAcEAAgEDAcEAwQADAcIABAEFAcMAwwAFAcQABQEGAcQAxAAGAcUABgEHAcUAxQAHAcYABwEIAcYAxgAIAccACAEJAccAxwAJAcgACQEKAcgAyAAKAckACgELAckAyQALAcoACwEMAcoAygAMAcsADAENAcsAywANAcwADQEOAcwAzAAOAc0ADgEPAc0AzQAPAc4ADwEQAc4AzgAQAc8AEAERAc8AzwARAdAAEQESAdAA0AASAdEAEgETAdEA0QATAdIAEwEUAdIA0gAUAdMAFAEVAdMA0wAVAdQAFQEWAdQA1AAWAdUAFgEXAdUA1QAXAdYAFwEYAdYA1gAYAdcAGAEZAdcA1wAZAdgAGQEaAdgA2AAaAdkAGgEbAdkA2QAbAdoAGwEcAdoA2gAcAdsAHAEdAdsA2wAdAdwAHQEeAdwA3AAeAd0AHgEfAd0A3QAfAd4AHwEgAd4A3gAgAd8AIAEhAd8A3wAhAeAAIQEiAeAA4AAiAeEAIgEjAeEA4QAjAeIAIwEkAeIA4gAkAeMAJAElAeMA4wAlAeQAJQEmAeQA5AAmAeUAJgEnAeUA5QAnAeYAJwEoAeYA5gAoAecAKAEpAecA5wApAegAKQEqAegA6AAqAekAKgErAekA6QArAeoAKwEsAeoA6gAsAesALAEtAesA6wAtAewALQEuAewA7AAuAe0ALgEvAe0A7QAvAe4ALwEwAe4A7gAwAe8AMAExAe8A7wAxAfAAMQEyAfAA8AAyAfEAMgEzAfEA8QAzAfIAMwE0AfIA8gA0AfMANAE1AfMA8wA1AfQANQE2AfQA9AA2AfUANgE3AfUA9QA3AfYANwE4AfYA9gA4AfcAOAE5AfcA9wA5AfgAOQE6AfgA+AA6AfkAOgE7AfkA+QA7AfoAOwE8AfoA+gA8AfsAPAE9AfsA+wA9AfwAPQE+AfwA/AA+Af0APgE/Af0A/QA/Af4APwFAAf4A/gBAAf8AQAFBAf8A/wBBAQABQQFCAQABAAFCAQEBQgFDAQEBAQFDAQIBQwFEAQIBAgFEAQMBRQFGAQQBBAFGAQUBRgFHAQUBBQFHAQYBRwFIAQYBBgFIAQcBSAFJAQcBBwFJAQgBSQFKAQgBCAFKAQkBSgFLAQkBCQFLAQoBSwFMAQoBCgFMAQsBTAFNAQsBCwFNAQwBTQFOAQwBDAFOAQ0BTgFPAQ0BDQFPAQ4BTwFQAQ4BDgFQAQ8BUAFRAQ8BDwFRARABUQFSARABEAFSAREBUgFTAREBEQFTARIBUwFUARIBEgFUARMBVAFVARMBEwFVARQBVQFWARQBFAFWARUBVgFXARUBFQFXARYBVwFYARYBFgFYARcBWAFZARcBFwFZARgBWQFaARgBGAFaARkBWgFbARkBGQFbARoBWwFcARoBGgFcARsBXAFdARsBGwFdARwBXQFeARwBHAFeAR0BXgFfAR0BHQFfAR4BXwFgAR4BHgFgAR8BYAFhAR8BHwFhASABYQFiASABIAFiASEBYgFjASEBIQFjASIBYwFkASIBIgFkASMBZAFlASMBIwFlASQBZQFmASQBJAFmASUBZgFnASUBJQFnASYBZwFoASYBJgFoAScBaAFpAScBJwFpASgBaQFqASgBKAFqASkBagFrASkBKQFrASoBawFsASoBKgFsASsBbAFtASsBKwFtASwBbQFuASwBLAFuAS0BbgFvAS0BLQFvAS4BbwFwAS4BLgFwAS8BcAFxAS8BLwFxATABcQFyATABMAFyATEBcgFzATEBMQFzATIBcwF0ATIBMgF0ATMBdAF1ATMBMwF1ATQBdQF2ATQBNAF2ATUBdgF3ATUBNQF3ATYBdwF4ATYBNgF4ATcBeAF5ATcBNwF5ATgBeQF6ATgBOAF6ATkBegF7ATkBOQF7AToBewF8AToBOgF8ATsBfAF9ATsBOwF9ATwBfQF+ATwBPAF+AT0BfgF/AT0BPQF/AT4BfwGAAT4BPgGAAT8BgAGBAT8BPwGBAUABgQGCAUABQAGCAUEBggGDAUEBQQGDAUIBgwGEAUIBQgGEAUMBhAGFAUMBQwGFAUQB"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 390,
+"vertex_data": PackedByteArray("KVyPPgAAAAAAAAAAcKuOPurT4DwAAAAA+pqMPsW+Xz0AAAAA3S+JPvp1pj0AAAAAh3KEPixy2z0AAAAATt18PqwoBz4AAAAAI2ZuPghLHz4AAAAAN6NdPqzkNT4AAAAA3b1KPt29Sj4AAAAArOQ1PjejXT4AAAAACEsfPiNmbj4AAAAArCgHPk7dfD4AAAAALHLbPYdyhD4AAAAA+nWmPd0viT4AAAAAxb5fPfqajD4AAAAA6tPgPHCrjj4AAAAAniKeIylcjz4AAAAA6tPgvHCrjj4AAAAAxb5fvfqajD4AAAAA+nWmvd0viT4AAAAALHLbvYdyhD4AAAAArCgHvk7dfD4AAAAACEsfviNmbj4AAAAArOQ1vjejXT4AAAAA3b1Kvt29Sj4AAAAAN6NdvqzkNT4AAAAAI2ZuvghLHz4AAAAATt18vqwoBz4AAAAAh3KEvixy2z0AAAAA3S+Jvvp1pj0AAAAA+pqMvsW+Xz0AAAAAcKuOvurT4DwAAAAAKVyPvp4iHiQAAAAAcKuOvurT4LwAAAAA+pqMvsW+X70AAAAA3S+Jvvp1pr0AAAAAh3KEvixy270AAAAATt18vqwoB74AAAAAI2ZuvghLH74AAAAAN6NdvqzkNb4AAAAA3b1Kvt29Sr4AAAAArOQ1vjejXb4AAAAACEsfviNmbr4AAAAArCgHvk7dfL4AAAAALHLbvYdyhL4AAAAA+nWmvd0vib4AAAAAxb5fvfqajL4AAAAA6tPgvHCrjr4AAAAA7TNtpClcj74AAAAA6tPgPHCrjr4AAAAAxb5fPfqajL4AAAAA+nWmPd0vib4AAAAALHLbPYdyhL4AAAAArCgHPk7dfL4AAAAACEsfPiNmbr4AAAAArOQ1PjejXb4AAAAA3b1KPt29Sr4AAAAAN6NdPqzkNb4AAAAAI2ZuPghLH74AAAAATt18PqwoB74AAAAAh3KEPixy270AAAAA3S+JPvp1pr0AAAAA+pqMPsW+X70AAAAAcKuOPurT4LwAAAAAKVyPPp4inqQAAAAAUZeNPgAAAAA00ps7x+iMPrwN3jw00ps71t6KPgL8XD000ps7hX6HPipopD000ps7KNCCPv682D000ps7j755Prx9BT400ps7FnVrPtxTHT400ps7HOdaPhymMz400ps7cz1IPnM9SD400ps7HKYzPhznWj400ps73FMdPhZ1az400ps7vH0FPo++eT400ps7/rzYPSjQgj400ps7KmikPYV+hz400ps7AvxcPdbeij400ps7vA3ePMfojD400ps7Gi+cI1GXjT400ps7vA3evMfojD400ps7Avxcvdbeij400ps7KmikvYV+hz400ps7/rzYvSjQgj400ps7vH0Fvo++eT400ps73FMdvhZ1az400ps7HKYzvhznWj400ps7cz1IvnM9SD400ps7HOdavhymMz400ps7FnVrvtxTHT400ps7j755vrx9BT400ps7KNCCvv682D000ps7hX6HvipopD000ps71t6KvgL8XD000ps7x+iMvrwN3jw00ps7UZeNvhovHCQ00ps7x+iMvrwN3rw00ps71t6KvgL8XL000ps7hX6HvipopL000ps7KNCCvv682L000ps7j755vrx9Bb400ps7FnVrvtxTHb400ps7HOdavhymM7400ps7cz1IvnM9SL400ps7HKYzvhznWr400ps73FMdvhZ1a7400ps7vH0Fvo++eb400ps7/rzYvSjQgr400ps7KmikvYV+h7400ps7Avxcvdbeir400ps7vA3evMfojL400ps7p0ZqpFGXjb400ps7vA3ePMfojL400ps7AvxcPdbeir400ps7KmikPYV+h7400ps7/rzYPSjQgr400ps7vH0FPo++eb400ps73FMdPhZ1a7400ps7HKYzPhznWr400ps7cz1IPnM9SL400ps7HOdaPhymM7400ps7FnVrPtxTHb400ps7j755Prx9Bb400ps7KNCCPv682L000ps7hX6HPipopL000ps71t6KPgL8XL000ps7x+iMPrwN3rw00ps7UZeNPhovnKQ00ps7mrqKPgAAAAAAm0A7lw+KPqOQ2TwAm0A7MxCIPnGEWD0Am0A7W8GEPmEVoT0Am0A7NyuAPmZb1D0Am0A7K7J0PvDKAj4Am0A7oLJmPrYlGj4Am0A7UXpWPnMEMD4Am0A7PDFEPjwxRD4Am0A7cwQwPlF6Vj4Am0A7tiUaPqCyZj4Am0A78MoCPiuydD4Am0A7ZlvUPTcrgD4Am0A7YRWhPVvBhD4Am0A7cYRYPTMQiD4Am0A7o5DZPJcPij4Am0A73waZI5q6ij4Am0A7o5DZvJcPij4Am0A7cYRYvTMQiD4Am0A7YRWhvVvBhD4Am0A7ZlvUvTcrgD4Am0A78MoCviuydD4Am0A7tiUavqCyZj4Am0A7cwQwvlF6Vj4Am0A7PDFEvjwxRD4Am0A7UXpWvnMEMD4Am0A7oLJmvrYlGj4Am0A7K7J0vvDKAj4Am0A7NyuAvmZb1D0Am0A7W8GEvmEVoT0Am0A7MxCIvnGEWD0Am0A7lw+KvqOQ2TwAm0A7mrqKvt8GGSQAm0A7lw+KvqOQ2bwAm0A7MxCIvnGEWL0Am0A7W8GEvmEVob0Am0A7NyuAvmZb1L0Am0A7K7J0vvDKAr4Am0A7oLJmvrYlGr4Am0A7UXpWvnMEML4Am0A7PDFEvjwxRL4Am0A7cwQwvlF6Vr4Am0A7tiUavqCyZr4Am0A78MoCviuydL4Am0A7ZlvUvTcrgL4Am0A7YRWhvVvBhL4Am0A7cYRYvTMQiL4Am0A7o5DZvJcPir4Am0A7T4plpJq6ir4Am0A7o5DZPJcPir4Am0A7cYRYPTMQiL4Am0A7YRWhPVvBhL4Am0A7ZlvUPTcrgL4Am0A78MoCPiuydL4Am0A7tiUaPqCyZr4Am0A7cwQwPlF6Vr4Am0A7PDFEPjwxRL4Am0A7UXpWPnMEML4Am0A7oLJmPrYlGr4Am0A7K7J0PvDKAr4Am0A7NyuAPmZb1L0Am0A7W8GEPmEVob0Am0A7MxCIPnGEWL0Am0A7lw+KPqOQ2bwAm0A7mrqKPt8GmaQAm0A7mrqKPgAAAAAAm0C7lw+KPqOQ2TwAm0C7MxCIPnGEWD0Am0C7W8GEPmEVoT0Am0C7NyuAPmZb1D0Am0C7K7J0PvDKAj4Am0C7oLJmPrYlGj4Am0C7UXpWPnMEMD4Am0C7PDFEPjwxRD4Am0C7cwQwPlF6Vj4Am0C7tiUaPqCyZj4Am0C78MoCPiuydD4Am0C7ZlvUPTcrgD4Am0C7YRWhPVvBhD4Am0C7cYRYPTMQiD4Am0C7o5DZPJcPij4Am0C73waZI5q6ij4Am0C7o5DZvJcPij4Am0C7cYRYvTMQiD4Am0C7YRWhvVvBhD4Am0C7ZlvUvTcrgD4Am0C78MoCviuydD4Am0C7tiUavqCyZj4Am0C7cwQwvlF6Vj4Am0C7PDFEvjwxRD4Am0C7UXpWvnMEMD4Am0C7oLJmvrYlGj4Am0C7K7J0vvDKAj4Am0C7NyuAvmZb1D0Am0C7W8GEvmEVoT0Am0C7MxCIvnGEWD0Am0C7lw+KvqOQ2TwAm0C7mrqKvt8GGSQAm0C7lw+KvqOQ2bwAm0C7MxCIvnGEWL0Am0C7W8GEvmEVob0Am0C7NyuAvmZb1L0Am0C7K7J0vvDKAr4Am0C7oLJmvrYlGr4Am0C7UXpWvnMEML4Am0C7PDFEvjwxRL4Am0C7cwQwvlF6Vr4Am0C7tiUavqCyZr4Am0C78MoCviuydL4Am0C7ZlvUvTcrgL4Am0C7YRWhvVvBhL4Am0C7cYRYvTMQiL4Am0C7o5DZvJcPir4Am0C7T4plpJq6ir4Am0C7o5DZPJcPir4Am0C7cYRYPTMQiL4Am0C7YRWhPVvBhL4Am0C7ZlvUPTcrgL4Am0C78MoCPiuydL4Am0C7tiUaPqCyZr4Am0C7cwQwPlF6Vr4Am0C7PDFEPjwxRL4Am0C7UXpWPnMEML4Am0C7oLJmPrYlGr4Am0C7K7J0PvDKAr4Am0C7NyuAPmZb1L0Am0C7W8GEPmEVob0Am0C7MxCIPnGEWL0Am0C7lw+KPqOQ2bwAm0C7mrqKPt8GmaQAm0C7UZeNPgAAAAA00pu7x+iMPrwN3jw00pu71t6KPgL8XD000pu7hX6HPipopD000pu7KNCCPv682D000pu7j755Prx9BT400pu7FnVrPtxTHT400pu7HOdaPhymMz400pu7cz1IPnM9SD400pu7HKYzPhznWj400pu73FMdPhZ1az400pu7vH0FPo++eT400pu7/rzYPSjQgj400pu7KmikPYV+hz400pu7AvxcPdbeij400pu7vA3ePMfojD400pu7Gi+cI1GXjT400pu7vA3evMfojD400pu7Avxcvdbeij400pu7KmikvYV+hz400pu7/rzYvSjQgj400pu7vH0Fvo++eT400pu73FMdvhZ1az400pu7HKYzvhznWj400pu7cz1IvnM9SD400pu7HOdavhymMz400pu7FnVrvtxTHT400pu7j755vrx9BT400pu7KNCCvv682D000pu7hX6HvipopD000pu71t6KvgL8XD000pu7x+iMvrwN3jw00pu7UZeNvhovHCQ00pu7x+iMvrwN3rw00pu71t6KvgL8XL000pu7hX6HvipopL000pu7KNCCvv682L000pu7j755vrx9Bb400pu7FnVrvtxTHb400pu7HOdavhymM7400pu7cz1IvnM9SL400pu7HKYzvhznWr400pu73FMdvhZ1a7400pu7vH0Fvo++eb400pu7/rzYvSjQgr400pu7KmikvYV+h7400pu7Avxcvdbeir400pu7vA3evMfojL400pu7p0ZqpFGXjb400pu7vA3ePMfojL400pu7AvxcPdbeir400pu7KmikPYV+h7400pu7/rzYPSjQgr400pu7vH0FPo++eb400pu73FMdPhZ1a7400pu7HKYzPhznWr400pu7cz1IPnM9SL400pu7HOdaPhymM7400pu7FnVrPtxTHb400pu7j755Prx9Bb400pu7KNCCPv682L000pu7hX6HPipopL000pu71t6KPgL8XL000pu7x+iMPrwN3rw00pu7UZeNPhovnKQ00pu7KVyPPgAAAADZubShcKuOPurT4DzZubSh+pqMPsW+Xz3ZubSh3S+JPvp1pj3ZubShh3KEPixy2z3ZubShTt18PqwoBz7ZubShI2ZuPghLHz7ZubShN6NdPqzkNT7ZubSh3b1KPt29Sj7ZubShrOQ1PjejXT7ZubShCEsfPiNmbj7ZubShrCgHPk7dfD7ZubShLHLbPYdyhD7ZubSh+nWmPd0viT7ZubShxb5fPfqajD7ZubSh6tPgPHCrjj7ZubShniKeIylcjz7ZubSh6tPgvHCrjj7ZubShxb5fvfqajD7ZubSh+nWmvd0viT7ZubShLHLbvYdyhD7ZubShrCgHvk7dfD7ZubShCEsfviNmbj7ZubShrOQ1vjejXT7ZubSh3b1Kvt29Sj7ZubShN6NdvqzkNT7ZubShI2ZuvghLHz7ZubShTt18vqwoBz7ZubShh3KEvixy2z3ZubSh3S+Jvvp1pj3ZubSh+pqMvsW+Xz3ZubShcKuOvurT4DzZubShKVyPvp4iHiTZubShcKuOvurT4LzZubSh+pqMvsW+X73ZubSh3S+Jvvp1pr3ZubShh3KEvixy273ZubShTt18vqwoB77ZubShI2ZuvghLH77ZubShN6NdvqzkNb7ZubSh3b1Kvt29Sr7ZubShrOQ1vjejXb7ZubShCEsfviNmbr7ZubShrCgHvk7dfL7ZubShLHLbvYdyhL7ZubSh+nWmvd0vib7ZubShxb5fvfqajL7ZubSh6tPgvHCrjr7ZubSh7TNtpClcj77ZubSh6tPgPHCrjr7ZubSh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")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7amrc"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/x_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/z_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/face_shading = false
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_g7ya7"]
+_surfaces = [{
+"aabb": AABB(-0.094, -0.094, 0, 0.188, 0.188, 1e-05),
+"format": 34359742471,
+"index_count": 72,
+"index_data": PackedByteArray("AQAAAAIAAgAAAAMAAwAAAAQABAAAAAUABQAAAAYABgAAAAcABwAAAAgACAAAAAkACQAAAAoACgAAAAsACwAAAAwADAAAAA0ADQAAAA4ADgAAAA8ADwAAABAAEAAAABEAEQAAABIAEgAAABMAEwAAABQAFAAAABUAFQAAABYAFgAAABcAFwAAABgAGAAAABkA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 26,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAEoPAPQAAAAAAAAAAy/O5PZdNxzwAAAAAZLimPRKDQD0AAAAAZSCIPWUgiD0AAAAAEoNAPWS4pj0AAAAAl03HPMvzuT0AAAAAX1rUIhKDwD0AAAAAl03HvMvzuT0AAAAAEoNAvWS4pj0AAAAAZSCIvWUgiD0AAAAAZLimvRKDQD0AAAAAy/O5vZdNxzwAAAAAEoPAvV9aVCMAAAAAy/O5vZdNx7wAAAAAZLimvRKDQL0AAAAAZSCIvWUgiL0AAAAAEoNAvWS4pr0AAAAAl03HvMvzub0AAAAAx0OfoxKDwL0AAAAAl03HPMvzub0AAAAAEoNAPWS4pr0AAAAAZSCIPWUgiL0AAAAAZLimPRKDQL0AAAAAy/O5PZdNx7wAAAAAEoPAPV9a1KMAAAAA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgA==")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2mpji"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/x_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/z_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/face_shading = false
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_hd88l"]
+_surfaces = [{
+"aabb": AABB(-0.094, -0.094, 0, 0.188, 0.188, 1e-05),
+"format": 34359742471,
+"index_count": 72,
+"index_data": PackedByteArray("AQAAAAIAAgAAAAMAAwAAAAQABAAAAAUABQAAAAYABgAAAAcABwAAAAgACAAAAAkACQAAAAoACgAAAAsACwAAAAwADAAAAA0ADQAAAA4ADgAAAA8ADwAAABAAEAAAABEAEQAAABIAEgAAABMAEwAAABQAFAAAABUAFQAAABYAFgAAABcAFwAAABgAGAAAABkA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 26,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAEoPAPQAAAAAAAAAAy/O5PZdNxzwAAAAAZLimPRKDQD0AAAAAZSCIPWUgiD0AAAAAEoNAPWS4pj0AAAAAl03HPMvzuT0AAAAAX1rUIhKDwD0AAAAAl03HvMvzuT0AAAAAEoNAvWS4pj0AAAAAZSCIvWUgiD0AAAAAZLimvRKDQD0AAAAAy/O5vZdNxzwAAAAAEoPAvV9aVCMAAAAAy/O5vZdNx7wAAAAAZLimvRKDQL0AAAAAZSCIvWUgiL0AAAAAEoNAvWS4pr0AAAAAl03HvMvzub0AAAAAx0OfoxKDwL0AAAAAl03HPMvzub0AAAAAEoNAPWS4pr0AAAAAZSCIPWUgiL0AAAAAZLimPRKDQL0AAAAAy/O5PZdNx7wAAAAAEoPAPV9a1KMAAAAA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgA==")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ky0eq"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/x_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/z_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/face_shading = false
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_agjr8"]
+_surfaces = [{
+"aabb": AABB(-0.094, -0.094, 0, 0.188, 0.188, 1e-05),
+"format": 34359742471,
+"index_count": 72,
+"index_data": PackedByteArray("AQAAAAIAAgAAAAMAAwAAAAQABAAAAAUABQAAAAYABgAAAAcABwAAAAgACAAAAAkACQAAAAoACgAAAAsACwAAAAwADAAAAA0ADQAAAA4ADgAAAA8ADwAAABAAEAAAABEAEQAAABIAEgAAABMAEwAAABQAFAAAABUAFQAAABYAFgAAABcAFwAAABgAGAAAABkA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 26,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAEoPAPQAAAAAAAAAAy/O5PZdNxzwAAAAAZLimPRKDQD0AAAAAZSCIPWUgiD0AAAAAEoNAPWS4pj0AAAAAl03HPMvzuT0AAAAAX1rUIhKDwD0AAAAAl03HvMvzuT0AAAAAEoNAvWS4pj0AAAAAZSCIvWUgiD0AAAAAZLimvRKDQD0AAAAAy/O5vZdNxzwAAAAAEoPAvV9aVCMAAAAAy/O5vZdNx7wAAAAAZLimvRKDQL0AAAAAZSCIvWUgiL0AAAAAEoNAvWS4pr0AAAAAl03HvMvzub0AAAAAx0OfoxKDwL0AAAAAl03HPMvzub0AAAAAEoNAPWS4pr0AAAAAZSCIPWUgiL0AAAAAZLimPRKDQL0AAAAAy/O5PZdNx7wAAAAAEoPAPV9a1KMAAAAA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgA==")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ahb4"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/x_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/z_color = Color(0.9019608, 0.7254902, 0.31764707, 1)
+shader_parameter/face_shading = false
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = -2.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ww8lc"]
+_surfaces = [{
+"aabb": AABB(-0.094, -0.094, 0, 0.188, 0.188, 1e-05),
+"format": 34359742471,
+"index_count": 72,
+"index_data": PackedByteArray("AQAAAAIAAgAAAAMAAwAAAAQABAAAAAUABQAAAAYABgAAAAcABwAAAAgACAAAAAkACQAAAAoACgAAAAsACwAAAAwADAAAAA0ADQAAAA4ADgAAAA8ADwAAABAAEAAAABEAEQAAABIAEgAAABMAEwAAABQAFAAAABUAFQAAABYAFgAAABcAFwAAABgAGAAAABkA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 26,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAEoPAPQAAAAAAAAAAy/O5PZdNxzwAAAAAZLimPRKDQD0AAAAAZSCIPWUgiD0AAAAAEoNAPWS4pj0AAAAAl03HPMvzuT0AAAAAX1rUIhKDwD0AAAAAl03HvMvzuT0AAAAAEoNAvWS4pj0AAAAAZSCIvWUgiD0AAAAAZLimvRKDQD0AAAAAy/O5vZdNxzwAAAAAEoPAvV9aVCMAAAAAy/O5vZdNx7wAAAAAZLimvRKDQL0AAAAAZSCIvWUgiL0AAAAAEoNAvWS4pr0AAAAAl03HvMvzub0AAAAAx0OfoxKDwL0AAAAAl03HPMvzub0AAAAAEoNAPWS4pr0AAAAAZSCIPWUgiL0AAAAAZLimPRKDQL0AAAAAy/O5PZdNx7wAAAAAEoPAPV9a1KMAAAAA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgA==")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iswbk"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.40784314, 0.70980394, 0.8980392, 1)
+shader_parameter/x_color = Color(0.28235295, 0.52156866, 0.6745098, 1)
+shader_parameter/z_color = Color(0.17254902, 0.3647059, 0.5019608, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_s8e0p"]
+_surfaces = [{
+"aabb": AABB(-0.45, -2.25, -0.45, 0.9, 4.5, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPgAAEEBmZuY+ZmbmPgAAEEBmZua+ZmbmPgAAEMBmZuY+ZmbmPgAAEMBmZua+ZmbmvgAAEEBmZua+ZmbmvgAAEEBmZuY+ZmbmvgAAEMBmZua+ZmbmvgAAEMBmZuY+ZmbmvgAAEEBmZua+ZmbmPgAAEEBmZua+ZmbmvgAAEEBmZuY+ZmbmPgAAEEBmZuY+ZmbmvgAAEMBmZuY+ZmbmPgAAEMBmZuY+ZmbmvgAAEMBmZua+ZmbmPgAAEMBmZua+ZmbmvgAAEEBmZuY+ZmbmPgAAEEBmZuY+ZmbmvgAAEMBmZuY+ZmbmPgAAEMBmZuY+ZmbmPgAAEEBmZua+ZmbmvgAAEEBmZua+ZmbmPgAAEMBmZua+ZmbmvgAAEMBmZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3gwk7"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.40784314, 0.70980394, 0.8980392, 1)
+shader_parameter/x_color = Color(0.28235295, 0.52156866, 0.6745098, 1)
+shader_parameter/z_color = Color(0.17254902, 0.3647059, 0.5019608, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_2hfuv"]
+_surfaces = [{
+"aabb": AABB(-0.45, -3.15, -0.45, 0.9, 6.3, 0.9),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZmbmPpqZSUBmZuY+ZmbmPpqZSUBmZua+ZmbmPpqZScBmZuY+ZmbmPpqZScBmZua+ZmbmvpqZSUBmZua+ZmbmvpqZSUBmZuY+ZmbmvpqZScBmZua+ZmbmvpqZScBmZuY+ZmbmvpqZSUBmZua+ZmbmPpqZSUBmZua+ZmbmvpqZSUBmZuY+ZmbmPpqZSUBmZuY+ZmbmvpqZScBmZuY+ZmbmPpqZScBmZuY+ZmbmvpqZScBmZua+ZmbmPpqZScBmZua+ZmbmvpqZSUBmZuY+ZmbmPpqZSUBmZuY+ZmbmvpqZScBmZuY+ZmbmPpqZScBmZuY+ZmbmPpqZSUBmZua+ZmbmvpqZSUBmZua+ZmbmPpqZScBmZua+ZmbmvpqZScBmZua+////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m3r6w"]
+render_priority = 0
+shader = ExtResource("1_1mlb5")
+shader_parameter/top_color = Color(0.40784314, 0.70980394, 0.8980392, 1)
+shader_parameter/x_color = Color(0.28235295, 0.52156866, 0.6745098, 1)
+shader_parameter/z_color = Color(0.17254902, 0.3647059, 0.5019608, 1)
+shader_parameter/face_shading = true
+shader_parameter/angle = 1.5707963267948966
+shader_parameter/depth_offset = 0.0
+shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
+shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
+shader_parameter/gate_a = Vector4(0, 1, 0, -1)
+shader_parameter/gate_b = Vector4(0, 1, 0, -1)
+shader_parameter/upright_a = 0.0
+shader_parameter/upright_b = 0.0
+shader_parameter/traveller = null
+shader_parameter/carrier_floor = null
+shader_parameter/self_masked = null
+shader_parameter/view_origin = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fokfn"]
+_surfaces = [{
+"aabb": AABB(-0.06, -0.06, -1.8, 0.12, 0.12, 3.6),
+"format": 34359742471,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("j8J1PY/CdT1mZuY/j8J1PY/CdT1mZua/j8J1PY/Cdb1mZuY/j8J1PY/Cdb1mZua/j8J1vY/CdT1mZua/j8J1vY/CdT1mZuY/j8J1vY/Cdb1mZua/j8J1vY/Cdb1mZuY/j8J1vY/CdT1mZua/j8J1PY/CdT1mZua/j8J1vY/CdT1mZuY/j8J1PY/CdT1mZuY/j8J1vY/Cdb1mZuY/j8J1PY/Cdb1mZuY/j8J1vY/Cdb1mZua/j8J1PY/Cdb1mZua/j8J1vY/CdT1mZuY/j8J1PY/CdT1mZuY/j8J1vY/Cdb1mZuY/j8J1PY/Cdb1mZuY/j8J1PY/CdT1mZua/j8J1vY/CdT1mZua/j8J1PY/Cdb1mZua/j8J1vY/Cdb1mZua/////f/9//7////9//3//v////3//f/+/////f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP//////fwCA//////9/AID//////38AgP//////fwCA")
+}]
+
+[node name="Architecture" type="Node3D" unique_id=1295277654]
+
+[node name="FixedArchitecture" type="Node3D" parent="." unique_id=527704893]
+
+[node name="Road_west_road" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1424516256]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 1.725)
+material_override = SubResource("ShaderMaterial_bb66s")
+mesh = SubResource("ArrayMesh_1751e")
+metadata/roads = ["west-road"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.45, 1.725],
+"min": [-0.45, -0.45, -1.725]
+}
+
+[node name="Road_west_road_1" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1730567571]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.665, 2, 0)
+material_override = SubResource("ShaderMaterial_h50jy")
+mesh = SubResource("ArrayMesh_7rmfb")
+metadata/roads = ["west-road-1"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [1.3350000381469729, 0.45, 0.45],
+"min": [-1.3350000381469729, -0.45, -0.45]
+}
+
+[node name="@MeshInstance3D@2" type="MeshInstance3D" parent="FixedArchitecture" unique_id=276790939]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+material_override = SubResource("ShaderMaterial_xcg22")
+mesh = SubResource("ArrayMesh_aimxb")
+metadata/roads = ["west-road", "west-road-1"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.45, 0.45],
+"min": [-0.45, -0.45, -0.45]
+}
+
+[node name="Road_approach" type="MeshInstance3D" parent="FixedArchitecture" unique_id=2074504916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.665, 2, 0)
+material_override = SubResource("ShaderMaterial_ha1xn")
+mesh = SubResource("ArrayMesh_a5w1o")
+metadata/roads = ["approach"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [1.3350000381469729, 0.45, 0.45],
+"min": [-1.3350000381469729, -0.45, -0.45]
+}
+
+[node name="Road_approach_1" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1601389247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, -1.75)
+material_override = SubResource("ShaderMaterial_5srmi")
+mesh = SubResource("ArrayMesh_w0ogo")
+metadata/roads = ["approach-1"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.45, 1.75],
+"min": [-0.45, -0.45, -1.75]
+}
+
+[node name="@MeshInstance3D@3" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1956167455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 0)
+material_override = SubResource("ShaderMaterial_ir4rt")
+mesh = SubResource("ArrayMesh_uvkd1")
+metadata/roads = ["approach", "approach-1"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.45, 0.45],
+"min": [-0.45, -0.45, -0.45]
+}
+
+[node name="Road_crown" type="MeshInstance3D" parent="FixedArchitecture" unique_id=508633887]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.85, -5.275)
+material_override = SubResource("ShaderMaterial_u3wyf")
+mesh = SubResource("ArrayMesh_h5kjp")
+metadata/roads = ["crown"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 1.3, 0.225],
+"min": [-0.45, -1.3, -0.225]
+}
+
+[node name="Road_crown_1" type="MeshInstance3D" parent="FixedArchitecture" unique_id=586462934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.775, 3.7, -5.5)
+material_override = SubResource("ShaderMaterial_rvqch")
+mesh = SubResource("ArrayMesh_q7c4m")
+metadata/roads = ["crown-1"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.225, 0.45, 0.45],
+"min": [-0.225, -0.45, -0.45]
+}
+
+[node name="@MeshInstance3D@4" type="MeshInstance3D" parent="FixedArchitecture" unique_id=501597176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.85, -5.5)
+material_override = SubResource("ShaderMaterial_b0qub")
+mesh = SubResource("ArrayMesh_jpwok")
+metadata/roads = ["crown", "crown-1"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 1.3, 0.45],
+"min": [-0.45, -1.3, -0.45]
+}
+
+[node name="Road_landing" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1060255227]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.675, 2.4, -5.5)
+material_override = SubResource("ShaderMaterial_iyhlc")
+mesh = SubResource("ArrayMesh_mrrjp")
+metadata/roads = ["landing"]
+metadata/part = "landing"
+metadata/self_part = "landing"
+metadata/control = false
+metadata/collider = {
+"max": [0.325, 0.85, 0.45],
+"min": [-0.325, -0.85, -0.45]
+}
+
+[node name="Road_middle" type="MeshInstance3D" parent="FixedArchitecture" unique_id=490660262]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 2.4, -6.175)
+material_override = SubResource("ShaderMaterial_3mb46")
+mesh = SubResource("ArrayMesh_l0i02")
+metadata/roads = ["middle"]
+metadata/part = "middle"
+metadata/self_part = "middle"
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.85, 0.225],
+"min": [-0.45, -0.85, -0.225]
+}
+
+[node name="Road_middle_1" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1515419086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55, 2.4, -6.4)
+material_override = SubResource("ShaderMaterial_j258b")
+mesh = SubResource("ArrayMesh_ikq5e")
+metadata/roads = ["middle-1"]
+metadata/part = "middle"
+metadata/self_part = "middle"
+metadata/control = false
+metadata/collider = {
+"max": [3.45, 0.85, 0.45],
+"min": [-3.45, -0.85, -0.45]
+}
+
+[node name="Road_middle_2" type="MeshInstance3D" parent="FixedArchitecture" unique_id=503391813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.4, -4.6)
+material_override = SubResource("ShaderMaterial_mefx6")
+mesh = SubResource("ArrayMesh_xbe0c")
+metadata/roads = ["middle-2"]
+metadata/part = "middle"
+metadata/self_part = "middle"
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.85, 1.8],
+"min": [-0.45, -0.85, -1.8]
+}
+
+[node name="Road_middle_3" type="MeshInstance3D" parent="FixedArchitecture" unique_id=238974860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.475, 2.4, -2.8)
+material_override = SubResource("ShaderMaterial_m2uk4")
+mesh = SubResource("ArrayMesh_1xm03")
+metadata/roads = ["middle-3"]
+metadata/part = "middle"
+metadata/self_part = "middle"
+metadata/control = false
+metadata/collider = {
+"max": [0.525, 0.85, 0.45],
+"min": [-0.525, -0.85, -0.45]
+}
+
+[node name="@MeshInstance3D@5" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1125577467]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 2.4, -6.4)
+material_override = SubResource("ShaderMaterial_hddox")
+mesh = SubResource("ArrayMesh_noi1c")
+metadata/roads = ["middle", "middle-1"]
+metadata/part = "middle"
+metadata/self_part = "middle"
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.85, 0.45],
+"min": [-0.45, -0.85, -0.45]
+}
+
+[node name="@MeshInstance3D@6" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1068344080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.4, -6.4)
+material_override = SubResource("ShaderMaterial_c2wjd")
+mesh = SubResource("ArrayMesh_nstra")
+metadata/roads = ["middle-1", "middle-2"]
+metadata/part = "middle"
+metadata/self_part = "middle"
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.85, 0.45],
+"min": [-0.45, -0.85, -0.45]
+}
+
+[node name="@MeshInstance3D@7" type="MeshInstance3D" parent="FixedArchitecture" unique_id=898247983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.4, -2.8)
+material_override = SubResource("ShaderMaterial_mloej")
+mesh = SubResource("ArrayMesh_hdumw")
+metadata/roads = ["middle-2", "middle-3"]
+metadata/part = "middle"
+metadata/self_part = "middle"
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.85, 0.45],
+"min": [-0.45, -0.85, -0.45]
+}
+
+[node name="Road_goal_road" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1337630535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.375, 4, -1.6)
+material_override = SubResource("ShaderMaterial_06ida")
+mesh = SubResource("ArrayMesh_t5atl")
+metadata/roads = ["goal-road"]
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.225, 0.45, 0.45],
+"min": [-0.225, -0.45, -0.45]
+}
+
+[node name="Road_up_tread_0" type="MeshInstance3D" parent="FixedArchitecture" unique_id=127162703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.10625, -3.596875)
+material_override = SubResource("ShaderMaterial_0qkvc")
+mesh = SubResource("ArrayMesh_y2olt")
+metadata/roads = ["up-tread-0"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.55625, 0.096875],
+"min": [-0.45, -0.55625, -0.096875]
+}
+
+[node name="Road_up_tread_1" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1677255642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.2125, -3.790625)
+material_override = SubResource("ShaderMaterial_ieavo")
+mesh = SubResource("ArrayMesh_8nfa5")
+metadata/roads = ["up-tread-1"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.6625, 0.096875],
+"min": [-0.45, -0.6625, -0.096875]
+}
+
+[node name="Road_up_tread_2" type="MeshInstance3D" parent="FixedArchitecture" unique_id=826034009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.31875, -3.984375)
+material_override = SubResource("ShaderMaterial_h15ao")
+mesh = SubResource("ArrayMesh_x36ar")
+metadata/roads = ["up-tread-2"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.76875, 0.096875],
+"min": [-0.45, -0.76875, -0.096875]
+}
+
+[node name="Road_up_tread_3" type="MeshInstance3D" parent="FixedArchitecture" unique_id=539053879]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.425, -4.178125)
+material_override = SubResource("ShaderMaterial_eanw5")
+mesh = SubResource("ArrayMesh_o8sc0")
+metadata/roads = ["up-tread-3"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.875, 0.096875],
+"min": [-0.45, -0.875, -0.096875]
+}
+
+[node name="Road_up_tread_4" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1606298925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.53125, -4.371875)
+material_override = SubResource("ShaderMaterial_m2hry")
+mesh = SubResource("ArrayMesh_ams50")
+metadata/roads = ["up-tread-4"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.98125, 0.096875],
+"min": [-0.45, -0.98125, -0.096875]
+}
+
+[node name="Road_up_tread_5" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1188681374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.6375, -4.565625)
+material_override = SubResource("ShaderMaterial_s6fhi")
+mesh = SubResource("ArrayMesh_fe6e4")
+metadata/roads = ["up-tread-5"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 1.0875, 0.096875],
+"min": [-0.45, -1.0875, -0.096875]
+}
+
+[node name="Road_up_tread_6" type="MeshInstance3D" parent="FixedArchitecture" unique_id=817722881]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.74375, -4.759375)
+material_override = SubResource("ShaderMaterial_as05n")
+mesh = SubResource("ArrayMesh_v0swc")
+metadata/roads = ["up-tread-6"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 1.19375, 0.096875],
+"min": [-0.45, -1.19375, -0.096875]
+}
+
+[node name="Road_up_tread_7" type="MeshInstance3D" parent="FixedArchitecture" unique_id=142348554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.85, -4.953125)
+material_override = SubResource("ShaderMaterial_0mmuq")
+mesh = SubResource("ArrayMesh_kefwk")
+metadata/roads = ["up-tread-7"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 1.3, 0.096875],
+"min": [-0.45, -1.3, -0.096875]
+}
+
+[node name="Road_down_tread_0" type="MeshInstance3D" parent="FixedArchitecture" unique_id=605857948]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.395, 2.76, -5.5)
+material_override = SubResource("ShaderMaterial_45n2c")
+mesh = SubResource("ArrayMesh_fhehf")
+metadata/roads = ["down-tread-0"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.155, 1.2100000381469729, 0.45],
+"min": [-0.155, -1.2100000381469729, -0.45]
+}
+
+[node name="Road_down_tread_1" type="MeshInstance3D" parent="FixedArchitecture" unique_id=627790297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.085, 2.67, -5.5)
+material_override = SubResource("ShaderMaterial_i4aat")
+mesh = SubResource("ArrayMesh_4mdjl")
+metadata/roads = ["down-tread-1"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.155, 1.12, 0.45],
+"min": [-0.155, -1.12, -0.45]
+}
+
+[node name="Road_down_tread_2" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1285086431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.775, 2.58, -5.5)
+material_override = SubResource("ShaderMaterial_m25u6")
+mesh = SubResource("ArrayMesh_ehii1")
+metadata/roads = ["down-tread-2"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.155, 1.03, 0.45],
+"min": [-0.155, -1.03, -0.45]
+}
+
+[node name="Road_down_tread_3" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1298129275]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.465, 2.49, -5.5)
+material_override = SubResource("ShaderMaterial_l3fbc")
+mesh = SubResource("ArrayMesh_o6sin")
+metadata/roads = ["down-tread-3"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.155, 0.94, 0.45],
+"min": [-0.155, -0.94, -0.45]
+}
+
+[node name="Road_down_tread_4" type="MeshInstance3D" parent="FixedArchitecture" unique_id=438223244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.155, 2.4, -5.5)
+material_override = SubResource("ShaderMaterial_a2v8t")
+mesh = SubResource("ArrayMesh_nu604")
+metadata/roads = ["down-tread-4"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.155, 0.85, 0.45],
+"min": [-0.155, -0.85, -0.45]
+}
+
+[node name="Mesh" type="MeshInstance3D" parent="FixedArchitecture" unique_id=1687670525]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 4, -1.6)
+material_override = SubResource("ShaderMaterial_6okvx")
+mesh = SubResource("ArrayMesh_4f3x5")
+metadata/roads = []
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 0.45, 0.45],
+"min": [-0.45, -0.45, -0.45]
+}
+
+[node name="Crank" type="Node3D" parent="FixedArchitecture" unique_id=1697170089]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 2, 0.8)
+
+[node name="Mesh" type="MeshInstance3D" parent="FixedArchitecture/Crank" unique_id=324617465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.22)
+material_override = SubResource("ShaderMaterial_f6x0p")
+mesh = SubResource("ArrayMesh_qkpyv")
+metadata/roads = []
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@8" type="MeshInstance3D" parent="FixedArchitecture/Crank" unique_id=493943672]
+material_override = SubResource("ShaderMaterial_qjb5w")
+mesh = SubResource("ArrayMesh_ukwy0")
+metadata/roads = []
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@9" type="MeshInstance3D" parent="FixedArchitecture/Crank" unique_id=2119729103]
+material_override = SubResource("ShaderMaterial_gy8m1")
+mesh = SubResource("ArrayMesh_u2iw5")
+metadata/roads = []
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@10" type="MeshInstance3D" parent="FixedArchitecture/Crank" unique_id=1854510567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0, 0.015)
+material_override = SubResource("ShaderMaterial_3rdln")
+mesh = SubResource("ArrayMesh_v5eml")
+metadata/roads = []
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@11" type="MeshInstance3D" parent="FixedArchitecture/Crank" unique_id=1351644752]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32, 0, 0.015)
+material_override = SubResource("ShaderMaterial_mmgbh")
+mesh = SubResource("ArrayMesh_kfp87")
+metadata/roads = []
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@12" type="MeshInstance3D" parent="FixedArchitecture/Crank" unique_id=1673852284]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32, 0.015)
+material_override = SubResource("ShaderMaterial_fmlcc")
+mesh = SubResource("ArrayMesh_842kl")
+metadata/roads = []
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@13" type="MeshInstance3D" parent="FixedArchitecture/Crank" unique_id=2029549085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32, 0.015)
+material_override = SubResource("ShaderMaterial_jlh66")
+mesh = SubResource("ArrayMesh_upnm3")
+metadata/roads = []
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+
+[node name="GoalEmblem" type="Node3D" parent="FixedArchitecture" unique_id=1980235922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 4.461, -1.6)
+
+[node name="Mesh" type="MeshInstance3D" parent="FixedArchitecture/GoalEmblem" unique_id=804569902]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_87f6r")
+mesh = SubResource("ArrayMesh_ywjxp")
+metadata/roads = []
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@14" type="MeshInstance3D" parent="FixedArchitecture/GoalEmblem" unique_id=1354179994]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.003, 0)
+material_override = SubResource("ShaderMaterial_bmt7g")
+mesh = SubResource("ArrayMesh_48pf4")
+metadata/roads = []
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@15" type="MeshInstance3D" parent="FixedArchitecture/GoalEmblem" unique_id=754672731]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.004, 0)
+material_override = SubResource("ShaderMaterial_5ldbi")
+mesh = SubResource("ArrayMesh_jxik0")
+metadata/roads = []
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@16" type="MeshInstance3D" parent="FixedArchitecture/GoalEmblem" unique_id=1759126175]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.104, 0.006, 0)
+material_override = SubResource("ShaderMaterial_7amrc")
+mesh = SubResource("ArrayMesh_g7ya7")
+metadata/roads = []
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@17" type="MeshInstance3D" parent="FixedArchitecture/GoalEmblem" unique_id=268135817]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 6.3681633e-18, 0.006, 0.104)
+material_override = SubResource("ShaderMaterial_2mpji")
+mesh = SubResource("ArrayMesh_hd88l")
+metadata/roads = []
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@18" type="MeshInstance3D" parent="FixedArchitecture/GoalEmblem" unique_id=494097731]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.104, 0.006, 1.27363265e-17)
+material_override = SubResource("ShaderMaterial_ky0eq")
+mesh = SubResource("ArrayMesh_agjr8")
+metadata/roads = []
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+
+[node name="@MeshInstance3D@19" type="MeshInstance3D" parent="FixedArchitecture/GoalEmblem" unique_id=1032737792]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -1.910449e-17, 0.006, -0.104)
+material_override = SubResource("ShaderMaterial_6ahb4")
+mesh = SubResource("ArrayMesh_ww8lc")
+metadata/roads = []
+metadata/part = "goal-road"
+metadata/self_part = ""
+metadata/control = false
+
+[node name="Mechanism" type="Node3D" parent="." unique_id=1744484025]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Road_deck_front" type="MeshInstance3D" parent="Mechanism" unique_id=218074420]
+material_override = SubResource("ShaderMaterial_iswbk")
+mesh = SubResource("ArrayMesh_s8e0p")
+metadata/roads = ["deck-front"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 2.25, 0.45],
+"min": [-0.45, -2.25, -0.45]
+}
+
+[node name="Road_deck_back" type="MeshInstance3D" parent="Mechanism" unique_id=50888006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.6)
+material_override = SubResource("ShaderMaterial_3gwk7")
+mesh = SubResource("ArrayMesh_2hfuv")
+metadata/roads = ["deck-back", "deck-cap-x", "deck-cap-z"]
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.45, 3.15, 0.45],
+"min": [-0.45, -3.15, -0.45]
+}
+
+[node name="Mesh" type="MeshInstance3D" parent="Mechanism" unique_id=1783190699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
+material_override = SubResource("ShaderMaterial_m3r6w")
+mesh = SubResource("ArrayMesh_fokfn")
+metadata/roads = []
+metadata/part = ""
+metadata/self_part = ""
+metadata/control = false
+metadata/collider = {
+"max": [0.06, 0.06, 1.8],
+"min": [-0.06, -0.06, -1.8]
+}

@@ -2,9 +2,12 @@
 config_version=5
 
 [application]
-config/name="雾屿 · Godot 迁移试作"
-run/main_scene="res://scenes/blue_gate.tscn"
+config/name="雾屿"
+run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[autoload]
+Progress="*res://scripts/progress.gd"
 
 [display]
 window/size/viewport_width=1100

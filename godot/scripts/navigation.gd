@@ -12,10 +12,10 @@ func _init(data: Dictionary) -> void:
 
 func rebuild(angle: float) -> void:
 	segments.clear();links.clear();by_id.clear()
-	var orientation: int = int(round(angle/(PI/2.0)))
+	var orientation: int = posmod(int(round(angle/(PI/2.0))),4)
 	var settled: bool = absf(angle/(PI/2.0)-round(angle/(PI/2.0)))<0.001
 	var pivot: Vector3 = Optics.v(level.pivot)
-	var q := Quaternion(Vector3.FORWARD*-1.0,angle)
+	var q := Optics.rotation(level,angle)
 	var nodes: Dictionary = {}
 	for source: Dictionary in level.segments:
 		var s: Dictionary=source.duplicate(true)

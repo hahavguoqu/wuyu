@@ -3,6 +3,12 @@ extends RefCounted
 
 const VIEW_RAY := Vector3(0.57735026919,0.57735026919,0.57735026919)
 
+static func axis(level: Dictionary) -> Vector3:
+	return Vector3.RIGHT if level.axis=="x" else (Vector3.UP if level.axis=="y" else Vector3.BACK)
+
+static func rotation(level: Dictionary,angle: float) -> Quaternion:
+	return Quaternion(axis(level),angle*float(level.get("sign",1)))
+
 static func v(a: Array) -> Vector3:
 	return Vector3(float(a[0]),float(a[1]),float(a[2]))
 

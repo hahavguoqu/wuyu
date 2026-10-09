@@ -1,13 +1,15 @@
 {
   "name": "mist-isles",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
-    "build": "vite build",
-    "test": "node --test test/levels.test.js",
-    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "dev": "node tools/serve-godot.mjs",
+    "build": "node tools/build-godot.mjs",
+    "test": "node --test legacy/threejs/test/levels.test.js",
+    "preview": "node tools/serve-godot.mjs --dist",
+    "legacy:dev": "vite legacy/threejs --host 127.0.0.1 --port 5173 --strictPort",
+    "legacy:build": "vite build legacy/threejs",
     "godot:data": "node tools/export-godot.mjs",
     "godot:preview": "node tools/serve-godot.mjs"
   },

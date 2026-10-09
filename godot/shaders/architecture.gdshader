@@ -6,6 +6,9 @@ uniform vec4 x_color : source_color = vec4(1.0);
 uniform vec4 z_color : source_color = vec4(1.0);
 uniform bool face_shading = true;
 uniform float angle = 0.0;
+// Explicit compositor bands retain the first level's authored A/B/C order.
+// Each band keeps its own continuous depth; the C prepass removes buried faces.
+uniform float pass_priority = -1.0;
 uniform float depth_offset = 0.0;
 uniform vec4 ramp_a = vec4(0.0,1.0,0.0,0.0);
 uniform vec4 ramp_b = vec4(0.0,1.0,0.0,0.0);
@@ -40,6 +43,8 @@ void vertex() {
     if(traveller) sample_point -= vec3(world.y-carrier_floor);
     vec3 displaced = world + vec3(profile(sample_point));
     POSITION = PROJECTION_MATRIX * VIEW_MATRIX * vec4(displaced,1.0);
+    // Godot's projection uses reverse Z in [0,1], including Compatibility.
+    if(pass_priority>=0.0) POSITION.z = POSITION.w*(0.1+pass_priority*0.18)+POSITION.z*0.08;
     vec3 n = normalize(MODEL_NORMAL_MATRIX * NORMAL);
     float t = max(0.0,n.y), x = abs(n.x), z = abs(n.z);
     face_color = face_shading ? (top_color.rgb*t+x_color.rgb*x+z_color.rgb*z)/max(t+x+z,0.0001) : top_color.rgb;

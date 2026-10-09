@@ -32,6 +32,27 @@ jobs:
         run: npm ci
       - name: Check game mechanics
         run: npm test
+      - name: Cache Godot and Web export template
+        id: godot-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/bin/godot
+            ~/.local/share/godot/export_templates/4.7.2.stable
+          key: godot-4.7.2-linux-web-nothreads-v1
+      - name: Install official Godot 4.7.2
+        if: steps.godot-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.local/bin" "$HOME/.local/share/godot/export_templates/4.7.2.stable"
+          curl --fail --location --retry 3 -o "$RUNNER_TEMP/godot.zip" https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot-engine"
+          install -m 755 "$RUNNER_TEMP/godot-engine/Godot_v4.7.2-stable_linux.x86_64" "$HOME/.local/bin/godot"
+          curl --fail --location --retry 3 -o "$RUNNER_TEMP/templates.tpz" https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz
+          unzip -j -q "$RUNNER_TEMP/templates.tpz" templates/web_nothreads_release.zip -d "$HOME/.local/share/godot/export_templates/4.7.2.stable"
+      - name: Add Godot to PATH
+        run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - name: Build game
         run: npm run build
       - name: Upload website

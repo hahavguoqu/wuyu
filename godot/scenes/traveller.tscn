@@ -9,7 +9,8 @@ shader_parameter/top_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/x_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/z_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -18,7 +19,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -41,7 +42,8 @@ shader_parameter/top_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/x_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/z_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -50,7 +52,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -73,7 +75,8 @@ shader_parameter/top_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/x_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/z_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -82,7 +85,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -105,7 +108,8 @@ shader_parameter/top_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/x_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/z_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -114,7 +118,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -137,7 +141,8 @@ shader_parameter/top_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/x_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/z_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -146,7 +151,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -169,7 +174,8 @@ shader_parameter/top_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/x_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/z_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -178,7 +184,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -201,7 +207,8 @@ shader_parameter/top_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/x_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/z_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -210,7 +217,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -233,7 +240,8 @@ shader_parameter/top_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/x_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/z_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -242,7 +250,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -265,7 +273,8 @@ shader_parameter/top_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/x_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/z_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -274,7 +283,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -297,7 +306,8 @@ shader_parameter/top_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/x_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/z_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -306,7 +316,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -329,7 +339,8 @@ shader_parameter/top_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/x_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/z_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -338,7 +349,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -361,7 +372,8 @@ shader_parameter/top_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/x_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/z_color = Color(0.92941177, 0.9411765, 0.90588236, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -370,7 +382,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -393,7 +405,8 @@ shader_parameter/top_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/x_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/z_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -402,7 +415,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -425,7 +438,8 @@ shader_parameter/top_color = Color(0.69803923, 0.5372549, 0.27450982, 1)
 shader_parameter/x_color = Color(0.69803923, 0.5372549, 0.27450982, 1)
 shader_parameter/z_color = Color(0.69803923, 0.5372549, 0.27450982, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -434,7 +448,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -457,7 +471,8 @@ shader_parameter/top_color = Color(0.69803923, 0.5372549, 0.27450982, 1)
 shader_parameter/x_color = Color(0.69803923, 0.5372549, 0.27450982, 1)
 shader_parameter/z_color = Color(0.69803923, 0.5372549, 0.27450982, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -466,7 +481,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -489,7 +504,8 @@ shader_parameter/top_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/x_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/z_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -498,7 +514,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -521,7 +537,8 @@ shader_parameter/top_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/x_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/z_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -530,7 +547,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -553,7 +570,8 @@ shader_parameter/top_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/x_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/z_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -562,7 +580,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -585,7 +603,8 @@ shader_parameter/top_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/x_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/z_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -594,7 +613,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -617,7 +636,8 @@ shader_parameter/top_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/x_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/z_color = Color(0.9019608, 0.73333335, 0.34901962, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -626,7 +646,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -649,7 +669,8 @@ shader_parameter/top_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/x_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/z_color = Color(0.2509804, 0.2901961, 0.29411766, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -658,7 +679,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -681,7 +702,8 @@ shader_parameter/top_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/x_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/z_color = Color(1, 0.8784314, 0.627451, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -690,7 +712,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -713,7 +735,8 @@ shader_parameter/top_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/x_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/z_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -722,7 +745,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -745,7 +768,8 @@ shader_parameter/top_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/x_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/z_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -754,7 +778,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -777,7 +801,8 @@ shader_parameter/top_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/x_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/z_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -786,7 +811,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -809,7 +834,8 @@ shader_parameter/top_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/x_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/z_color = Color(0.94509804, 0.83137256, 0.7254902, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -818,7 +844,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -841,7 +867,8 @@ shader_parameter/top_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/x_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/z_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -850,7 +877,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -873,7 +900,8 @@ shader_parameter/top_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/x_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/z_color = Color(0.25882354, 0.3254902, 0.33333334, 1)
 shader_parameter/face_shading = false
-shader_parameter/angle = 1.5707963267948966
+shader_parameter/angle = 0.0
+shader_parameter/pass_priority = -1.0
 shader_parameter/depth_offset = 0.0
 shader_parameter/ramp_a = Vector4(0, 1, 0, 0)
 shader_parameter/ramp_b = Vector4(0, 1, 0, 0)
@@ -882,7 +910,7 @@ shader_parameter/gate_b = Vector4(0, 1, 0, -1)
 shader_parameter/upright_a = 0.0
 shader_parameter/upright_b = 0.0
 shader_parameter/traveller = true
-shader_parameter/carrier_floor = 2.45
+shader_parameter/carrier_floor = 0.0
 shader_parameter/self_masked = false
 shader_parameter/view_origin = null
 
@@ -898,20 +926,22 @@ _surfaces = [{
 "vertex_data": PackedByteArray("AAAAAJqZGT0pXA89oIeoPJqZGT0b9uc87VcIPZqZGT3kMzE87VcIPZqZGT3kMzG8oIeoPJqZGT0b9ue8niKeIpqZGT0pXA+9oIeovJqZGT0b9ue87VcIvZqZGT3kMzG87VcIvZqZGT3kMzE8oIeovJqZGT0b9uc8niIeo5qZGT0pXA89AAAAAJqZGb0pXA89oIeoPJqZGb0b9uc87VcIPZqZGb3kMzE87VcIPZqZGb3kMzG8oIeoPJqZGb0b9ue8niKeIpqZGb0pXA+9oIeovJqZGb0b9ue87VcIvZqZGb3kMzG87VcIvZqZGb3kMzE8oIeovJqZGb0b9uc8niIeo5qZGb0pXA89AAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0AAAAAAAAAAJqZGT0pXA89oIeoPJqZGT0b9uc87VcIPZqZGT3kMzE87VcIPZqZGT3kMzG8oIeoPJqZGT0b9ue8niKeIpqZGT0pXA+9oIeovJqZGT0b9ue87VcIvZqZGT3kMzG87VcIvZqZGT3kMzE8oIeovJqZGT0b9uc8niIeo5qZGT0pXA89AAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0AAAAAAAAAAJqZGb0pXA89oIeoPJqZGb0b9uc87VcIPZqZGb3kMzE87VcIPZqZGb3kMzG8oIeoPJqZGb0b9ue8niKeIpqZGb0pXA+9oIeovJqZGb0b9ue87VcIvZqZGb3kMzG87VcIvZqZGb3kMzE8oIeovJqZGb0b9uc8niIeo5qZGb0pXA89/3//f/9/AIDctf9/v1abo5vg/3/sYka7//9jnxKdRrv//yLKP6mbo///////fwCAAAAiyr9Wm6MAAGOf7GJGu2Mf/38SnUa7Ikr/fz+pm6P/f/9//38AgP9//3//fwCA3LX/f79Wm6Ob4P9/7GJGu///Y58SnUa7//8iyj+pm6P//////38AgAAAIsq/VpujAABjn+xiRrtjH/9/Ep1GuyJK/38/qZuj/3//f/9/AID/f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/78=")
 }]
 
-[node name="Traveller" type="Node3D" unique_id=394120794]
-transform = Transform3D(0.7071067, 0, 0.7071068, 0, 1, 0, -0.7071068, 0, 0.7071067, 5, 2.45, 3)
+[node name="Traveller" type="Node3D" unique_id=755819791]
+transform = Transform3D(0.45961934, 0, 0.45961943, 0, 0.65, 0, -0.45961943, 0, 0.45961934, 0, 0, 4)
 
-[node name="Body" type="Node3D" parent="." unique_id=1403593338]
+[node name="Body" type="Node3D" parent="." unique_id=793238409]
 
-[node name="Mesh" type="MeshInstance3D" parent="Body" unique_id=743460727]
+[node name="Mesh" type="MeshInstance3D" parent="Body" unique_id=338857320]
 material_override = SubResource("ShaderMaterial_ifkpq")
 mesh = SubResource("ArrayMesh_b0pw0")
 metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@20" type="MeshInstance3D" parent="Body" unique_id=2054005170]
+[node name="@MeshInstance3D@22" type="MeshInstance3D" parent="Body" unique_id=1285887906]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.315, 0)
 material_override = SubResource("ShaderMaterial_vjsxs")
 mesh = SubResource("ArrayMesh_ih6p7")
@@ -919,8 +949,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@21" type="MeshInstance3D" parent="Body" unique_id=1238557132]
+[node name="@MeshInstance3D@23" type="MeshInstance3D" parent="Body" unique_id=548271501]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.432, 0.127)
 material_override = SubResource("ShaderMaterial_y0vvk")
 mesh = SubResource("ArrayMesh_ntovc")
@@ -928,8 +960,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@22" type="MeshInstance3D" parent="Body" unique_id=848357521]
+[node name="@MeshInstance3D@24" type="MeshInstance3D" parent="Body" unique_id=79323970]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.534, 0)
 material_override = SubResource("ShaderMaterial_siy0b")
 mesh = SubResource("ArrayMesh_dlimr")
@@ -937,11 +971,13 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="Group" type="Node3D" parent="Body" unique_id=983512803]
+[node name="Group" type="Node3D" parent="Body" unique_id=934833878]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.665, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Body/Group" unique_id=255170935]
+[node name="Mesh" type="MeshInstance3D" parent="Body/Group" unique_id=811158038]
 transform = Transform3D(0.93, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_lifv0")
 mesh = SubResource("ArrayMesh_q7g8a")
@@ -949,8 +985,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@23" type="MeshInstance3D" parent="Body/Group" unique_id=221924772]
+[node name="@MeshInstance3D@25" type="MeshInstance3D" parent="Body/Group" unique_id=1685152191]
 transform = Transform3D(1, 0, 0, 0, 1.03, 0, 0, 0, 1, 0, 0.013, -0.018)
 material_override = SubResource("ShaderMaterial_m5kho")
 mesh = SubResource("ArrayMesh_ds2uf")
@@ -958,8 +996,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@24" type="MeshInstance3D" parent="Body/Group" unique_id=915624713]
+[node name="@MeshInstance3D@26" type="MeshInstance3D" parent="Body/Group" unique_id=483210141]
 transform = Transform3D(-0.9950042, -0.09983347, 0, 0.09983347, -0.9950042, 0, 0, 0, 1, -0.117, -0.045, -0.005)
 material_override = SubResource("ShaderMaterial_pxauk")
 mesh = SubResource("ArrayMesh_3dms2")
@@ -967,8 +1007,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@25" type="MeshInstance3D" parent="Body/Group" unique_id=1063864522]
+[node name="@MeshInstance3D@27" type="MeshInstance3D" parent="Body/Group" unique_id=482987704]
 transform = Transform3D(-0.9950042, 0.09983347, 0, -0.09983347, -0.9950042, 0, 0, 0, 1, 0.117, -0.045, -0.005)
 material_override = SubResource("ShaderMaterial_pag0h")
 mesh = SubResource("ArrayMesh_4cehd")
@@ -976,8 +1018,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@26" type="MeshInstance3D" parent="Body/Group" unique_id=275189471]
+[node name="@MeshInstance3D@28" type="MeshInstance3D" parent="Body/Group" unique_id=1191623769]
 transform = Transform3D(-0.921061, -0.38941836, 0, 0.38941836, -0.921061, 0, 0, 0, 1, -0.076, 0.025, 0.108)
 material_override = SubResource("ShaderMaterial_wjuqe")
 mesh = SubResource("ArrayMesh_l6txj")
@@ -985,8 +1029,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@27" type="MeshInstance3D" parent="Body/Group" unique_id=397531554]
+[node name="@MeshInstance3D@29" type="MeshInstance3D" parent="Body/Group" unique_id=1306203521]
 transform = Transform3D(-0.96639, -0.25708047, 0, 0.25708047, -0.96639, 0, 0, 0, 1, -0.022, 0.035, 0.128)
 material_override = SubResource("ShaderMaterial_yg4qu")
 mesh = SubResource("ArrayMesh_43hid")
@@ -994,8 +1040,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@28" type="MeshInstance3D" parent="Body/Group" unique_id=714909295]
+[node name="@MeshInstance3D@30" type="MeshInstance3D" parent="Body/Group" unique_id=1360125575]
 transform = Transform3D(-0.9689124, 0.24740387, 0, -0.24740387, -0.9689124, 0, 0, 0, 1, 0.038, 0.036, 0.123)
 material_override = SubResource("ShaderMaterial_bj3wj")
 mesh = SubResource("ArrayMesh_weolp")
@@ -1003,8 +1051,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@29" type="MeshInstance3D" parent="Body/Group" unique_id=1307365820]
+[node name="@MeshInstance3D@31" type="MeshInstance3D" parent="Body/Group" unique_id=257154807]
 transform = Transform3D(-0.8775826, 0.47942546, 0, -0.47942546, -0.8775826, 0, 0, 0, 1, 0.093, 0.027, 0.091)
 material_override = SubResource("ShaderMaterial_dqof5")
 mesh = SubResource("ArrayMesh_jepyc")
@@ -1012,8 +1062,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@30" type="MeshInstance3D" parent="Body/Group" unique_id=1508402448]
+[node name="@MeshInstance3D@32" type="MeshInstance3D" parent="Body/Group" unique_id=1996864939]
 transform = Transform3D(0.99680173, -0.07991468, 0, 0.07991468, 0.99680173, 0, 0, 0, 1, 0, 0.015, -0.016)
 material_override = SubResource("ShaderMaterial_acocu")
 mesh = SubResource("ArrayMesh_qk3x3")
@@ -1021,8 +1073,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@31" type="MeshInstance3D" parent="Body/Group" unique_id=660027126]
+[node name="@MeshInstance3D@33" type="MeshInstance3D" parent="Body/Group" unique_id=1700705251]
 transform = Transform3D(1, 0, 0, 0, 1.3, 0, 0, 0, 1, -0.038, -0.022, 0.117)
 material_override = SubResource("ShaderMaterial_ork7n")
 mesh = SubResource("ArrayMesh_bs7pv")
@@ -1030,8 +1084,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@32" type="MeshInstance3D" parent="Body/Group" unique_id=1867326950]
+[node name="@MeshInstance3D@34" type="MeshInstance3D" parent="Body/Group" unique_id=74574046]
 transform = Transform3D(1, 0, 0, 0, 1.3, 0, 0, 0, 1, 0.038, -0.022, 0.117)
 material_override = SubResource("ShaderMaterial_3tou1")
 mesh = SubResource("ArrayMesh_y38et")
@@ -1039,8 +1095,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@33" type="MeshInstance3D" parent="Body/Group" unique_id=1705717834]
+[node name="@MeshInstance3D@35" type="MeshInstance3D" parent="Body/Group" unique_id=369309677]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.041, 0.126)
 material_override = SubResource("ShaderMaterial_lrsvv")
 mesh = SubResource("ArrayMesh_ykmt3")
@@ -1048,8 +1106,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@34" type="MeshInstance3D" parent="Body/Group" unique_id=827257764]
+[node name="@MeshInstance3D@36" type="MeshInstance3D" parent="Body/Group" unique_id=509443989]
 transform = Transform3D(0.8253356, 0, -0.5646424, 0, 1, 0, 0.5646424, 0, 0.8253356, -0.123, 0.045, 0.064)
 material_override = SubResource("ShaderMaterial_hokv3")
 mesh = SubResource("ArrayMesh_tvdn2")
@@ -1057,11 +1117,13 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@Node3D@36" type="Node3D" parent="Body" unique_id=550207710]
+[node name="@Node3D@38" type="Node3D" parent="Body" unique_id=2046294468]
 transform = Transform3D(0.990216, 0.1395431, 0, -0.1395431, 0.990216, 0, 0, 0, 1, -0.15, 0.49, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Body/@Node3D@36" unique_id=70036592]
+[node name="Mesh" type="MeshInstance3D" parent="Body/@Node3D@38" unique_id=27476341]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07, 0)
 material_override = SubResource("ShaderMaterial_mvpl8")
 mesh = SubResource("ArrayMesh_ga6pc")
@@ -1069,8 +1131,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@35" type="MeshInstance3D" parent="Body/@Node3D@36" unique_id=1654903216]
+[node name="@MeshInstance3D@37" type="MeshInstance3D" parent="Body/@Node3D@38" unique_id=612253489]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.147, 0.004)
 material_override = SubResource("ShaderMaterial_jr22o")
 mesh = SubResource("ArrayMesh_syi7r")
@@ -1078,11 +1142,13 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@Node3D@38" type="Node3D" parent="Body" unique_id=1172093414]
+[node name="@Node3D@40" type="Node3D" parent="Body" unique_id=1661994030]
 transform = Transform3D(0.990216, -0.1395431, 0, 0.1395431, 0.990216, 0, 0, 0, 1, 0.15, 0.49, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Body/@Node3D@38" unique_id=1184110137]
+[node name="Mesh" type="MeshInstance3D" parent="Body/@Node3D@40" unique_id=52557380]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07, 0)
 material_override = SubResource("ShaderMaterial_t6gl8")
 mesh = SubResource("ArrayMesh_3awxs")
@@ -1090,8 +1156,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@37" type="MeshInstance3D" parent="Body/@Node3D@38" unique_id=1114474284]
+[node name="@MeshInstance3D@39" type="MeshInstance3D" parent="Body/@Node3D@40" unique_id=1180784138]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.147, 0.004)
 material_override = SubResource("ShaderMaterial_xjsrm")
 mesh = SubResource("ArrayMesh_bkvqo")
@@ -1099,8 +1167,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@39" type="MeshInstance3D" parent="Body" unique_id=42730550]
+[node name="@MeshInstance3D@41" type="MeshInstance3D" parent="Body" unique_id=1912736716]
 transform = Transform3D(0.9838437, -0.17902958, 0, 0.17902958, 0.9838437, 0, 0, 0, 1, 0.055, 0.452, -0.123)
 material_override = SubResource("ShaderMaterial_m8fea")
 mesh = SubResource("ArrayMesh_i1jg3")
@@ -1108,11 +1178,13 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="LeftLeg" type="Node3D" parent="." unique_id=347401425]
+[node name="LeftLeg" type="Node3D" parent="." unique_id=1204525525]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.064, 0.29, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="LeftLeg" unique_id=1840085444]
+[node name="Mesh" type="MeshInstance3D" parent="LeftLeg" unique_id=2006453868]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.093, 0)
 material_override = SubResource("ShaderMaterial_o4x67")
 mesh = SubResource("ArrayMesh_qwyol")
@@ -1120,8 +1192,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@40" type="MeshInstance3D" parent="LeftLeg" unique_id=1451022878]
+[node name="@MeshInstance3D@42" type="MeshInstance3D" parent="LeftLeg" unique_id=1277343510]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 1.5, 0, -0.238, 0.022)
 material_override = SubResource("ShaderMaterial_h3wfa")
 mesh = SubResource("ArrayMesh_3tqek")
@@ -1129,8 +1203,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@41" type="MeshInstance3D" parent="LeftLeg" unique_id=1319123759]
+[node name="@MeshInstance3D@43" type="MeshInstance3D" parent="LeftLeg" unique_id=1786433777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.193, 0)
 material_override = SubResource("ShaderMaterial_eyb2y")
 mesh = SubResource("ArrayMesh_kipon")
@@ -1138,11 +1214,13 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="RightLeg" type="Node3D" parent="." unique_id=1692801834]
+[node name="RightLeg" type="Node3D" parent="." unique_id=777868327]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.064, 0.29, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="RightLeg" unique_id=53193576]
+[node name="Mesh" type="MeshInstance3D" parent="RightLeg" unique_id=1123418431]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.093, 0)
 material_override = SubResource("ShaderMaterial_skody")
 mesh = SubResource("ArrayMesh_ro8ya")
@@ -1150,8 +1228,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@42" type="MeshInstance3D" parent="RightLeg" unique_id=152329194]
+[node name="@MeshInstance3D@44" type="MeshInstance3D" parent="RightLeg" unique_id=1694814207]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 1.5, 0, -0.238, 0.022)
 material_override = SubResource("ShaderMaterial_rhvgq")
 mesh = SubResource("ArrayMesh_m0v63")
@@ -1159,8 +1239,10 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false
 
-[node name="@MeshInstance3D@43" type="MeshInstance3D" parent="RightLeg" unique_id=724395093]
+[node name="@MeshInstance3D@45" type="MeshInstance3D" parent="RightLeg" unique_id=1267579301]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.193, 0)
 material_override = SubResource("ShaderMaterial_ewrkp")
 mesh = SubResource("ArrayMesh_68ciy")
@@ -1168,3 +1250,5 @@ metadata/roads = []
 metadata/part = ""
 metadata/self_part = ""
 metadata/control = false
+metadata/layer = 0.0
+metadata/goal = false

@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('editor','play','verify','web','bake')]
+    [ValidateSet('editor','play','verify','web','bake','capture','playthrough')]
     [string]$Mode = 'editor',
     [string]$GodotPath = ''
 )
@@ -19,7 +19,26 @@ if (-not (Test-Path -LiteralPath $GodotPath)) {
 switch ($Mode) {
     'editor' { & $GodotPath --path $migrationProject --editor }
     'play' { & $GodotPath --path $migrationProject }
-    'verify' { & $GodotPath --headless --path $migrationProject -- --verify }
+    'verify' {
+        0..3 | ForEach-Object {
+            & $GodotPath --headless --path $migrationProject -- --verify "--level=$_"
+            if ($LASTEXITCODE -ne 0) { throw "Level $_ verification failed." }
+        }
+    }
+    'capture' {
+        0..3 | ForEach-Object {
+            & $GodotPath --path $migrationProject --position '-10000,-10000' -- --capture "--level=$_"
+            if ($LASTEXITCODE -ne 0) { throw "Level $_ capture failed." }
+        }
+    }
+    'playthrough' {
+        0..3 | ForEach-Object {
+            $migrationOutput = @(& $GodotPath --path $migrationProject --position '-10000,-10000' -- --playthrough "--level=$_")
+            $migrationExit = $LASTEXITCODE
+            $migrationOutput | Write-Output
+            if ($migrationExit -ne 0 -or -not ($migrationOutput -match 'PLAYTHROUGH_PASS')) { throw "Level $_ playthrough failed or was interrupted." }
+        }
+    }
     'web' {
         $migrationWeb = Join-Path $migrationProject 'build/web'
         New-Item -ItemType Directory -Force $migrationWeb | Out-Null
@@ -31,7 +50,12 @@ switch ($Mode) {
         try {
             & node tools/export-godot.mjs
             if ($LASTEXITCODE -ne 0) { throw 'Source data export failed.' }
-            & $GodotPath --headless --path $migrationProject -- --bake
+            & $GodotPath --headless --path $migrationProject --editor --import
+            if ($LASTEXITCODE -ne 0) { throw 'Godot resource import failed.' }
+            0..3 | ForEach-Object {
+                & $GodotPath --headless --path $migrationProject -- --bake "--level=$_"
+                if ($LASTEXITCODE -ne 0) { throw "Level $_ scene bake failed." }
+            }
         } finally { Pop-Location }
     }
 }

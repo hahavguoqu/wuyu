@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b7d5d3">
+<meta name="description" content="雾屿，在旋转建筑与错层路径间发现通路的 2.5D 解谜游戏。">
+<title>雾屿</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#b7d5d3;color:#456761;font-family:system-ui,sans-serif}#canvas{display:block;outline:none;touch-action:none;width:100%;height:100%}#loading{position:fixed;inset:0;display:grid;place-content:center;gap:28px;text-align:center;background:linear-gradient(160deg,#b7d5d3,#d4e1d2)}h1{margin:0;font-size:32px;font-weight:400;letter-spacing:12px;padding-left:12px}progress{width:160px;height:3px;border:0;appearance:none;accent-color:#68998b}progress::-webkit-progress-bar{background:#759a8b30}progress::-webkit-progress-value{background:#68998b}#notice{max-width:300px;font-size:14px;line-height:1.8;white-space:pre-line}#retry{display:none;border:1px solid #68998b55;border-radius:4px;padding:9px 24px;background:transparent;color:inherit;margin:auto}
+</style>
+$GODOT_HEAD_INCLUDE
+</head>
+<body>
+<canvas id="canvas" tabindex="0" aria-label="雾屿解谜游戏"></canvas>
+<div id="loading" role="status"><h1>雾屿</h1><progress id="progress" aria-label="加载游戏"></progress><div id="notice"></div><button id="retry" onclick="location.reload()">重试</button></div>
+<noscript>请开启 JavaScript 后进入游戏。</noscript>
+<script src="$GODOT_URL"></script>
+<script>
+const GODOT_CONFIG=$GODOT_CONFIG;
+const engine=new Engine(GODOT_CONFIG);
+const missing=Engine.getMissingFeatures({threads:false});
+function failed(error){console.error(error);document.getElementById('progress').hidden=true;document.getElementById('notice').textContent=missing.length?'请使用支持 WebGL 2 的浏览器。':'加载未完成，请重试。';document.getElementById('retry').style.display='block';}
+if(missing.length)failed(new Error(missing.join(', ')));
+else engine.startGame({onProgress:(current,total)=>{const p=document.getElementById('progress');if(total>0){p.max=total;p.value=current;}}}).then(()=>document.getElementById('loading').remove(),failed);
+window.addEventListener('pagehide',()=>{if(engine)engine.requestQuit();});
+</script>
+</body>
+</html>
